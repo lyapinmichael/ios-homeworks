@@ -17,18 +17,12 @@ class FeedViewController: UIViewController {
         button.setTitle("Open Post", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.setTitleColor(.lightGray, for: .highlighted)
+        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
         
         return button
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "Feed"
-        view.backgroundColor = .white
-        
-        view.addSubview(button)
-        
+    private func setupButtonConstraints(_ button: UIButton) {
         let safeAreaGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([button.leadingAnchor.constraint(
             equalTo: safeAreaGuide.leadingAnchor,
@@ -40,8 +34,17 @@ class FeedViewController: UIViewController {
         ),
         button.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
         button.heightAnchor.constraint(equalToConstant: 44.0)])
+
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        title = "Feed"
+        view.backgroundColor = .white
+        
+        view.addSubview(button)
+        setupButtonConstraints(button)
 
         
     }

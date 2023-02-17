@@ -9,7 +9,13 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private let profileHeader = ProfileHeaderView()
+    private let profileHeader: ProfileHeaderView = {
+       let view = ProfileHeaderView()
+        view.profilePicture = UIImage(named: "DarthVader")
+        view.profileName = "Darth Vader"
+        view.status = "Join the dark side!.."
+       return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,15 +33,4 @@ class ProfileViewController: UIViewController {
         profileHeader.frame = view.frame
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

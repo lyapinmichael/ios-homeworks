@@ -8,8 +8,28 @@
 import UIKit
 
 final class CustomButton: UIButton {
-    private var color: UIColor = .systemBlue
+
     private let touchDownAlpha: CGFloat = 0.8
+    private var color: UIColor?
+    
+    enum ButtonActions: String {
+        case printStatus = "Print status"
+        case setStatus = "Set status"
+    }
+    
+    var buttonAction: ButtonActions? {
+        willSet {
+            let title = newValue?.rawValue
+            switch newValue{
+            case .printStatus:
+                setTitle(title, for: .normal)
+            case .setStatus:
+                setTitle(title, for: .normal)
+            case .none:
+                setTitle("Button", for: .normal)
+            }
+        }
+    }
     
     override var isHighlighted: Bool {
         didSet {
@@ -26,9 +46,8 @@ final class CustomButton: UIButton {
         backgroundColor = .white
         clipsToBounds = true
         titleLabel?.textColor = .white
-        layer.backgroundColor = color.cgColor
         layer.cornerRadius = 4
-        
+        layer.backgroundColor = color?.cgColor
         layer.masksToBounds = false
         layer.shadowOpacity = 0.7
         layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -40,33 +59,30 @@ final class CustomButton: UIButton {
         UIView.animate(withDuration: 0.09, delay: 0, animations: {
             self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             self.layer.shadowOffset = CGSize(width: 2, height: 2)
-            self.layer.backgroundColor = self.color.withAlphaComponent(self.touchDownAlpha).cgColor
+            self.layer.backgroundColor = self.color?.withAlphaComponent(self.touchDownAlpha).cgColor
         })
     }
-
+    
     func touchUp() {
         UIView.animate(withDuration: 0.05, delay: 0, animations:  {
             self.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.layer.shadowOffset = CGSize(width: 4, height: 4)
-            self.layer.backgroundColor = self.color.cgColor
+            self.layer.backgroundColor = self.color?.cgColor
         })
     }
     
-    convenience init(color: UIColor? = nil, title: String? = nil) {
+    convenience init(custom: Bool, initAction: ButtonActions = .printStatus, color: UIColor? = nil) {
         self.init(type: .custom)
         
         if let color = color {
             self.color = color
-        }
-        
-        if let title = title {
-            setTitle(title, for: .normal)
         } else {
-            setTitle("Button", for: .normal)
+            self.color = UIColor.systemBlue
         }
         
+        buttonAction = initAction
+        setTitle(initAction.rawValue, for: .normal)
         setup()
         
     }
-    
 }

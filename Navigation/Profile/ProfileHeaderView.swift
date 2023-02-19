@@ -16,6 +16,7 @@ class ProfileHeaderView: UIView {
     private var statusField: UITextField?
     private var statusText: String?
     
+    
     var profilePicture: UIImage? {
         get { return profilePictureView?.image }
         set { profilePictureView?.image = newValue }
@@ -45,8 +46,8 @@ class ProfileHeaderView: UIView {
         profileStatusLabel?.textColor = .gray
         addSubview(profileStatusLabel!)
         
-        statusButton = CustomButton(title: "Print status")
-        statusButton?.addTarget(self, action: #selector(printStatus(_:)), for: .touchUpInside)
+        statusButton = CustomButton(custom: true)
+        statusButton?.addTarget(self, action: #selector(buttonHandler(_:)), for: .touchUpInside)
         addSubview(statusButton!)
         
         statusField = StatusTextField()
@@ -108,28 +109,38 @@ class ProfileHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func printStatus(_ sender: UIButton) {
-        print (self.status ?? "no status")
-    }
     
-    @objc func statusTextChanged(_ textField: UITextField) {
-        statusText = textField.text
-        statusButton?.setTitle("Set status", for: .normal)
-        statusButton?.removeTarget(self, action: #selector(printStatus(_:)), for: .touchUpInside)
-        statusButton?.addTarget(self, action: #selector(setStatus(_:)), for: .touchUpInside)
-    }
-    
-    @objc func dismissKeyboard() {
+    @objc fileprivate func dismissKeyboard() {
         endEditing(true)
     }
     
-    @objc func setStatus(_ sender: UIButton) {
+    @objc fileprivate func statusTextChanged(_ textField: UITextField) {
+        statusText = textField.text
+        statusButton?.setTitle("Set status", for: .normal)
+        statusButton?.buttonAction = .setStatus
+    }
+    
+    @objc func buttonHandler(_ sender: CustomButton) {
+        switch sender.buttonAction {
+        case .printStatus:
+            printStatus(sender)
+        case .setStatus:
+            setStatus(sender)
+        case .none:
+            return
+        }
+    }
+    
+    @objc fileprivate func printStatus(_ sender: CustomButton) {
+        print (self.status ?? "no status")
+    }
+    
+    @objc fileprivate func setStatus(_ sender: CustomButton) {
         status = statusText
         statusField?.endEditing(true)
         statusField?.text = nil
-        statusButton?.setTitle("Print status", for: .normal)
-        statusButton?.removeTarget(self, action: #selector(setStatus(_:)), for: .touchUpInside)
-        statusButton?.addTarget(self, action: #selector(printStatus(_:)), for: .touchUpInside)
+        sender.buttonAction = .printStatus
+
     }
     
 }

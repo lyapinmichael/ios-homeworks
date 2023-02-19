@@ -9,7 +9,7 @@ import UIKit
 
 final class CustomButton: UIButton {
     private var color: UIColor = .systemBlue
-    private let touchDownAlpha: CGFloat = 0.3
+    private let touchDownAlpha: CGFloat = 0.8
     
     override var isHighlighted: Bool {
         didSet {

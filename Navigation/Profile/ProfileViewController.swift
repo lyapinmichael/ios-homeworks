@@ -10,11 +10,11 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     private let profileHeader: ProfileHeaderView = {
-       let view = ProfileHeaderView()
+        let view = ProfileHeaderView()
         view.profilePicture = UIImage(named: "DarthVader")
         view.profileName = "Darth Vader"
         view.status = "Join the dark side!.."
-       return view
+        return view
     }()
     
     override func viewDidLoad() {
@@ -24,7 +24,10 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .lightGray
         view.addSubview(profileHeader)
         viewWillLayoutSubviews()
-    
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -33,4 +36,8 @@ class ProfileViewController: UIViewController {
         profileHeader.frame = view.frame
     }
     
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
+

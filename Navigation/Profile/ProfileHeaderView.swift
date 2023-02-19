@@ -13,6 +13,9 @@ class ProfileHeaderView: UIView {
     private var profileStatusLabel: UILabel?
     private var statusButton: CustomButton?
     
+    private var statusField: UITextField?
+    private var statusText: String?
+    
     var profilePicture: UIImage? {
         get { return profilePictureView?.image }
         set { profilePictureView?.image = newValue }
@@ -42,9 +45,17 @@ class ProfileHeaderView: UIView {
         profileStatusLabel?.textColor = .gray
         addSubview(profileStatusLabel!)
         
-        statusButton = CustomButton(title: "Show status")
+        statusButton = CustomButton(title: "Print status")
         statusButton?.addTarget(self, action: #selector(printStatus(_:)), for: .touchUpInside)
         addSubview(statusButton!)
+        
+        statusField = StatusTextField()
+        statusField?.delegate = (statusField! as! any UITextFieldDelegate)
+        statusField?.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
+        statusField?.placeholder = "What's new?"
+        addSubview(statusField!)
+        
+        
     }
     
     private func setConstraints() {
@@ -53,6 +64,7 @@ class ProfileHeaderView: UIView {
         profileNameLabel!.translatesAutoresizingMaskIntoConstraints = false
         profileStatusLabel!.translatesAutoresizingMaskIntoConstraints = false
         statusButton!.translatesAutoresizingMaskIntoConstraints = false
+        statusField!.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             profilePictureView!.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 16),
@@ -66,15 +78,21 @@ class ProfileHeaderView: UIView {
             
             profileStatusLabel!.leadingAnchor.constraint(equalTo: profilePictureView!.trailingAnchor, constant: 24),
             profileStatusLabel!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            profileStatusLabel!.centerYAnchor.constraint(equalTo: profilePictureView!.centerYAnchor),
             
-            statusButton!.topAnchor.constraint(equalTo: profilePictureView!.bottomAnchor, constant: 16),
+            statusButton!.topAnchor.constraint(equalTo: profilePictureView!.bottomAnchor, constant: 34), //set to fit statusField
             statusButton!.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
             statusButton!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
             statusButton!.heightAnchor.constraint(equalToConstant: 50),
             
             profileStatusLabel!.leadingAnchor.constraint(equalTo: profilePictureView!.trailingAnchor, constant: 24),
             profileStatusLabel!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            profileStatusLabel!.bottomAnchor.constraint(equalTo: statusButton!.topAnchor, constant: -34)
+            profileStatusLabel!.bottomAnchor.constraint(equalTo: statusButton!.topAnchor, constant: -34),
+            
+            statusField!.leadingAnchor.constraint(equalTo: profilePictureView!.trailingAnchor, constant: 24),
+            statusField!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            statusField!.heightAnchor.constraint(equalToConstant: 40),
+            statusField!.centerYAnchor.constraint(equalTo: profilePictureView!.bottomAnchor)
         ])
     }
     
@@ -83,6 +101,7 @@ class ProfileHeaderView: UIView {
         
         setup()
         setConstraints()
+     
     }
     
     required init?(coder: NSCoder) {
@@ -91,6 +110,26 @@ class ProfileHeaderView: UIView {
     
     @objc func printStatus(_ sender: UIButton) {
         print (self.status ?? "no status")
+    }
+    
+    @objc func statusTextChanged(_ textField: UITextField) {
+        statusText = textField.text
+        statusButton?.setTitle("Set status", for: .normal)
+        statusButton?.removeTarget(self, action: #selector(printStatus(_:)), for: .touchUpInside)
+        statusButton?.addTarget(self, action: #selector(setStatus(_:)), for: .touchUpInside)
+    }
+    
+    @objc func dismissKeyboard() {
+        endEditing(true)
+    }
+    
+    @objc func setStatus(_ sender: UIButton) {
+        status = statusText
+        statusField?.endEditing(true)
+        statusField?.text = nil
+        statusButton?.setTitle("Print status", for: .normal)
+        statusButton?.removeTarget(self, action: #selector(setStatus(_:)), for: .touchUpInside)
+        statusButton?.addTarget(self, action: #selector(printStatus(_:)), for: .touchUpInside)
     }
     
 }

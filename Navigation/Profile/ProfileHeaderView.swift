@@ -8,92 +8,129 @@
 import UIKit
 
 class ProfileHeaderView: UIView {
-    private var profilePictureView: CircularImageView?
-    private var profileNameLabel: UILabel?
-    private var profileStatusLabel: UILabel?
-    private var statusButton: CustomButton?
     
-    private var statusField: UITextField?
-    private var statusText: String?
+    private let profilePictureView: UIImageView = {
+        let profilePictureView = UIImageView(frame: CGRect(x: .zero, y: .zero, width: 104, height: 104))
+        
+        profilePictureView.clipsToBounds = true
+        profilePictureView.contentMode = .scaleAspectFill
+        profilePictureView.backgroundColor = .white
+        
+        profilePictureView.layer.cornerRadius = profilePictureView.bounds.height / 2
+        profilePictureView.layer.borderColor = UIColor.white.cgColor
+        profilePictureView.layer.borderWidth = 3
+        profilePictureView.image = UIImage(named: "DarthVader")
+        profilePictureView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return profilePictureView
+    }()
     
+    private var profileNameLabel: UILabel = {
+        let profileNameLabel = UILabel()
+        
+        profileNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        profileNameLabel.textColor = .black
+        profileNameLabel.text = "Darth Vader"
+        profileNameLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    var profilePicture: UIImage? {
-        get { return profilePictureView?.image }
-        set { profilePictureView?.image = newValue }
-    }
+        return profileNameLabel
+    }()
     
-    var profileName: String? {
-        get { return profileNameLabel?.text }
-        set { profileNameLabel?.text = newValue }
-    }
+    private var profileStatusLabel: UILabel = {
+        let profileStatusLabel = UILabel()
+        
+        profileStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        profileStatusLabel.textColor = .gray
+        profileStatusLabel.text = "Join the dark side!.."
+        profileStatusLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        return profileStatusLabel
+    }()
     
-    var status: String? {
-        get { return profileStatusLabel?.text }
-        set { profileStatusLabel?.text = newValue }
-    }
+    private let statusButton: CustomButton = {
+        let statusButton = CustomButton(custom: true)
+        
+        statusButton.backgroundColor = .white
+        statusButton.clipsToBounds = true
+        statusButton.titleLabel?.textColor = .white
+        statusButton.layer.cornerRadius = 4
+        statusButton.layer.backgroundColor = statusButton.color?.cgColor
+        statusButton.layer.masksToBounds = false
+        statusButton.layer.shadowOpacity = 0.7
+        statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        statusButton.layer.shadowRadius = 4
+        statusButton.layer.shadowColor = UIColor.black.cgColor
+        statusButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        return statusButton
+    }()
+    
+
+//    private var statusField: UITextField = {
+//        let statusField = UITextField()
+//
+//        statusField.layer.borderWidth = 1
+//        statusField.layer.borderColor = UIColor.black.cgColor
+//        statusField.layer.cornerRadius = 12
+//        statusField.layer.backgroundColor = UIColor.white.cgColor
+//
+//        statusField.placeholder = "What's new?"
+//
+//        statusField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+//        statusField.textColor = UIColor.black
+//        statusField.returnKeyType = .done
+//        statusField.enablesReturnKeyAutomatically = true
+//        statusField.translatesAutoresizingMaskIntoConstraints = false
+//
+//        return statusField
+//    }()
+//
+//    private var statusText: String?
+
     
     private func setup() {
-        profilePictureView = CircularImageView(radius: 104)
-        addSubview(profilePictureView!)
         
-        profileNameLabel = UILabel()
-        profileNameLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        profileNameLabel?.textColor = .black
-        addSubview(profileNameLabel!)
+        addSubview(profilePictureView)
+        addSubview(profileNameLabel)
+        addSubview(profileStatusLabel)
         
-        profileStatusLabel = UILabel()
-        profileStatusLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        profileStatusLabel?.textColor = .gray
-        addSubview(profileStatusLabel!)
         
-        statusButton = CustomButton(custom: true)
-        statusButton?.addTarget(self, action: #selector(buttonHandler(_:)), for: .touchUpInside)
-        addSubview(statusButton!)
-        
-        statusField = StatusTextField()
-        statusField?.delegate = (statusField! as! any UITextFieldDelegate)
-        statusField?.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
-        statusField?.placeholder = "What's new?"
-        addSubview(statusField!)
-        
+//        statusField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
+//        addSubview(statusField)
+
+        statusButton.addTarget(self, action: #selector(buttonHandler(_:)), for: .touchUpInside)
+        addSubview(statusButton)
         
     }
     
     private func setConstraints() {
         let safeArea = safeAreaLayoutGuide
-        profilePictureView!.translatesAutoresizingMaskIntoConstraints = false
-        profileNameLabel!.translatesAutoresizingMaskIntoConstraints = false
-        profileStatusLabel!.translatesAutoresizingMaskIntoConstraints = false
-        statusButton!.translatesAutoresizingMaskIntoConstraints = false
-        statusField!.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
-            profilePictureView!.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 16),
-            profilePictureView!.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
-            profilePictureView!.widthAnchor.constraint(equalToConstant: profilePictureView!.frame.width),
-            profilePictureView!.heightAnchor.constraint(equalToConstant: profilePictureView!.frame.height),
+            profilePictureView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 16),
+            profilePictureView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
+            profilePictureView.widthAnchor.constraint(equalToConstant: profilePictureView.frame.width),
+            profilePictureView.heightAnchor.constraint(equalToConstant: profilePictureView.frame.height),
             
-            profileNameLabel!.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 16),
-            profileNameLabel!.leadingAnchor.constraint(equalTo: profilePictureView!.trailingAnchor, constant: 24),
-            profileNameLabel!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            profileNameLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 16),
+            profileNameLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
+            profileNameLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+
+            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 16),
+//            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 34),
+            statusButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
+            statusButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            statusButton.heightAnchor.constraint(equalToConstant: 50),
             
-            profileStatusLabel!.leadingAnchor.constraint(equalTo: profilePictureView!.trailingAnchor, constant: 24),
-            profileStatusLabel!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            profileStatusLabel!.centerYAnchor.constraint(equalTo: profilePictureView!.centerYAnchor),
-            
-            statusButton!.topAnchor.constraint(equalTo: profilePictureView!.bottomAnchor, constant: 34), //set to fit statusField
-            statusButton!.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
-            statusButton!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            statusButton!.heightAnchor.constraint(equalToConstant: 50),
-            
-            profileStatusLabel!.leadingAnchor.constraint(equalTo: profilePictureView!.trailingAnchor, constant: 24),
-            profileStatusLabel!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            profileStatusLabel!.bottomAnchor.constraint(equalTo: statusButton!.topAnchor, constant: -34),
-            
-            statusField!.leadingAnchor.constraint(equalTo: profilePictureView!.trailingAnchor, constant: 24),
-            statusField!.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            statusField!.heightAnchor.constraint(equalToConstant: 40),
-            statusField!.centerYAnchor.constraint(equalTo: profilePictureView!.bottomAnchor)
+            profileStatusLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
+            profileStatusLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            profileStatusLabel.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -34),
+//            profileStatusLabel.centerYAnchor.constraint(equalTo: profilePictureView.centerYAnchor),
+
+//            statusField.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
+//            statusField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+//            statusField.heightAnchor.constraint(equalToConstant: 40),
+//            statusField.centerYAnchor.constraint(equalTo: profilePictureView.bottomAnchor)
         ])
     }
     
@@ -114,33 +151,34 @@ class ProfileHeaderView: UIView {
         endEditing(true)
     }
     
-    @objc fileprivate func statusTextChanged(_ textField: UITextField) {
-        statusText = textField.text
-        statusButton?.setTitle("Set status", for: .normal)
-        statusButton?.buttonAction = .setStatus
-    }
-    
+//    @objc fileprivate func statusTextChanged(_ textField: UITextField) {
+//        statusText = textField.text
+//        statusButton.buttonAction = .setStatus
+//    }
+
     @objc func buttonHandler(_ sender: CustomButton) {
         switch sender.buttonAction {
         case .printStatus:
             printStatus(sender)
-        case .setStatus:
-            setStatus(sender)
-        case .none:
+//        case .setStatus:
+//            setStatus(sender)
+            
+        default:
             return
         }
+        dismissKeyboard()
     }
-    
-    @objc fileprivate func printStatus(_ sender: CustomButton) {
-        print (self.status ?? "no status")
-    }
-    
-    @objc fileprivate func setStatus(_ sender: CustomButton) {
-        status = statusText
-        statusField?.endEditing(true)
-        statusField?.text = nil
-        sender.buttonAction = .printStatus
 
+    @objc fileprivate func printStatus(_ sender: CustomButton) {
+        print (self.profileStatusLabel.text ?? "no status")
     }
-    
+
+//    @objc fileprivate func setStatus(_ sender: CustomButton) {
+//
+//        profileStatusLabel.text = statusText
+//        statusField.text = nil
+//        sender.buttonAction = .printStatus
+//
+//    }
+
 }

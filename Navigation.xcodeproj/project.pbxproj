@@ -13,8 +13,6 @@
 		EC1FF4E629984F31007A589E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC1FF4E529984F31007A589E /* Assets.xcassets */; };
 		EC1FF4E929984F31007A589E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC1FF4E729984F31007A589E /* LaunchScreen.storyboard */; };
 		EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */; };
-		EC4F7C6B299FAC54006EFAE1 /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F7C6A299FAC54006EFAE1 /* CircularImageView.swift */; };
-		EC4F7C6D29A10C5D006EFAE1 /* StatusTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F7C6C29A10C5D006EFAE1 /* StatusTextField.swift */; };
 		EC9720DA299855A80090FE5A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720D9299855A80090FE5A /* FeedViewController.swift */; };
 		EC9720DC299855C80090FE5A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DB299855C80090FE5A /* ProfileViewController.swift */; };
 		EC9720DE299855F20090FE5A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DD299855F20090FE5A /* PostViewController.swift */; };
@@ -32,8 +30,6 @@
 		EC1FF4E829984F31007A589E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC1FF4EA29984F31007A589E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		EC4F7C6A299FAC54006EFAE1 /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
-		EC4F7C6C29A10C5D006EFAE1 /* StatusTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusTextField.swift; sourceTree = "<group>"; };
 		EC9720D9299855A80090FE5A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		EC9720DB299855C80090FE5A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EC9720DD299855F20090FE5A /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -117,8 +113,6 @@
 				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
 				ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */,
 				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
-				EC4F7C6A299FAC54006EFAE1 /* CircularImageView.swift */,
-				EC4F7C6C29A10C5D006EFAE1 /* StatusTextField.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -198,11 +192,9 @@
 				EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */,
 				EC9720E22998565E0090FE5A /* Post.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
-				EC4F7C6B299FAC54006EFAE1 /* CircularImageView.swift in Sources */,
 				ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */,
 				EC9720E0299856190090FE5A /* InfoViewController.swift in Sources */,
 				EC9720DC299855C80090FE5A /* ProfileViewController.swift in Sources */,
-				EC4F7C6D29A10C5D006EFAE1 /* StatusTextField.swift in Sources */,
 				EC9720DA299855A80090FE5A /* FeedViewController.swift in Sources */,
 				EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */,
 			);
@@ -343,6 +335,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6RRYH7RTN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -369,6 +362,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6RRYH7RTN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

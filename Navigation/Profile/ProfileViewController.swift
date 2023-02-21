@@ -11,9 +11,6 @@ class ProfileViewController: UIViewController {
     
     private let profileHeader: ProfileHeaderView = {
         let view = ProfileHeaderView()
-        view.profilePicture = UIImage(named: "DarthVader")
-        view.profileName = "Darth Vader"
-        view.status = "Join the dark side!.."
         return view
     }()
     

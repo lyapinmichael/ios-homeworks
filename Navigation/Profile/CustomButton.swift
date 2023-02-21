@@ -10,7 +10,7 @@ import UIKit
 final class CustomButton: UIButton {
 
     private let touchDownAlpha: CGFloat = 0.8
-    private var color: UIColor?
+    var color: UIColor?
     
     enum ButtonActions: String {
         case printStatus = "Print status"
@@ -42,18 +42,6 @@ final class CustomButton: UIButton {
         }
     }
     
-    func setup() {
-        backgroundColor = .white
-        clipsToBounds = true
-        titleLabel?.textColor = .white
-        layer.cornerRadius = 4
-        layer.backgroundColor = color?.cgColor
-        layer.masksToBounds = false
-        layer.shadowOpacity = 0.7
-        layer.shadowOffset = CGSize(width: 4, height: 4)
-        layer.shadowRadius = 4
-        layer.shadowColor = UIColor.black.cgColor
-    }
     
     func touchDown() {
         UIView.animate(withDuration: 0.09, delay: 0, animations: {
@@ -82,7 +70,6 @@ final class CustomButton: UIButton {
         
         buttonAction = initAction
         setTitle(initAction.rawValue, for: .normal)
-        setup()
         
     }
 }

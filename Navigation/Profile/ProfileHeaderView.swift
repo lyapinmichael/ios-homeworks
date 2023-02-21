@@ -66,26 +66,26 @@ class ProfileHeaderView: UIView {
     }()
     
 
-//    private var statusField: UITextField = {
-//        let statusField = UITextField()
-//
-//        statusField.layer.borderWidth = 1
-//        statusField.layer.borderColor = UIColor.black.cgColor
-//        statusField.layer.cornerRadius = 12
-//        statusField.layer.backgroundColor = UIColor.white.cgColor
-//
-//        statusField.placeholder = "What's new?"
-//
-//        statusField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-//        statusField.textColor = UIColor.black
-//        statusField.returnKeyType = .done
-//        statusField.enablesReturnKeyAutomatically = true
-//        statusField.translatesAutoresizingMaskIntoConstraints = false
-//
-//        return statusField
-//    }()
-//
-//    private var statusText: String?
+    private var statusField: UITextField = {
+        let statusField = UITextField()
+
+        statusField.layer.borderWidth = 1
+        statusField.layer.borderColor = UIColor.black.cgColor
+        statusField.layer.cornerRadius = 12
+        statusField.layer.backgroundColor = UIColor.white.cgColor
+
+        statusField.placeholder = "What's new?"
+
+        statusField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        statusField.textColor = UIColor.black
+        statusField.returnKeyType = .done
+        statusField.enablesReturnKeyAutomatically = true
+        statusField.translatesAutoresizingMaskIntoConstraints = false
+
+        return statusField
+    }()
+
+    private var statusText: String?
 
     
     private func setup() {
@@ -95,8 +95,8 @@ class ProfileHeaderView: UIView {
         addSubview(profileStatusLabel)
         
         
-//        statusField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
-//        addSubview(statusField)
+        statusField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
+        addSubview(statusField)
 
         statusButton.addTarget(self, action: #selector(buttonHandler(_:)), for: .touchUpInside)
         addSubview(statusButton)
@@ -116,21 +116,21 @@ class ProfileHeaderView: UIView {
             profileNameLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
             profileNameLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
 
-            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 16),
-//            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 34),
+//            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 16),
+            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 34),
             statusButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
             statusButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
             statusButton.heightAnchor.constraint(equalToConstant: 50),
             
             profileStatusLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
             profileStatusLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            profileStatusLabel.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -34),
-//            profileStatusLabel.centerYAnchor.constraint(equalTo: profilePictureView.centerYAnchor),
+//            profileStatusLabel.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -34),
+            profileStatusLabel.centerYAnchor.constraint(equalTo: profilePictureView.centerYAnchor),
 
-//            statusField.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
-//            statusField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-//            statusField.heightAnchor.constraint(equalToConstant: 40),
-//            statusField.centerYAnchor.constraint(equalTo: profilePictureView.bottomAnchor)
+            statusField.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
+            statusField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            statusField.heightAnchor.constraint(equalToConstant: 40),
+            statusField.centerYAnchor.constraint(equalTo: profilePictureView.bottomAnchor)
         ])
     }
     
@@ -151,17 +151,17 @@ class ProfileHeaderView: UIView {
         endEditing(true)
     }
     
-//    @objc fileprivate func statusTextChanged(_ textField: UITextField) {
-//        statusText = textField.text
-//        statusButton.buttonAction = .setStatus
-//    }
+    @objc fileprivate func statusTextChanged(_ textField: UITextField) {
+        statusText = textField.text
+        statusButton.buttonAction = .setStatus
+    }
 
     @objc func buttonHandler(_ sender: CustomButton) {
         switch sender.buttonAction {
         case .printStatus:
             printStatus(sender)
-//        case .setStatus:
-//            setStatus(sender)
+        case .setStatus:
+            setStatus(sender)
             
         default:
             return
@@ -173,12 +173,12 @@ class ProfileHeaderView: UIView {
         print (self.profileStatusLabel.text ?? "no status")
     }
 
-//    @objc fileprivate func setStatus(_ sender: CustomButton) {
-//
-//        profileStatusLabel.text = statusText
-//        statusField.text = nil
-//        sender.buttonAction = .printStatus
-//
-//    }
+    @objc fileprivate func setStatus(_ sender: CustomButton) {
+
+        profileStatusLabel.text = statusText
+        statusField.text = nil
+        sender.buttonAction = .printStatus
+
+    }
 
 }

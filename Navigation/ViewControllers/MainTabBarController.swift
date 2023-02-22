@@ -22,14 +22,14 @@ class MainTabBarController: UITabBarController {
         let feedViewController = createNavigationController(root: FeedViewController(), title: "Feed", image: "house.circle")
         
         viewControllers = [feedViewController, profileViewController]
-        
+
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
         tabBarAppearance.backgroundColor = .white
         
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
-        
+
         
     }
     
@@ -39,6 +39,7 @@ class MainTabBarController: UITabBarController {
         
         let navigationController = UINavigationController(rootViewController: root)
         
+
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.backgroundColor = .white
@@ -46,8 +47,9 @@ class MainTabBarController: UITabBarController {
         navigationController.tabBarItem = navigationItem
         navigationController.navigationBar.standardAppearance = navBarAppearance
         navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
+
         
         return (navigationController)
     }
-    
+
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 class FeedViewController: UIViewController {
+
     
     let post = Post(title: "New Post")
     
@@ -15,6 +16,7 @@ class FeedViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Open Post", for: .normal)
+
         button.setTitleColor(.systemBlue, for: .normal)
         button.setTitleColor(.lightGray, for: .highlighted)
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
@@ -22,6 +24,7 @@ class FeedViewController: UIViewController {
         return button
     }()
     
+
     private func setupButtonConstraints(_ button: UIButton) {
         let safeAreaGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([button.leadingAnchor.constraint(
@@ -36,7 +39,7 @@ class FeedViewController: UIViewController {
                                      button.heightAnchor.constraint(equalToConstant: 44.0)])
         
     }
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,6 +47,7 @@ class FeedViewController: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(button)
+
         setupButtonConstraints(button)
         
         
@@ -56,7 +60,8 @@ class FeedViewController: UIViewController {
         postViewController.title = post.title
         navigationController?.pushViewController(postViewController, animated: true)
         
+
     }
     
-    
+
 }

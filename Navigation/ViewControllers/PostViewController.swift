@@ -20,7 +20,9 @@ class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         view.backgroundColor = .systemYellow
+
         navigationItem.rightBarButtonItem = barButtonItem
         
     }
@@ -30,5 +32,5 @@ class PostViewController: UIViewController {
         infoViewController.modalPresentationStyle = .pageSheet
         present(infoViewController, animated: true)
     }
-
+    
 }

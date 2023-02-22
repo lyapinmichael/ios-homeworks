@@ -14,7 +14,9 @@ class InfoViewController: UIViewController {
         var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Press for Alert", for: .normal)
+
         button.setTitleColor(.systemBlue, for: .normal)
+
         button.setTitleColor(.lightGray, for: .highlighted)
         
         return button
@@ -37,6 +39,7 @@ class InfoViewController: UIViewController {
         button.addTarget(self, action: #selector(buttonIsPressed(_:)), for: .touchUpInside)
         
     }
+
     
     @objc private func buttonIsPressed(_ sender: UIButton) {
         
@@ -61,8 +64,5 @@ class InfoViewController: UIViewController {
         present(alert, animated: true)
         
     }
-    
-    
-    
-    
+
 }

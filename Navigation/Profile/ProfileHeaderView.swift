@@ -66,8 +66,8 @@ class ProfileHeaderView: UIView {
     }()
     
 
-    private var statusField: UITextField = {
-        let statusField = UITextField()
+    private var statusField: CustomTextField = {
+        let statusField = CustomTextField()
 
         statusField.layer.borderWidth = 1
         statusField.layer.borderColor = UIColor.black.cgColor

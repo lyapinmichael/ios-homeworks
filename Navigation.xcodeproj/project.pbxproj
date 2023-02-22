@@ -18,6 +18,7 @@
 		EC9720DE299855F20090FE5A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DD299855F20090FE5A /* PostViewController.swift */; };
 		EC9720E0299856190090FE5A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DF299856190090FE5A /* InfoViewController.swift */; };
 		EC9720E22998565E0090FE5A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720E12998565E0090FE5A /* Post.swift */; };
+		ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */; };
 		ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		EC9720DD299855F20090FE5A /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		EC9720DF299856190090FE5A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		EC9720E12998565E0090FE5A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
 				ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */,
 				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
+				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				EC9720E22998565E0090FE5A /* Post.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
 				ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */,
+				ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */,
 				EC9720E0299856190090FE5A /* InfoViewController.swift in Sources */,
 				EC9720DC299855C80090FE5A /* ProfileViewController.swift in Sources */,
 				EC9720DA299855A80090FE5A /* FeedViewController.swift in Sources */,

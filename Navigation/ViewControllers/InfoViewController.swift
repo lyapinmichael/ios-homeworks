@@ -14,9 +14,7 @@ class InfoViewController: UIViewController {
         var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Press for Alert", for: .normal)
-
-        button.setTitleColor(.systemBlue, for: .normal)
-
+        button.setTitleColor(.blue, for: .normal)
         button.setTitleColor(.lightGray, for: .highlighted)
         
         return button
@@ -37,9 +35,8 @@ class InfoViewController: UIViewController {
         ])
         
         button.addTarget(self, action: #selector(buttonIsPressed(_:)), for: .touchUpInside)
-        
-    }
 
+}
     
     @objc private func buttonIsPressed(_ sender: UIButton) {
         
@@ -63,6 +60,18 @@ class InfoViewController: UIViewController {
         
         present(alert, animated: true)
         
+}
+
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
     }
+    */
 
 }

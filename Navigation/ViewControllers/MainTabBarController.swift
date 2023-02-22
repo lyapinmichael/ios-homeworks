@@ -22,14 +22,7 @@ class MainTabBarController: UITabBarController {
         let feedViewController = createNavigationController(root: FeedViewController(), title: "Feed", image: "house.circle")
         
         viewControllers = [feedViewController, profileViewController]
-
-        let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = .white
         
-        tabBar.standardAppearance = tabBarAppearance
-        tabBar.scrollEdgeAppearance = tabBarAppearance
-
         
     }
     
@@ -39,17 +32,20 @@ class MainTabBarController: UITabBarController {
         
         let navigationController = UINavigationController(rootViewController: root)
         
-
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithOpaqueBackground()
-        navBarAppearance.backgroundColor = .white
-        
         navigationController.tabBarItem = navigationItem
-        navigationController.navigationBar.standardAppearance = navBarAppearance
-        navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
-
         
         return (navigationController)
     }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }

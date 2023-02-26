@@ -15,15 +15,14 @@ final class CustomButton: UIButton {
     enum ButtonActions: String {
         case printStatus = "Print status"
         case setStatus = "Set status"
+        case logIn = "Log In"
     }
     
     var buttonAction: ButtonActions? {
         willSet {
             let title = newValue?.rawValue
             switch newValue{
-            case .printStatus:
-                setTitle(title, for: .normal)
-            case .setStatus:
+            case .printStatus, .setStatus, .logIn:
                 setTitle(title, for: .normal)
             case .none:
                 setTitle("Button", for: .normal)

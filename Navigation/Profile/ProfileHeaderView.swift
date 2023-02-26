@@ -9,7 +9,8 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    private let profilePictureView: UIImageView = {
+    private  lazy var
+profilePictureView: UIImageView = {
         let profilePictureView = UIImageView(frame: CGRect(x: .zero, y: .zero, width: 104, height: 104))
         
         profilePictureView.clipsToBounds = true
@@ -25,7 +26,7 @@ class ProfileHeaderView: UIView {
         return profilePictureView
     }()
     
-    private var profileNameLabel: UILabel = {
+    private lazy var profileNameLabel: UILabel = {
         let profileNameLabel = UILabel()
         
         profileNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -36,7 +37,7 @@ class ProfileHeaderView: UIView {
         return profileNameLabel
     }()
     
-    private var profileStatusLabel: UILabel = {
+    private lazy var profileStatusLabel: UILabel = {
         let profileStatusLabel = UILabel()
         
         profileStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -47,7 +48,7 @@ class ProfileHeaderView: UIView {
         return profileStatusLabel
     }()
     
-    private let statusButton: CustomButton = {
+    private lazy var statusButton: CustomButton = {
         let statusButton = CustomButton(custom: true)
         
         statusButton.backgroundColor = .white
@@ -66,7 +67,7 @@ class ProfileHeaderView: UIView {
     }()
     
 
-    private var statusField: CustomTextField = {
+    private lazy var statusField: CustomTextField = {
         let statusField = CustomTextField()
 
         statusField.layer.borderWidth = 1
@@ -78,8 +79,9 @@ class ProfileHeaderView: UIView {
 
         statusField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         statusField.textColor = UIColor.black
-        statusField.returnKeyType = .done
         statusField.enablesReturnKeyAutomatically = true
+        statusField.returnKeyType = .done
+        statusField.delegate = self
         statusField.translatesAutoresizingMaskIntoConstraints = false
 
         return statusField
@@ -181,4 +183,12 @@ class ProfileHeaderView: UIView {
 
     }
 
+}
+
+extension ProfileHeaderView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        statusField.resignFirstResponder()
+        return true
+    }
 }

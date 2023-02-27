@@ -9,7 +9,7 @@ import UIKit
 
 final class CustomButton: UIButton {
 
-    private let touchDownAlpha: CGFloat = 0.8
+    private let customAlpha: CGFloat = 0.8
     var color: UIColor?
     
     enum ButtonActions: String {
@@ -41,12 +41,32 @@ final class CustomButton: UIButton {
         }
     }
     
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                layer.backgroundColor = self.color?.withAlphaComponent(self.customAlpha).cgColor
+            } else {
+                layer.backgroundColor = self.color?.cgColor
+            }
+        }
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            if isEnabled {
+                layer.backgroundColor = self.color?.cgColor
+            } else {
+                layer.backgroundColor = self.color?.withAlphaComponent(self.customAlpha).cgColor
+            }
+        }
+    }
+
     
     func touchDown() {
         UIView.animate(withDuration: 0.09, delay: 0, animations: {
             self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             self.layer.shadowOffset = CGSize(width: 2, height: 2)
-            self.layer.backgroundColor = self.color?.withAlphaComponent(self.touchDownAlpha).cgColor
+            self.layer.backgroundColor = self.color?.withAlphaComponent(self.customAlpha).cgColor
         })
     }
     

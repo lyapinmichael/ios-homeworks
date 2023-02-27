@@ -101,8 +101,6 @@ class LogInViewController: UIViewController {
         button.layer.backgroundColor = button.color?.cgColor
         button.titleLabel?.textColor = .white
         button.layer.cornerRadius = 10
-    
-
 
         button.translatesAutoresizingMaskIntoConstraints = false
 

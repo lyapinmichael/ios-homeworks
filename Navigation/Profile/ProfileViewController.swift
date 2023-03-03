@@ -136,28 +136,6 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
     
-//    func tableView(
-//        _ tableView: UITableView,
-//        viewForHeaderInSection section: Int
-//    ) -> UIView? {
-//
-//        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderFooterReuseID.profileHeader.rawValue) else {
-//            fatalError("Invalid header footer class")
-//        }
-//
-//        let profileHeaderView = ProfileHeaderView()
-//        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-//        headerView.contentView.addSubview(profileHeaderView)
-//
-//        NSLayoutConstraint.activate([
-//            profileHeaderView.topAnchor.constraint(equalTo: headerView.contentView.topAnchor),
-//            profileHeaderView.leadingAnchor.constraint(equalTo: headerView.contentView.leadingAnchor),
-//            profileHeaderView.trailingAnchor.constraint(equalTo: headerView.contentView.trailingAnchor),
-//            profileHeaderView.bottomAnchor.constraint(equalTo: headerView.contentView.bottomAnchor)
-//        ])
-//
-//        return headerView
-//    }
     
 }
 

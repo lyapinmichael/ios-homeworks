@@ -155,10 +155,8 @@ class LogInViewController: UIViewController {
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
-        ])
+            scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
         
-        NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -166,7 +164,6 @@ class LogInViewController: UIViewController {
             contentView.heightAnchor.constraint(equalTo: safeArea.heightAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
-
     }
     
     
@@ -195,26 +192,20 @@ class LogInViewController: UIViewController {
     
     private func addContentSubviews() {
         contentView.addSubview(logoImage)
+        contentView.addSubview(loginView)
+        contentView.addSubview(loginButton)
         
         NSLayoutConstraint.activate([
             logoImage.heightAnchor.constraint(equalToConstant: 100),
             logoImage.widthAnchor.constraint(equalToConstant: 100),
             logoImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
-            logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+            logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         
-        contentView.addSubview(loginView)
-        
-        NSLayoutConstraint.activate([
             loginView.heightAnchor.constraint(equalToConstant: 100),
             loginView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120),
             loginView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            loginView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
-        ])
+            loginView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
         
-        contentView.addSubview(loginButton)
-        
-        NSLayoutConstraint.activate([
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.topAnchor.constraint(equalTo: loginView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),

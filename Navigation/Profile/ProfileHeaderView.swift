@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    private let profilePictureView: UIImageView = {
+    private  lazy var profilePictureView: UIImageView = {
         let profilePictureView = UIImageView(frame: CGRect(x: .zero, y: .zero, width: 104, height: 104))
         
         profilePictureView.clipsToBounds = true
@@ -25,7 +25,7 @@ class ProfileHeaderView: UIView {
         return profilePictureView
     }()
     
-    private var profileNameLabel: UILabel = {
+    private lazy var profileNameLabel: UILabel = {
         let profileNameLabel = UILabel()
         
         profileNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -36,7 +36,7 @@ class ProfileHeaderView: UIView {
         return profileNameLabel
     }()
     
-    private var profileStatusLabel: UILabel = {
+    private lazy var profileStatusLabel: UILabel = {
         let profileStatusLabel = UILabel()
         
         profileStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -47,7 +47,7 @@ class ProfileHeaderView: UIView {
         return profileStatusLabel
     }()
     
-    private let statusButton: CustomButton = {
+    private lazy var statusButton: CustomButton = {
         let statusButton = CustomButton(custom: true)
         
         statusButton.backgroundColor = .white
@@ -66,7 +66,7 @@ class ProfileHeaderView: UIView {
     }()
     
 
-    private var statusField: CustomTextField = {
+    private lazy var statusField: CustomTextField = {
         let statusField = CustomTextField()
 
         statusField.layer.borderWidth = 1
@@ -78,8 +78,9 @@ class ProfileHeaderView: UIView {
 
         statusField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         statusField.textColor = UIColor.black
-        statusField.returnKeyType = .done
         statusField.enablesReturnKeyAutomatically = true
+        statusField.returnKeyType = .done
+        statusField.delegate = self
         statusField.translatesAutoresizingMaskIntoConstraints = false
 
         return statusField
@@ -94,43 +95,44 @@ class ProfileHeaderView: UIView {
         addSubview(profileNameLabel)
         addSubview(profileStatusLabel)
         
+        statusButton.addTarget(self, action: #selector(buttonHandler(_:)), for: .touchUpInside)
+        addSubview(statusButton)
         
         statusField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         addSubview(statusField)
-
-        statusButton.addTarget(self, action: #selector(buttonHandler(_:)), for: .touchUpInside)
-        addSubview(statusButton)
         
     }
     
     private func setConstraints() {
-        let safeArea = safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
-            profilePictureView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 16),
-            profilePictureView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
+            profilePictureView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            profilePictureView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             profilePictureView.widthAnchor.constraint(equalToConstant: profilePictureView.frame.width),
             profilePictureView.heightAnchor.constraint(equalToConstant: profilePictureView.frame.height),
             
-            profileNameLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 16),
+            profileNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             profileNameLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
-            profileNameLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            profileNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
 //            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 16),
             statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 34),
-            statusButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
-            statusButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            statusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            statusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             statusButton.heightAnchor.constraint(equalToConstant: 50),
-            
+
             profileStatusLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
-            profileStatusLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            profileStatusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 //            profileStatusLabel.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -34),
             profileStatusLabel.centerYAnchor.constraint(equalTo: profilePictureView.centerYAnchor),
 
             statusField.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
-            statusField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            statusField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             statusField.heightAnchor.constraint(equalToConstant: 40),
-            statusField.centerYAnchor.constraint(equalTo: profilePictureView.bottomAnchor)
+            statusField.centerYAnchor.constraint(equalTo: profilePictureView.bottomAnchor),
+            
+            bottomAnchor.constraint(equalTo: statusButton.bottomAnchor, constant: 16)
+            
         ])
     }
     
@@ -141,6 +143,14 @@ class ProfileHeaderView: UIView {
         setConstraints()
      
     }
+    
+//
+//    override init(reuseIdentifier: String?) {
+//        super.init(reuseIdentifier: reuseIdentifier)
+//
+//        setup()
+//        setConstraints()
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -181,4 +191,12 @@ class ProfileHeaderView: UIView {
 
     }
 
+}
+
+extension ProfileHeaderView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        statusField.resignFirstResponder()
+        return true
+    }
 }

@@ -10,7 +10,7 @@ import UIKit
 class FeedViewController: UIViewController {
 
     
-    let post = Post(title: "New Post")
+    let postsArray = Post.make()
     
     private lazy var  button: UIButton = {
         let button = UIButton()
@@ -27,16 +27,17 @@ class FeedViewController: UIViewController {
 
     private func setupButtonConstraints(_ button: UIButton) {
         let safeAreaGuide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([button.leadingAnchor.constraint(
-            equalTo: safeAreaGuide.leadingAnchor,
-            constant: 20.0
-        ),
-                                     button.trailingAnchor.constraint(
-                                        equalTo: safeAreaGuide.trailingAnchor,
-                                        constant: -20.0
-                                     ),
-                                     button.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
-                                     button.heightAnchor.constraint(equalToConstant: 44.0)])
+        NSLayoutConstraint.activate([
+            button.leadingAnchor.constraint(
+                equalTo: safeAreaGuide.leadingAnchor,
+                constant: 20.0
+            ),
+            button.trailingAnchor.constraint(
+                equalTo: safeAreaGuide.trailingAnchor,
+                constant: -20.0
+            ),
+            button.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
+            button.heightAnchor.constraint(equalToConstant: 44.0)])
         
     }
    
@@ -55,12 +56,11 @@ class FeedViewController: UIViewController {
     
     @objc func buttonPressed (_ sender: UIButton) {
         
-        let post = Post(title: "This is a new post")
+        let post = postsArray[0]
         let postViewController = PostViewController()
         postViewController.title = post.title
         navigationController?.pushViewController(postViewController, animated: true)
-        
-
+    
     }
     
 

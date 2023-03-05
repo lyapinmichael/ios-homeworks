@@ -18,7 +18,7 @@ class MainTabBarController: UITabBarController {
     
     private func createTabBarController() {
         
-        let profileViewController = createNavigationController(root: ProfileViewController(), title: "Profile", image: "person.circle")
+        let profileViewController = createNavigationController(root: LogInViewController(), title: "Profile", image: "person.circle")
         let feedViewController = createNavigationController(root: FeedViewController(), title: "Feed", image: "house.circle")
         
         viewControllers = [feedViewController, profileViewController]

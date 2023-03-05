@@ -12,17 +12,21 @@
 		EC06901829A61AAC004513A4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720E12998565E0090FE5A /* Post.swift */; };
 		EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DD299855F20090FE5A /* PostViewController.swift */; };
 		EC06901A29A61AC5004513A4 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DF299856190090FE5A /* InfoViewController.swift */; };
+		EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06901B29A6B0CB004513A4 /* LogInViewController.swift */; };
 		EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4DC29984F30007A589E /* AppDelegate.swift */; };
 		EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4DE29984F30007A589E /* SceneDelegate.swift */; };
 		EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4E029984F30007A589E /* MainTabBarController.swift */; };
 		EC1FF4E629984F31007A589E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC1FF4E529984F31007A589E /* Assets.xcassets */; };
 		EC1FF4E929984F31007A589E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC1FF4E729984F31007A589E /* LaunchScreen.storyboard */; };
 		EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */; };
+		ECAA5CFE29B0AEA600EC2F21 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */; };
+		ECAA5D0029B0C41D00EC2F21 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */; };
 		ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */; };
 		ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EC06901B29A6B0CB004513A4 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		EC1FF4D929984F30007A589E /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC1FF4DC29984F30007A589E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC1FF4DE29984F30007A589E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +40,8 @@
 		EC9720DD299855F20090FE5A /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		EC9720DF299856190090FE5A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		EC9720E12998565E0090FE5A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
+		ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +122,9 @@
 				ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */,
 				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
 				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
+				EC06901B29A6B0CB004513A4 /* LogInViewController.swift */,
+				ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */,
+				ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -196,8 +205,11 @@
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
 				ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */,
 				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
+				ECAA5CFE29B0AEA600EC2F21 /* UITableViewExtension.swift in Sources */,
+				ECAA5D0029B0C41D00EC2F21 /* PostTableViewCell.swift in Sources */,
 				EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */,
 				ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */,
+				EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */,
 				EC06901829A61AAC004513A4 /* Post.swift in Sources */,
 				EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */,
 				EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */,

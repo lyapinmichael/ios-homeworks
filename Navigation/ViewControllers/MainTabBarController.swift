@@ -18,10 +18,10 @@ class MainTabBarController: UITabBarController {
     
     private func createTabBarController() {
         
-        let profileViewController = createNavigationController(root: LogInViewController(), title: "Profile", image: "person.circle")
-        let feedViewController = createNavigationController(root: FeedViewController(), title: "Feed", image: "house.circle")
+        let profileNavigationController = createNavigationController(root: LogInViewController(), title: "Profile", image: "person.circle")
+        let feedNavigationController = createNavigationController(root: FeedViewController(), title: "Feed", image: "house.circle")
         
-        viewControllers = [feedViewController, profileViewController]
+        viewControllers = [feedNavigationController, profileNavigationController]
 
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()

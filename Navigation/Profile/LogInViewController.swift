@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - LogInViewController: UIViewController()
 
-class LogInViewController: UIViewController {
+final class LogInViewController: UIViewController {
    
     // MARK: - Private properties
     

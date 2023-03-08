@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "imperial-shuttle-tidirium.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

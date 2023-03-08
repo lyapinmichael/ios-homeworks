@@ -24,7 +24,6 @@
 		ECAA5D0029B0C41D00EC2F21 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */; };
 		ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */; };
 		ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5D0729B3B9E800EC2F21 /* Photo.swift */; };
-		ECAA5D0A29B4EF4800EC2F21 /* ProfilePhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5D0929B4EF4800EC2F21 /* ProfilePhotosCell.swift */; };
 		ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB02D7B29B64A00002DD75B /* PhotosCollectionViewCell.swift */; };
 		ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */; };
 		ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */; };
@@ -50,7 +49,6 @@
 		ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		ECAA5D0729B3B9E800EC2F21 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		ECAA5D0929B4EF4800EC2F21 /* ProfilePhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotosCell.swift; sourceTree = "<group>"; };
 		ECB02D7B29B64A00002DD75B /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 				ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */,
 				ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
-				ECAA5D0929B4EF4800EC2F21 /* ProfilePhotosCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -228,7 +225,6 @@
 				EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */,
 				ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
-				ECAA5D0A29B4EF4800EC2F21 /* ProfilePhotosCell.swift in Sources */,
 				ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */,
 				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,

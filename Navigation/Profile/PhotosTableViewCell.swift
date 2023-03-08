@@ -45,8 +45,8 @@ final class PhotosTableViewCell: UITableViewCell {
     
         let photosCollection = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
         photosCollection.register(
-            ProfilePhotosCell.self,
-            forCellWithReuseIdentifier: ProfilePhotosCell.id)
+            PhotosCollectionViewCell.self,
+            forCellWithReuseIdentifier: PhotosCollectionViewCell.id)
         
         photosCollection.translatesAutoresizingMaskIntoConstraints = false
         return photosCollection
@@ -117,7 +117,7 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfilePhotosCell.id, for: indexPath) as! ProfilePhotosCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.id, for: indexPath) as! PhotosCollectionViewCell
         
         if photos.indices.contains(indexPath.row) {
             cell.updateContent(with: photos[indexPath.row])
@@ -125,6 +125,7 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
             cell.updateContent(with: "ImagePlaceholder" )
         }
         
+        cell.contentView.layer.cornerRadius = 6
         return cell
     }
 }

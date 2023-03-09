@@ -7,7 +7,11 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+// MARK: - ProfileHeaderView class
+
+final class ProfileHeaderView: UIView {
+    
+    // MARK: - Private properties
     
     private  lazy var profilePictureView: UIImageView = {
         let profilePictureView = UIImageView(frame: CGRect(x: .zero, y: .zero, width: 104, height: 104))
@@ -85,6 +89,8 @@ class ProfileHeaderView: UIView {
 
         return statusField
     }()
+    
+    // MARK: - Private methods
 
     private var statusText: String?
 
@@ -136,6 +142,8 @@ class ProfileHeaderView: UIView {
         ])
     }
     
+    // MARK: - Override
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -156,6 +164,7 @@ class ProfileHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - ObjC actions
     
     @objc fileprivate func dismissKeyboard() {
         endEditing(true)
@@ -192,6 +201,8 @@ class ProfileHeaderView: UIView {
     }
 
 }
+
+// MARK: - TextField delegate extension
 
 extension ProfileHeaderView: UITextFieldDelegate {
     

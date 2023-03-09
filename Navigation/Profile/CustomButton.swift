@@ -63,7 +63,7 @@ final class CustomButton: UIButton {
 
     
     func touchDown() {
-        UIView.animate(withDuration: 0.09, delay: 0, animations: {
+        UIView.animate(withDuration: 0.07, delay: 0.02, animations: {
             self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             self.layer.shadowOffset = CGSize(width: 2, height: 2)
             self.layer.backgroundColor = self.color?.withAlphaComponent(self.customAlpha).cgColor
@@ -71,7 +71,7 @@ final class CustomButton: UIButton {
     }
     
     func touchUp() {
-        UIView.animate(withDuration: 0.05, delay: 0, animations:  {
+        UIView.animate(withDuration: 0.05, delay: 0.12, animations:  {
             self.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.layer.shadowOffset = CGSize(width: 4, height: 4)
             self.layer.backgroundColor = self.color?.cgColor

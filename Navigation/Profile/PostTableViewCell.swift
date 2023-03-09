@@ -7,9 +7,7 @@
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell {
-    
-    private var post: Post?
+final class PostTableViewCell: UITableViewCell {
     
     private lazy var postTitle: UILabel = {
         let title = UILabel()
@@ -30,14 +28,14 @@ class PostTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private lazy var postText: UITextView = {
-        let textView = UITextView()
-        textView.font = .systemFont(ofSize: 14, weight: .regular)
-        textView.textColor = .systemGray
-        textView.sizeToFit()
-        textView.isScrollEnabled = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
+    private lazy var postText: UILabel = {
+        let textLabel = UILabel()
+        textLabel.font = .systemFont(ofSize: 14, weight: .regular)
+        textLabel.textColor = .systemGray
+        textLabel.sizeToFit()
+        textLabel.numberOfLines = 0
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        return textLabel
     }()
     
     private lazy var likesLabel: UILabel = {
@@ -64,6 +62,7 @@ class PostTableViewCell: UITableViewCell {
         
         addSubviews()
         setConstraints()
+        backgroundColor = .white
 
     }
     
@@ -94,6 +93,7 @@ class PostTableViewCell: UITableViewCell {
             
             postImage.topAnchor.constraint(equalTo: postTitle.bottomAnchor, constant: 16),
             postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            postImage.heightAnchor.constraint(equalTo: postImage.widthAnchor),
             
             postText.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: 16),
             postText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -115,16 +115,18 @@ class PostTableViewCell: UITableViewCell {
         
         if let postImage = data.image {
             self.postImage.image = UIImage(named: postImage)
-            self.postImage.heightAnchor.constraint(equalTo: self.postImage.widthAnchor).isActive = true
+        } else {
+            self.postImage.image = UIImage(named: "ImagePlaceholder")
+            self.postImage.backgroundColor = .systemGray5
         }
         
         if let postText = data.description {
             self.postText.text = postText
         }
         
-        likesLabel.text = String(data.likes)
+        likesLabel.text = "Likes: \(String(data.likes))"
         
-        viewsLabel.text = String(data.views)
+        viewsLabel.text = "Veiws: \(String(data.views))"
         
     }
     

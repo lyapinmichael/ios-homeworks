@@ -122,6 +122,8 @@ final class ProfileViewController: UIViewController {
             profileView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
+  
+    // MARK: - Objc methods
     
     @objc func dismissKeyboard() {
         view.endEditing(true)

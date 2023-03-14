@@ -26,7 +26,36 @@ final class ProfileHeaderView: UIView {
         profilePictureView.image = UIImage(named: "DarthVader")
         profilePictureView.translatesAutoresizingMaskIntoConstraints = false
         
+        profilePictureView.isUserInteractionEnabled = true
+        let tapOnProfilePicture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(didTapOnProfilePicture)
+        )
+        profilePictureView.addGestureRecognizer(tapOnProfilePicture)
+
+        
         return profilePictureView
+    }()
+    
+    private var profilePictureOrigin = CGPoint()
+    
+    private lazy var pictureBackground = UIView(frame: CGRect(x: 0,
+                                                              y: 0,
+                                                              width: UIScreen.main.bounds.width,
+                                                              height: UIScreen.main.bounds.height))
+    
+    private lazy var crossButton: UIButton = {
+        let cross = UIButton()
+        
+        cross.frame = CGRect(x: UIScreen.main.bounds.width - 48, y: 24, width: 28, height: 28)
+        cross.setImage(UIImage(systemName: "xmark"), for: .normal)
+        cross.imageView?.clipsToBounds = true
+        cross.tintColor = .white
+        cross.alpha = 0
+        
+        cross.isUserInteractionEnabled = false
+        cross.isHidden = true
+        return cross
     }()
     
     private lazy var profileNameLabel: UILabel = {
@@ -94,10 +123,67 @@ final class ProfileHeaderView: UIView {
 
     private var statusText: String?
 
+    private func tapOnProfilePicture() {
+        
+        profilePictureOrigin = profilePictureView.center
+        profilePictureView.layer.borderWidth = 0
+        profilePictureView.contentMode = .scaleAspectFit
+        
+        pictureBackground.isHidden = false
+        pictureBackground.isUserInteractionEnabled = true
+        crossButton.isHidden = false
+        crossButton.isUserInteractionEnabled = true
+        
+        let zoomedBackgroundColor = UIColor.black.withAlphaComponent(0.8)
+        
+        let scaleX = UIScreen.main.bounds.width / profilePictureView.frame.width
+        
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            options: .curveEaseInOut,
+            animations: {
+                
+                self.pictureBackground.backgroundColor = zoomedBackgroundColor
+                self.profilePictureView.backgroundColor = .none
+                self.profilePictureView.layer.cornerRadius = 0
+                self.profilePictureView.center = CGPoint(x: UIScreen.main.bounds.midX,
+                                                         y: UIScreen.main.bounds.midY - self.profilePictureOrigin.y)
+                self.profilePictureView.transform = CGAffineTransform(scaleX: scaleX, y: scaleX)
+
+            },
+            completion: {_ in
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.crossButton.alpha = 1
+                })
+            }
+        )
+    }
+    
+    private func closeProfilePicture() {
+        
+        self.profilePictureView.contentMode = .scaleAspectFill
+        
+        let closedBackgroundColor = UIColor.black.withAlphaComponent(0)
+        
+        UIView.animate(withDuration: 0.5,
+                       animations: {
+            self.profilePictureView.center = self.profilePictureOrigin
+            self.profilePictureView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.width / 2
+            self.profilePictureView.layer.borderWidth = 3
+            self.pictureBackground.backgroundColor = closedBackgroundColor
+            self.crossButton.alpha = 1
+        }, completion: {_ in
+            self.crossButton.isHidden = true
+            self.crossButton.isUserInteractionEnabled = false
+            self.pictureBackground.isHidden = true
+            
+        })
+    }
     
     private func setup() {
         
-        addSubview(profilePictureView)
         addSubview(profileNameLabel)
         addSubview(profileStatusLabel)
         
@@ -106,6 +192,14 @@ final class ProfileHeaderView: UIView {
         
         statusField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         addSubview(statusField)
+        
+        addSubview(pictureBackground)
+        pictureBackground.isHidden = true
+            
+        addSubview(profilePictureView)
+
+        crossButton.addTarget(self, action: #selector(didTapOnCrossButton(_:)), for: .touchDown)
+        addSubview(crossButton)
         
     }
     
@@ -142,7 +236,7 @@ final class ProfileHeaderView: UIView {
         ])
     }
     
-    // MARK: - Override
+    // MARK: - Override init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -199,6 +293,18 @@ final class ProfileHeaderView: UIView {
         sender.buttonAction = .printStatus
 
     }
+    
+    @objc private func didTapOnProfilePicture() {
+
+        tapOnProfilePicture()
+        
+    }
+    
+    @objc private func didTapOnCrossButton(_ sender: UIButton) {
+        
+        closeProfilePicture()
+        
+    }
 
 }
 
@@ -209,5 +315,18 @@ extension ProfileHeaderView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         statusField.resignFirstResponder()
         return true
+    }
+}
+
+// MARK: - TouchPassView class
+
+final class TouchPassView: UIView {
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        if view === self {
+            return nil
+        }
+        return view
     }
 }

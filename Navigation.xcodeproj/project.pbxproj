@@ -118,6 +118,7 @@
 				EC9720D9299855A80090FE5A /* FeedViewController.swift */,
 				EC9720DD299855F20090FE5A /* PostViewController.swift */,
 				EC9720DF299856190090FE5A /* InfoViewController.swift */,
+				EC06901B29A6B0CB004513A4 /* LogInViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -141,7 +142,6 @@
 				ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */,
 				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
 				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
-				EC06901B29A6B0CB004513A4 /* LogInViewController.swift */,
 				ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */,
 				ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,

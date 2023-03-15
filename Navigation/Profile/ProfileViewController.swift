@@ -91,6 +91,7 @@ final class ProfileViewController: UIViewController {
         }
         
         let profileHeader = ProfileHeaderView()
+        profileHeader.delegate = self
         profileView.setAndLayout(headerView: profileHeader)
         
         
@@ -122,6 +123,21 @@ final class ProfileViewController: UIViewController {
             profileView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
+    
+    // MARK: - Public methods
+    
+    func isScrollAndSelectionEnabled(_ flag: Bool) {
+        switch flag {
+        case true:
+            profileView.isScrollEnabled = true
+            profileView.allowsSelection = true
+        case false:
+            profileView.isScrollEnabled = false
+            profileView.allowsSelection = false
+        }
+    }
+    
+
   
     // MARK: - Objc methods
     

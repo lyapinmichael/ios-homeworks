@@ -11,6 +11,10 @@ import UIKit
 
 final class ProfileHeaderView: UIView {
     
+    // MARK: - Delegate
+    
+    var delegate: ProfileViewController!
+    
     // MARK: - Private properties
     
     private  lazy var profilePictureView: UIImageView = {
@@ -124,13 +128,16 @@ final class ProfileHeaderView: UIView {
     private var statusText: String?
 
     private func tapOnProfilePicture() {
+    
+        delegate.isScrollAndSelectionEnabled(false)
         
         profilePictureOrigin = profilePictureView.center
-        profilePictureView.layer.borderWidth = 0
+        
         profilePictureView.contentMode = .scaleAspectFit
+        profilePictureView.isUserInteractionEnabled = false
         
         pictureBackground.isHidden = false
-        pictureBackground.isUserInteractionEnabled = true
+        
         crossButton.isHidden = false
         crossButton.isUserInteractionEnabled = true
         
@@ -141,15 +148,17 @@ final class ProfileHeaderView: UIView {
         UIView.animate(
             withDuration: 0.5,
             delay: 0,
-            options: .curveEaseInOut,
+            options: .curveEaseOut,
             animations: {
                 
                 self.pictureBackground.backgroundColor = zoomedBackgroundColor
                 self.profilePictureView.backgroundColor = .none
                 self.profilePictureView.layer.cornerRadius = 0
+                self.profilePictureView.layer.borderWidth = 0
                 self.profilePictureView.center = CGPoint(x: UIScreen.main.bounds.midX,
                                                          y: UIScreen.main.bounds.midY - self.profilePictureOrigin.y)
                 self.profilePictureView.transform = CGAffineTransform(scaleX: scaleX, y: scaleX)
+                self.delegate.tabBarController?.tabBar.standardAppearance.backgroundColor = .black
 
             },
             completion: {_ in
@@ -162,22 +171,28 @@ final class ProfileHeaderView: UIView {
     
     private func closeProfilePicture() {
         
-        self.profilePictureView.contentMode = .scaleAspectFill
+        profilePictureView.contentMode = .scaleAspectFill
         
         let closedBackgroundColor = UIColor.black.withAlphaComponent(0)
         
         UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       options: .curveEaseOut,
                        animations: {
             self.profilePictureView.center = self.profilePictureOrigin
             self.profilePictureView.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.width / 2
             self.profilePictureView.layer.borderWidth = 3
             self.pictureBackground.backgroundColor = closedBackgroundColor
+            self.delegate.tabBarController?.tabBar.standardAppearance.backgroundColor = .white
             self.crossButton.alpha = 1
+            
         }, completion: {_ in
             self.crossButton.isHidden = true
             self.crossButton.isUserInteractionEnabled = false
             self.pictureBackground.isHidden = true
+            self.delegate.isScrollAndSelectionEnabled(true)
+            self.profilePictureView.isUserInteractionEnabled = true
             
         })
     }
@@ -315,18 +330,5 @@ extension ProfileHeaderView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         statusField.resignFirstResponder()
         return true
-    }
-}
-
-// MARK: - TouchPassView class
-
-final class TouchPassView: UIView {
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let view = super.hitTest(point, with: event)
-        if view === self {
-            return nil
-        }
-        return view
     }
 }

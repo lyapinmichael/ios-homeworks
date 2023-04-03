@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StorageService
 
 final class ProfileViewController: UIViewController {
    
@@ -17,7 +18,14 @@ final class ProfileViewController: UIViewController {
     
     private lazy var profileView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
+        
+        #if DEBUG
         view.backgroundColor = .systemGray5
+        
+        #else
+        view.backgroundColor = .white
+        
+        #endif
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

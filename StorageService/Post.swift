@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct Post {
-    let title: String
-    let author: String
-    let description: String?
-    let image: String?
-    let likes: Int
-    let views: Int
+public struct Post {
+    public let title: String
+    public let author: String
+    public let description: String?
+    public let image: String?
+    public let likes: Int
+    public let views: Int
 }
 
-extension Post {
+public extension Post {
     
     static func make() -> [Post] {
         [

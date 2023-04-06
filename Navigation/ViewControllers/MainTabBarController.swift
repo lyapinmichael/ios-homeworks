@@ -1,0 +1,55 @@
+//
+//  MainTabBarController.swift
+//  Navigation
+//
+//  Created by Ляпин Михаил on 11.02.2023.
+//
+
+import UIKit
+
+class MainTabBarController: UITabBarController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        createTabBarController()
+
+    }
+    
+    private func createTabBarController() {
+        
+        let profileNavigationController = createNavigationController(root: LogInViewController(), title: "Profile", image: "person.circle")
+        let feedNavigationController = createNavigationController(root: FeedViewController(), title: "Feed", image: "house.circle")
+        
+        viewControllers = [feedNavigationController, profileNavigationController]
+
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = .white
+        
+        tabBar.standardAppearance = tabBarAppearance
+        tabBar.scrollEdgeAppearance = tabBarAppearance
+
+        
+    }
+    
+    private func createNavigationController(root: UIViewController, title: String, image: String) -> UINavigationController {
+        
+        let navigationItem = UITabBarItem(title: title, image: UIImage(systemName: image), tag: 0)
+        
+        let navigationController = UINavigationController(rootViewController: root)
+        
+
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = .white
+        
+        navigationController.tabBarItem = navigationItem
+        navigationController.navigationBar.standardAppearance = navBarAppearance
+        navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
+
+        
+        return (navigationController)
+    }
+
+}

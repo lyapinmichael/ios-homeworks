@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 // MARK: - ProfileHeaderView class
 
@@ -220,35 +221,48 @@ final class ProfileHeaderView: UIView {
     
     private func setConstraints() {
 
-        NSLayoutConstraint.activate([
-            profilePictureView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            profilePictureView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            profilePictureView.widthAnchor.constraint(equalToConstant: profilePictureView.frame.width),
-            profilePictureView.heightAnchor.constraint(equalToConstant: profilePictureView.frame.height),
+        profilePictureView.snp.makeConstraints{ (make) -> Void in
+            make.top.equalTo(self).offset(16)
+            make.leading.equalTo(self).offset(16)
+            make.height.equalTo(profilePictureView.frame.height)
+            make.width.equalTo(profilePictureView.frame.width)
             
-            profileNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            profileNameLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
-            profileNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-
-//            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 16),
-            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 34),
-            statusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            statusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            statusButton.heightAnchor.constraint(equalToConstant: 50),
-
-            profileStatusLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
-            profileStatusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-//            profileStatusLabel.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -34),
-            profileStatusLabel.centerYAnchor.constraint(equalTo: profilePictureView.centerYAnchor),
-
-            statusField.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
-            statusField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            statusField.heightAnchor.constraint(equalToConstant: 40),
-            statusField.centerYAnchor.constraint(equalTo: profilePictureView.bottomAnchor),
+        }
+        
+        profileNameLabel.snp.makeConstraints{ (make) -> Void in
+            make.top.equalTo(self).offset(16)
+            make.leading.equalTo(profilePictureView.snp.trailing).offset(24)
+            make.trailing.equalTo(self).offset(-16)
             
-            bottomAnchor.constraint(equalTo: statusButton.bottomAnchor, constant: 16)
+        }
+        
+        statusButton.snp.makeConstraints{ (make) -> Void in
+            make.top.equalTo(profilePictureView.snp.bottom).offset(34)
+            make.leading.equalTo(self).offset(16)
+            make.trailing.equalTo(self).offset(-16)
+            make.height.equalTo(50)
             
-        ])
+        }
+        
+        profileStatusLabel.snp.makeConstraints{ (make) -> Void in
+            make.leading.equalTo(profilePictureView.snp.trailing).offset(24)
+            make.trailing.equalTo(self).offset(-16)
+            make.centerY.equalTo(profilePictureView)
+            
+        }
+        
+        statusField.snp.makeConstraints{ (make) -> Void in
+            make.leading.equalTo(profilePictureView.snp.trailing).offset(24)
+            make.trailing.equalTo(self).offset(-16)
+            make.height.equalTo(40)
+            make.centerY.equalTo(profilePictureView)
+            
+        }
+        
+      
+            
+        self.bottomAnchor.constraint(equalTo: statusButton.bottomAnchor, constant: 16).isActive = true
+            
     }
     
     // MARK: - Override init

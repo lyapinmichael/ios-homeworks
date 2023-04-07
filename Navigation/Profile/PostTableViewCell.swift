@@ -7,6 +7,7 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 final class PostTableViewCell: UITableViewCell {
     
@@ -115,7 +116,14 @@ final class PostTableViewCell: UITableViewCell {
         postTitle.text = data.title
         
         if let postImage = data.image {
-            self.postImage.image = UIImage(named: postImage)
+            guard let image = UIImage(named: postImage) else {fatalError("Invalid image")}
+            let processor = ImageProcessor()
+            
+            processor.processImage(sourceImage: image,
+                                   filter: .process,
+                                   completion: {(image) -> Void in
+                self.postImage.image = image
+            })
         } else {
             self.postImage.image = UIImage(named: "ImagePlaceholder")
             self.postImage.backgroundColor = .systemGray5

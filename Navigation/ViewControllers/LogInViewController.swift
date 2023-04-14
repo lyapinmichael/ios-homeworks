@@ -234,9 +234,24 @@ final class LogInViewController: UIViewController {
         guard var viewControllers = navigationController?.viewControllers else { return }
         
         loginField.endEditing(true)
+        
         guard let login = loginField.text else {
             return
         }
+        
+        #if DEBUG
+        
+        let testUserService = TestUserService()
+        guard let authorizedTestUser = testUserService.authorize(login: login) else {
+            return
+        }
+                
+        _ = viewControllers.popLast()
+        
+        viewControllers.append(ProfileViewController(with: authorizedTestUser))
+        navigationController?.setViewControllers(viewControllers, animated: true)
+        
+        #else
         
         let allUsers = UsersStore.all
         
@@ -252,6 +267,7 @@ final class LogInViewController: UIViewController {
             }
         }
         
+        #endif
 
         let alertMessage: String
         
@@ -275,10 +291,6 @@ final class LogInViewController: UIViewController {
         self.present(alert,
                      animated: true,
                      completion: {self.loginField.text = nil})
-        
-        
-        
-        
     }
 }
 

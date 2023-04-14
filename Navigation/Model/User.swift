@@ -41,3 +41,18 @@ class CurrentUserService: UserService {
         return user
     }
 }
+
+class TestUserService: UserService {
+    
+    let testUser = User(login: "test",
+                        fullName: "TestUser")
+    
+    func authorize(login: String) -> User? {
+        if login == testUser.login {
+            return testUser
+        } else {
+            return nil
+        }
+    }
+    
+}

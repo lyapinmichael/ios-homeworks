@@ -13,7 +13,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Data
     
     fileprivate let postData = Post.make()
-    
+    let user: User
     // MARK: - Private Properties. Subviews
     
     private lazy var profileView: UITableView = {
@@ -42,6 +42,16 @@ final class ProfileViewController: UIViewController {
         case profileFooter = "ProfileSectionFooter_ReuseID"
     }
     
+    // MARK: - Init
+    
+    init(with user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
@@ -100,6 +110,7 @@ final class ProfileViewController: UIViewController {
         
         let profileHeader = ProfileHeaderView()
         profileHeader.delegate = self
+        profileHeader.update(with: self.user)
         profileView.setAndLayout(headerView: profileHeader)
         
         

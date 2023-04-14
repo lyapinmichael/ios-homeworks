@@ -139,7 +139,7 @@ final class LogInViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
         
-        loginButton.addTarget(self, action: #selector(pushToProfile(_:)), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(login(_:)), for: .touchUpInside)
     }
     
     private func addSubviews() {
@@ -230,13 +230,54 @@ final class LogInViewController: UIViewController {
         scrollView.contentInset.bottom = 0.0
     }
     
-    @objc func pushToProfile(_ button: UIButton) {
+    @objc func login(_ button: UIButton) {
         guard var viewControllers = navigationController?.viewControllers else { return }
         
-        _ = viewControllers.popLast()
+        loginField.endEditing(true)
+        guard let login = loginField.text else {
+            return
+        }
         
-        viewControllers.append(ProfileViewController())
-        navigationController?.setViewControllers(viewControllers, animated: true)
+        let allUsers = UsersStore.all
+        
+        for i in allUsers.indices {
+            let currentUserService = CurrentUserService(for: allUsers[i])
+            
+            if let authorizedUser = currentUserService.authorize(login: login) {
+                _ = viewControllers.popLast()
+                
+                viewControllers.append(ProfileViewController(with: authorizedUser))
+                navigationController?.setViewControllers(viewControllers, animated: true)
+                break
+            }
+        }
+        
+
+        let alertMessage: String
+        
+        switch login {
+        case "":
+            alertMessage = "Please, enter registered user login"
+        default:
+            alertMessage = "User with login \(login) is not registered"
+            
+        }
+        
+        let alert = UIAlertController(title: "Authorization error",
+                                      message: alertMessage,
+                                      preferredStyle: .alert)
+        
+        let dismissAction = UIAlertAction(title: "Close",
+                                          style: .cancel)
+        
+        alert.addAction(dismissAction)
+        
+        self.present(alert,
+                     animated: true,
+                     completion: {self.loginField.text = nil})
+        
+        
+        
         
     }
 }

@@ -7,10 +7,20 @@
 
 import UIKit
 
+//MARK: - LogInViewControllerDelegate Protocol
+
+protocol LogInViewControllerDelegate {
+    func check(login: String, password: String) -> Bool
+}
+
 // MARK: - LogInViewController: UIViewController()
 
 final class LogInViewController: UIViewController {
    
+    // MARK: - Public properties
+    
+    var loginDelegate: LogInViewControllerDelegate?
+    
     // MARK: - Private properties
     
     private lazy var scrollView: UIScrollView = {
@@ -234,63 +244,75 @@ final class LogInViewController: UIViewController {
         guard var viewControllers = navigationController?.viewControllers else { return }
         
         loginField.endEditing(true)
+        passwordField.endEditing(true)
         
-        guard let login = loginField.text else {
-            return
-        }
+        let login = loginField.text ?? ""
+        let password = passwordField.text ?? ""
         
-        #if DEBUG
+        /// Closure, that checks password and login, and handles exceptions
         
-        let testUserService = TestUserService()
-        guard let authorizedTestUser = testUserService.authorize(login: login) else {
-            return
-        }
-                
-        _ = viewControllers.popLast()
-        
-        viewControllers.append(ProfileViewController(with: authorizedTestUser))
-        navigationController?.setViewControllers(viewControllers, animated: true)
-        
-        #else
-        
-        let allUsers = UsersStore.all
-        
-        for i in allUsers.indices {
-            let currentUserService = CurrentUserService(for: allUsers[i])
+        let checkLoginPassword = { [self] (login: String?, password: String?) throws in
+           
+            guard login != nil && login != "" else { throw LoginInspectorErrors.emptyLogin }
             
-            if let authorizedUser = currentUserService.authorize(login: login) {
+            guard password != nil && password != "" else { throw LoginInspectorErrors.emptyPassword }
+            
+            if loginDelegate!.check(login: login!, password: password!) {
+                let userService: UserService
+                
+                #if DEBUG
+                userService = TestUserService()
+                
+                #else
+                
+                userService = CurrentUserService()
+                #endif
+                
+                guard let authorisedUser = userService.authorize(login: login!) else { throw LoginInspectorErrors.loginNotRegistered }
+                
                 _ = viewControllers.popLast()
                 
-                viewControllers.append(ProfileViewController(with: authorizedUser))
+                viewControllers.append(ProfileViewController(with: authorisedUser))
                 navigationController?.setViewControllers(viewControllers, animated: true)
-                break
-            }
+            } else { throw LoginInspectorErrors.wrongLoginOrPassword }
         }
         
-        #endif
-
-        let alertMessage: String
+        /// Closure, that shows alert message
         
-        switch login {
-        case "":
-            alertMessage = "Please, enter registered user login"
-        default:
-            alertMessage = "User with login \(login) is not registered"
+        let showAlert = { (message: String) -> Void in
+            
+            let alert = UIAlertController(title: "Authorization error",
+                                          message: message,
+                                          preferredStyle: .alert)
+            
+            let dismissAction = UIAlertAction(title: "Close",
+                                              style: .cancel)
+            
+            alert.addAction(dismissAction)
+            
+            self.present(alert,
+                         animated: true,
+                         completion: {self.loginField.text = nil})
             
         }
         
-        let alert = UIAlertController(title: "Authorization error",
-                                      message: alertMessage,
-                                      preferredStyle: .alert)
+        /// Main logic of function
         
-        let dismissAction = UIAlertAction(title: "Close",
-                                          style: .cancel)
+        do {
+            try checkLoginPassword(login, password)
+        } catch LoginInspectorErrors.emptyLogin {
+            showAlert("Please enter registered login")
+        } catch LoginInspectorErrors.emptyPassword {
+            showAlert("Please enter password")
+        } catch LoginInspectorErrors.loginNotRegistered {
+            showAlert("User with login \(login) not registered")
+        } catch LoginInspectorErrors.wrongLoginOrPassword {
+            showAlert("Wrong login or password")
+        } catch {
+            showAlert("Unknow error occured")
+        }
         
-        alert.addAction(dismissAction)
-        
-        self.present(alert,
-                     animated: true,
-                     completion: {self.loginField.text = nil})
+
     }
 }
 

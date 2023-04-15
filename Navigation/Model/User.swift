@@ -36,11 +36,10 @@ class User {
 
 class CurrentUserService: UserService {
     
-    var user: User
-    
-    init(for user: User) {
-        self.user = user
-    }
+    var user: User = User(login: "furiousVader66",
+                          fullName: "DarthVader",
+                          avatar: UIImage(named: "DarthVader"),
+                          status: "Join the Dark side!..")
 }
 
 class TestUserService: UserService {

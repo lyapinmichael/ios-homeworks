@@ -9,7 +9,15 @@ import Foundation
 import UIKit
 
 protocol UserService {
+    var user: User { get set }
+    
     func authorize(login: String) -> User?
+}
+
+extension UserService {
+    func authorize(login: String) -> User? {
+        return login == user.login ? user : nil
+    }
 }
 
 class User {
@@ -28,31 +36,16 @@ class User {
 
 class CurrentUserService: UserService {
     
-    let user: User
+    var user: User
     
     init(for user: User) {
         self.user = user
-    }
-    
-    func authorize(login: String) -> User? {
-        guard login == user.login else {
-            return nil
-        }
-        return user
     }
 }
 
 class TestUserService: UserService {
     
-    let testUser = User(login: "test",
+    var user = User(login: "test",
                         fullName: "TestUser")
-    
-    func authorize(login: String) -> User? {
-        if login == testUser.login {
-            return testUser
-        } else {
-            return nil
-        }
-    }
-    
+
 }

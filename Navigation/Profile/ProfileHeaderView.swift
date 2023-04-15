@@ -27,15 +27,11 @@ final class ProfileHeaderView: UIView {
         profilePictureView.layer.cornerRadius = profilePictureView.bounds.height / 2
         profilePictureView.layer.borderColor = UIColor.white.cgColor
         profilePictureView.layer.borderWidth = 3
-        profilePictureView.image = UIImage(named: "DarthVader")
+        profilePictureView.image = UIImage(named: "ImagePlaceholder")
         profilePictureView.translatesAutoresizingMaskIntoConstraints = false
         
         profilePictureView.isUserInteractionEnabled = true
-        let tapOnProfilePicture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(didTapOnProfilePicture)
-        )
-        profilePictureView.addGestureRecognizer(tapOnProfilePicture)
+      
 
         
         return profilePictureView
@@ -67,7 +63,7 @@ final class ProfileHeaderView: UIView {
         
         profileNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         profileNameLabel.textColor = .black
-        profileNameLabel.text = "Darth Vader"
+        profileNameLabel.text = "defaultUser"
         profileNameLabel.translatesAutoresizingMaskIntoConstraints = false
     
         return profileNameLabel
@@ -78,7 +74,7 @@ final class ProfileHeaderView: UIView {
         
         profileStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         profileStatusLabel.textColor = .gray
-        profileStatusLabel.text = "Join the dark side!.."
+        profileStatusLabel.text = "Nothing to see here yet..."
         profileStatusLabel.translatesAutoresizingMaskIntoConstraints = false
         
         return profileStatusLabel
@@ -249,6 +245,29 @@ final class ProfileHeaderView: UIView {
             bottomAnchor.constraint(equalTo: statusButton.bottomAnchor, constant: 16)
             
         ])
+    }
+    
+    // MARK: - Public methods
+    
+    func update(with user: User) {
+        profileNameLabel.text = user.fullName
+        
+        if let status = user.status {
+            profileStatusLabel.text = status
+        }
+        
+        if let avatar = user.avatar {
+            profilePictureView.image = avatar
+        } else {
+            profilePictureView.image = UIImage(named: "ImagePlaceholder")
+        }
+        
+        let tapOnProfilePicture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(didTapOnProfilePicture)
+        )
+        profilePictureView.addGestureRecognizer(tapOnProfilePicture)
+        
     }
     
     // MARK: - Override init

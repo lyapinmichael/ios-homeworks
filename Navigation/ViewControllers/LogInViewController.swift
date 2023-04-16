@@ -257,18 +257,20 @@ final class LogInViewController: UIViewController {
             
             guard password != nil && password != "" else { throw LoginInspectorErrors.emptyPassword }
             
+            let userService: UserService
+            
+            #if DEBUG
+            userService = TestUserService()
+            
+            #else
+            
+            userService = CurrentUserService()
+            #endif
+            
+            guard let authorisedUser = userService.authorize(login: login!) else { throw LoginInspectorErrors.loginNotRegistered }
+            
             if loginDelegate!.check(login: login!, password: password!) {
-                let userService: UserService
                 
-                #if DEBUG
-                userService = TestUserService()
-                
-                #else
-                
-                userService = CurrentUserService()
-                #endif
-                
-                guard let authorisedUser = userService.authorize(login: login!) else { throw LoginInspectorErrors.loginNotRegistered }
                 
                 _ = viewControllers.popLast()
                 

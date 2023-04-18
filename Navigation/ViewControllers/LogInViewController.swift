@@ -63,6 +63,8 @@ final class LogInViewController: UIViewController {
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
+        
+        textField.text = "furiousVader66"
         return textField
     }()
 
@@ -76,6 +78,8 @@ final class LogInViewController: UIViewController {
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
+        
+        textField.text = "isThisPasswordStrongEnough?"
         return textField
     }()
     
@@ -259,13 +263,7 @@ final class LogInViewController: UIViewController {
             
             let userService: UserService
             
-            #if DEBUG
-            userService = TestUserService()
-            
-            #else
-            
             userService = CurrentUserService()
-            #endif
             
             guard let authorisedUser = userService.authorize(login: login!) else { throw LoginInspectorErrors.loginNotRegistered }
             

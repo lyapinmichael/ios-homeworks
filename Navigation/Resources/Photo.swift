@@ -8,13 +8,10 @@
 import Foundation
 import UIKit
 
-struct Photo {
-    let name: String
-}
-
-extension Photo {
-    static func make() -> [UIImage] {
-        [
+class Photo {
+    static var shared = Photo()
+    
+    var testPhotos: [UIImage] = [
             UIImage.named("Vader1"),
             UIImage.named("Vader2"),
             UIImage.named("Vader3"),
@@ -37,5 +34,10 @@ extension Photo {
             UIImage.named("Vader9")
         
         ]
-    }
+    
+    private init() {}
+}
+
+extension Photo {
+ 
 }

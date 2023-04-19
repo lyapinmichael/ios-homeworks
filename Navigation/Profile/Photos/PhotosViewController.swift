@@ -57,7 +57,7 @@ final class PhotosViewController: UIViewController {
         view.backgroundColor = .white
         
         imagePublisherFacade.subscribe(self)
-        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 12, userImages:  Photo.make())
+        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 12, userImages:  Photo.shared.testPhotos)
         
         setupPhotosCollection()
         addSubviews()

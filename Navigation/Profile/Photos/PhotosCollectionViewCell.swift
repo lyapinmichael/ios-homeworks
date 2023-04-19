@@ -45,8 +45,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-     func updateContent(with photo: Photo) {
-            photoView.image = UIImage(named: photo.name)
+     func updateContent(with photo: UIImage) {
+            photoView.image = photo
     }
     
     func updateContent(with placeholder: String) {

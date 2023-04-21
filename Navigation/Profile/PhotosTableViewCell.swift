@@ -13,7 +13,7 @@ final class PhotosTableViewCell: UITableViewCell {
 
     // MARK: - Private properties
     
-    fileprivate let photos = Photo.make()
+    fileprivate let photos = Photo.shared.testPhotos
     
     private enum Constants {
         static let spacing: CGFloat = 8

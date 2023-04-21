@@ -6,35 +6,38 @@
 //
 
 import Foundation
+import UIKit
 
-struct Photo {
-    let name: String
+class Photo {
+    static var shared = Photo()
+    
+    var testPhotos: [UIImage] = [
+            UIImage.named("Vader1"),
+            UIImage.named("Vader2"),
+            UIImage.named("Vader3"),
+            UIImage.named("Vader4"),
+            UIImage.named("TieBomber"),
+            UIImage.named("AT-AT"),
+            UIImage.named("Vader5"),
+            UIImage.named("CoruscantSenateDistrict"),
+            UIImage.named("Geonosis"),
+            UIImage.named("Tidirium"),
+            UIImage.named("StarDestroyer"),
+            UIImage.named("Operation"),
+            UIImage.named("OnCorvette"),
+            UIImage.named("TrenchPursuit"),
+            UIImage.named("Vader6"),
+            UIImage.named("Vader7"),
+            UIImage.named("Vader8"),
+            UIImage.named("AnakinWithMother"),
+            UIImage.named("AnakinWithPadme"),
+            UIImage.named("Vader9")
+        
+        ]
+    
+    private init() {}
 }
 
 extension Photo {
-    static func make() -> [Photo]{
-        [
-            Photo(name: "Vader1"),
-            Photo(name: "Vader2"),
-            Photo(name: "Vader3"),
-            Photo(name: "Vader4"),
-            Photo(name: "TieBomber"),
-            Photo(name: "AT-AT"),
-            Photo(name: "Vader5"),
-            Photo(name: "CoruscantSenateDistrict"),
-            Photo(name: "Geonosis"),
-            Photo(name: "Tidirium"),
-            Photo(name: "StarDestroyer"),
-            Photo(name: "Operation"),
-            Photo(name: "OnCorvette"),
-            Photo(name: "TrenchPursuit"),
-            Photo(name: "Vader6"),
-            Photo(name: "Vader7"),
-            Photo(name: "Vader8"),
-            Photo(name: "AnakinWithMother"),
-            Photo(name: "AnakinWithPadme"),
-            Photo(name: "Vader9")
-            
-        ]
-    }
+ 
 }

@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 // MARK: - PhotosViewController class
 
 final class PhotosViewController: UIViewController {
     
+    // MARK: - Public properties
+    
+    let imagePublisherFacade = ImagePublisherFacade()
+    
     // MARK: - Private properties
     
-    fileprivate let photos = Photo.make()
+    fileprivate var photos: [UIImage] = []
     
     private enum Constants {
         static let spacing: CGFloat = 8
@@ -50,10 +55,22 @@ final class PhotosViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
+        imagePublisherFacade.subscribe(self)
+        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 12, userImages:  Photo.shared.testPhotos)
+        
         setupPhotosCollection()
         addSubviews()
         setConstraints()
     
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        imagePublisherFacade.rechargeImageLibrary()
+        imagePublisherFacade.removeSubscription(for: self)
+        
     }
     
     
@@ -84,15 +101,17 @@ final class PhotosViewController: UIViewController {
 
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photos.count
+
+        return photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellReuseID.basePhotoCell.rawValue, for: indexPath) as! PhotosCollectionViewCell
+        
         cell.updateContent(with: photos[indexPath.row])
         return cell
-    } 
+    }
 
 }
 
@@ -125,5 +144,17 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         Constants.spacing
     }
+    
+}
+
+// MARK: - ImageLibrarySubscriber protocol extension
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    
+    func receive(images: [UIImage]) {
+        photos = images
+        photosCollection.reloadData()
+    }
+    
     
 }

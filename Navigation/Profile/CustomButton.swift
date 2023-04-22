@@ -8,27 +8,31 @@
 import UIKit
 
 final class CustomButton: UIButton {
-
+    
+    var buttonAction: (() -> Void)?
+    
     private let customAlpha: CGFloat = 0.8
-    var color: UIColor?
+    private var color: UIColor?
     
-    enum ButtonActions: String {
-        case printStatus = "Print status"
-        case setStatus = "Set status"
-        case logIn = "Log In"
+    
+    
+    // MARK: - Init
+    
+    init(title: String, color: UIColor? = nil) {
+        super.init(frame: .zero)
+        
+        setup(title: title, color: color)
+        
+        
+        self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    
     }
     
-    var buttonAction: ButtonActions? {
-        willSet {
-            let title = newValue?.rawValue
-            switch newValue{
-            case .printStatus, .setStatus, .logIn:
-                setTitle(title, for: .normal)
-            case .none:
-                setTitle("Button", for: .normal)
-            }
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Override
     
     override var isHighlighted: Bool {
         didSet {
@@ -61,7 +65,30 @@ final class CustomButton: UIButton {
         }
     }
 
+    // MARK: - Private methods
     
+    private func setup(title: String, color: UIColor?) {
+       /// Setting parameters received while initializing
+        self.setTitle(title, for: .normal)
+        
+        if let color = color {
+            self.color = color
+        } else {
+            self.color = UIColor.systemBlue
+        }
+        /// Doing additional setup stuff for vizuals
+        self.layer.cornerRadius = 10
+        self.layer.shadowOpacity = 0.7
+        self.layer.shadowOffset = CGSize(width: 2, height: 2)
+        self.layer.shadowRadius = 2
+        self.layer.shadowColor = UIColor.darkGray.cgColor
+        self.backgroundColor = .white
+        self.layer.backgroundColor = self.color?.cgColor
+        
+
+    }
+
+    // MARK: - Animations of press
     func touchDown() {
         UIView.animate(withDuration: 0.07, delay: 0.02, animations: {
             self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
@@ -78,17 +105,10 @@ final class CustomButton: UIButton {
         })
     }
     
-    convenience init(custom: Bool, initAction: ButtonActions = .printStatus, color: UIColor? = nil) {
-        self.init(type: .custom)
-        
-        if let color = color {
-            self.color = color
-        } else {
-            self.color = UIColor.systemBlue
-        }
-        
-        buttonAction = initAction
-        setTitle(initAction.rawValue, for: .normal)
-        
+    // MARK: - Objc methods
+    
+    @objc func buttonTapped() {
+        buttonAction?()
     }
+    
 }

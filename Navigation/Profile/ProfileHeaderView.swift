@@ -81,18 +81,8 @@ final class ProfileHeaderView: UIView {
     }()
     
     private lazy var statusButton: CustomButton = {
-        let statusButton = CustomButton(custom: true)
-        
-        statusButton.backgroundColor = .white
-        statusButton.clipsToBounds = true
-        statusButton.titleLabel?.textColor = .white
-        statusButton.layer.cornerRadius = 4
-        statusButton.layer.backgroundColor = statusButton.color?.cgColor
-        statusButton.layer.masksToBounds = false
-        statusButton.layer.shadowOpacity = 0.7
-        statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        statusButton.layer.shadowRadius = 4
-        statusButton.layer.shadowColor = UIColor.black.cgColor
+        let statusButton = CustomButton(title: "Print status")
+    
         statusButton.translatesAutoresizingMaskIntoConstraints = false
         
         return statusButton
@@ -120,8 +110,6 @@ final class ProfileHeaderView: UIView {
     }()
     
     // MARK: - Private methods
-
-    private var statusText: String?
 
     private func tapOnProfilePicture() {
     
@@ -198,7 +186,14 @@ final class ProfileHeaderView: UIView {
         addSubview(profileNameLabel)
         addSubview(profileStatusLabel)
         
-        statusButton.addTarget(self, action: #selector(buttonHandler(_:)), for: .touchUpInside)
+        statusButton.buttonAction = { [weak self] in
+            guard let status = self?.profileStatusLabel.text else {
+                print("Nothing to see here")
+                return
+            }
+            
+            print (status)
+        }
         addSubview(statusButton)
         
         statusField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
@@ -299,33 +294,26 @@ final class ProfileHeaderView: UIView {
     }
     
     @objc fileprivate func statusTextChanged(_ textField: UITextField) {
-        statusText = textField.text
-        statusButton.buttonAction = .setStatus
-    }
-
-    @objc func buttonHandler(_ sender: CustomButton) {
-        switch sender.buttonAction {
-        case .printStatus:
-            printStatus(sender)
-        case .setStatus:
-            setStatus(sender)
+        
+        statusButton.setTitle("Set status", for: .normal)
+        
+        statusButton.buttonAction = {[weak self] in
             
-        default:
-            return
+            
+            self?.profileStatusLabel.text = textField.text
+            textField.text = nil
+            self?.statusButton.setTitle("Print status", for: .normal)
+            
+            self?.statusButton.buttonAction = {[weak self] in
+                guard let status = self?.profileStatusLabel.text else {
+                    print("Nothing to see here")
+                    return
+                }
+                
+                print (status)
+                
+            }
         }
-        dismissKeyboard()
-    }
-
-    @objc fileprivate func printStatus(_ sender: CustomButton) {
-        print (self.profileStatusLabel.text ?? "no status")
-    }
-
-    @objc fileprivate func setStatus(_ sender: CustomButton) {
-
-        profileStatusLabel.text = statusText
-        statusField.text = nil
-        sender.buttonAction = .printStatus
-
     }
     
     @objc private func didTapOnProfilePicture() {

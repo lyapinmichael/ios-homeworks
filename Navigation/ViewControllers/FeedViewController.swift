@@ -61,13 +61,21 @@ final class FeedViewController: UIViewController {
             }
             self?.feedModel.check(text)
             
-            
         }
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         return button
+    }()
+    
+    private lazy var checkResultLabel: UILabel = {
+       let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Nothing was checked yet"
+        label.textColor = .gray
+        
+        return label
     }()
     
     // MARK: - Private methods
@@ -82,6 +90,7 @@ final class FeedViewController: UIViewController {
             
         ])
         
+        stackView.addArrangedSubview(checkResultLabel)
         stackView.addArrangedSubview(guesserTextField)
         stackView.addArrangedSubview(checkGuessButton)
         stackView.addArrangedSubview(button)
@@ -125,7 +134,12 @@ final class FeedViewController: UIViewController {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapRecognizer)
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - ObjcMethods
@@ -153,8 +167,12 @@ final class FeedViewController: UIViewController {
         switch isTrue {
         case true:
             message = "Congrats! You're right!"
+            checkResultLabel.text = "Right"
+            checkResultLabel.textColor = .green
         case false:
-            message = "False! Try again!"
+            message = "You're wrong! Try again!"
+            checkResultLabel.text = "Wrong"
+            checkResultLabel.textColor = .red
         }
         
         let alert = UIAlertController(title: "Guess was checked and...",

@@ -55,10 +55,13 @@ final class FeedViewController: UIViewController {
             self?.guesserTextField.endEditing(true)
             
             guard let text = self?.guesserTextField.text else { return }
-            guard text != "" else { return }
-            guard let checkResult = self?.feedModel.check(text) else { return }
+            guard text != "" else {
+                self?.alertOnEmptyGuess()
+                return
+            }
+            self?.feedModel.check(text)
             
-            self?.didCheckGuess(checkResult)
+            
         }
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -84,30 +87,8 @@ final class FeedViewController: UIViewController {
         stackView.addArrangedSubview(button)
     }
     
-    private func didCheckGuess(_ isTrue: Bool) {
-        let message: String
-        
-        switch isTrue {
-        case true:
-            message = "Congrats! You're right!"
-        case false:
-            message = "False! Try again!"
-        }
-        
-        let alert = UIAlertController(title: "Guess was checked and...",
-                                      message: message,
-                                      preferredStyle: .alert)
-        
-        let dismissAction = UIAlertAction(title: "Close",
-                                          style: .cancel)
-        
-        alert.addAction(dismissAction)
-        
-        self.present(alert,
-                     animated: true,
-                     completion: {self.guesserTextField.text = nil})
-    }
     
+    ///Method presents an alert if button was pressed but no text was entered
     private func alertOnEmptyGuess() {
         let message = "Enter something so it can be checked "
         
@@ -136,6 +117,11 @@ final class FeedViewController: UIViewController {
         view.addSubview(stackView)
         setupStackView()
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didCheckGuess(_:)),
+                                               name: FeedModelNotification.checkResult,
+                                               object: nil)
+        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapRecognizer)
         
@@ -156,6 +142,33 @@ final class FeedViewController: UIViewController {
     @objc func dismissKeyboard () {
         guesserTextField.endEditing(true)
         
+    }
+    
+    // MARK: Check button action
+    @objc func didCheckGuess(_ notification: NSNotification) {
+        let message: String
+        
+        guard let isTrue = notification.userInfo?["isChecked"] as? Bool else { return }
+        
+        switch isTrue {
+        case true:
+            message = "Congrats! You're right!"
+        case false:
+            message = "False! Try again!"
+        }
+        
+        let alert = UIAlertController(title: "Guess was checked and...",
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        let dismissAction = UIAlertAction(title: "Close",
+                                          style: .cancel)
+        
+        alert.addAction(dismissAction)
+        
+        self.present(alert,
+                     animated: true,
+                     completion: {self.guesserTextField.text = nil})
     }
 
 }

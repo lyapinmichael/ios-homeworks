@@ -39,6 +39,8 @@ final class FeedViewController: UIViewController {
     private lazy var guesserTextField: UITextField = {
        let textField = UITextField()
         textField.placeholder = "correct word: discombobulate"
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.heightAnchor.constraint(equalToConstant: 50).isActive = true

@@ -64,6 +64,7 @@ final class LogInViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         
+        /// Default login to be deleted later:
         textField.text = "furiousVader66"
         return textField
     }()
@@ -79,6 +80,7 @@ final class LogInViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         
+        /// Default password to be deleted later:
         textField.text = "isThisPasswordStrongEnough?"
         return textField
     }()

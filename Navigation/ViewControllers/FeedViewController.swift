@@ -8,10 +8,21 @@
 import UIKit
 import StorageService
 
-class FeedViewController: UIViewController {
+final class FeedViewController: UIViewController {
 
+    // MARK: - Private properties
+    private let postsArray = Post.make()
+    private let feedModel = FeedModel()
     
-    let postsArray = Post.make()
+    private lazy var stackView: UIStackView = {
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 16.0
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     private lazy var  button: UIButton = {
         let button = UIButton()
@@ -25,35 +36,113 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-
-    private func setupButtonConstraints(_ button: UIButton) {
-        let safeAreaGuide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            button.leadingAnchor.constraint(
-                equalTo: safeAreaGuide.leadingAnchor,
-                constant: 20.0
-            ),
-            button.trailingAnchor.constraint(
-                equalTo: safeAreaGuide.trailingAnchor,
-                constant: -20.0
-            ),
-            button.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
-            button.heightAnchor.constraint(equalToConstant: 44.0)])
+    private lazy var guesserTextField: UITextField = {
+       let textField = UITextField()
+        textField.placeholder = "correct word: discombobulate"
         
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        textField.borderStyle = .roundedRect
+        
+        return textField
+    }()
+    
+    private lazy var checkGuessButton: CustomButton = {
+       let button = CustomButton(title: "Check!", color: UIColor(named: "ColorSet"))
+        
+        button.buttonAction = { [weak self] in
+            
+            self?.guesserTextField.endEditing(true)
+            
+            guard let text = self?.guesserTextField.text else { return }
+            guard text != "" else { return }
+            guard let checkResult = self?.feedModel.check(text) else { return }
+            
+            self?.didCheckGuess(checkResult)
+        }
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        return button
+    }()
+    
+    // MARK: - Private methods
+
+    private func setupStackView() {
+        
+        let safeArea = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            stackView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor)
+            
+        ])
+        
+        stackView.addArrangedSubview(guesserTextField)
+        stackView.addArrangedSubview(checkGuessButton)
+        stackView.addArrangedSubview(button)
     }
-   
+    
+    private func didCheckGuess(_ isTrue: Bool) {
+        let message: String
+        
+        switch isTrue {
+        case true:
+            message = "Congrats! You're right!"
+        case false:
+            message = "False! Try again!"
+        }
+        
+        let alert = UIAlertController(title: "Guess was checked and...",
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        let dismissAction = UIAlertAction(title: "Close",
+                                          style: .cancel)
+        
+        alert.addAction(dismissAction)
+        
+        self.present(alert,
+                     animated: true,
+                     completion: {self.guesserTextField.text = nil})
+    }
+    
+    private func alertOnEmptyGuess() {
+        let message = "Enter something so it can be checked "
+        
+        let alert = UIAlertController(title: "Ooops",
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        let dismissAction = UIAlertAction(title: "Close",
+                                          style: .cancel)
+        
+        alert.addAction(dismissAction)
+        
+        self.present(alert,
+                     animated: true,
+                     completion: {self.guesserTextField.text = nil})
+    }
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Feed"
         view.backgroundColor = .white
         
-        view.addSubview(button)
-
-        setupButtonConstraints(button)
+        view.addSubview(stackView)
+        setupStackView()
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapRecognizer)
         
         
     }
+    
+    //MARK: - ObjcMethods
     
     @objc func buttonPressed (_ sender: UIButton) {
         
@@ -64,5 +153,9 @@ class FeedViewController: UIViewController {
     
     }
     
+    @objc func dismissKeyboard () {
+        guesserTextField.endEditing(true)
+        
+    }
 
 }

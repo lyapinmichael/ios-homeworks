@@ -17,6 +17,7 @@
 		EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4E029984F30007A589E /* MainTabBarController.swift */; };
 		EC1FF4E629984F31007A589E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC1FF4E529984F31007A589E /* Assets.xcassets */; };
 		EC1FF4E929984F31007A589E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC1FF4E729984F31007A589E /* LaunchScreen.storyboard */; };
+		EC22BF4429F69D1C0024E0B4 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC22BF4329F69D1C0024E0B4 /* FeedModel.swift */; };
 		EC2799B629EA950C008E949B /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B529EA950C008E949B /* Checker.swift */; };
 		EC2799B829EA9744008E949B /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B729EA9744008E949B /* LoginInspector.swift */; };
 		EC2DA9B629E94A0A002149CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B529E94A0A002149CF /* User.swift */; };
@@ -72,6 +73,7 @@
 		EC1FF4E529984F31007A589E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC1FF4E829984F31007A589E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC1FF4EA29984F31007A589E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC22BF4329F69D1C0024E0B4 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		EC2799B529EA950C008E949B /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		EC2799B729EA9744008E949B /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		EC2DA9B529E94A0A002149CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -138,7 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				EC9720D6299855340090FE5A /* App */,
-				EC2DA9B429E949FC002149CF /* Model */,
+				EC2DA9B429E949FC002149CF /* Models */,
 				EC9720D7299855430090FE5A /* ViewControllers */,
 				ECC95B20299AD6350059A8FF /* Profile */,
 				EC9720D8299855730090FE5A /* Resources */,
@@ -147,7 +149,7 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
-		EC2DA9B429E949FC002149CF /* Model */ = {
+		EC2DA9B429E949FC002149CF /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				EC2DA9B529E94A0A002149CF /* User.swift */,
@@ -155,8 +157,9 @@
 				EC2799B529EA950C008E949B /* Checker.swift */,
 				EC2799B729EA9744008E949B /* LoginInspector.swift */,
 				ECFCC60929EB4930003C4D4A /* LoginFactory.swift */,
+				EC22BF4329F69D1C0024E0B4 /* FeedModel.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		EC650C4529DB55BE00BF938E /* StorageService */ = {
@@ -349,6 +352,7 @@
 				EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */,
 				EC06901A29A61AC5004513A4 /* InfoViewController.swift in Sources */,
 				EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */,
+				EC22BF4429F69D1C0024E0B4 /* FeedModel.swift in Sources */,
 				ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */,
 				EC2DA9BA29E96C60002149CF /* UsersStore.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,

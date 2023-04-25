@@ -16,7 +16,7 @@ protocol LogInViewControllerDelegate {
 // MARK: - LogInViewController: UIViewController()
 
 final class LogInViewController: UIViewController {
-   
+    
     // MARK: - Public properties
     
     var loginDelegate: LogInViewControllerDelegate?
@@ -47,10 +47,10 @@ final class LogInViewController: UIViewController {
     private lazy var logoImage: UIImageView = {
         let logo = UIImageView(frame: CGRect(x: .zero, y: .zero, width: 100.0, height: 100.0))
         logo.image = UIImage(named: "VKLogo")
-
+        
         logo.contentMode = .scaleAspectFit
         logo.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return logo
     }()
     
@@ -64,10 +64,11 @@ final class LogInViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         
+        /// Default login to be deleted later:
         textField.text = "furiousVader66"
         return textField
     }()
-
+    
     private lazy var passwordField: UITextField = {
         let textField = CustomTextField()
         textField.textColor = .black
@@ -79,6 +80,7 @@ final class LogInViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         
+        /// Default password to be deleted later:
         textField.text = "isThisPasswordStrongEnough?"
         return textField
     }()
@@ -90,34 +92,36 @@ final class LogInViewController: UIViewController {
         view.layer.borderWidth = 0.3
         view.layer.cornerRadius = 10
         view.tintColor = UIColor(named: "ColorSet")
-
+        
         view.axis = .vertical
         view.distribution = .fillProportionally
         view.spacing = 0.0
-
+        
         let separator = UIView()
         separator.backgroundColor = .lightGray
         separator.heightAnchor.constraint(equalToConstant: 0.3).isActive = true
         separator.translatesAutoresizingMaskIntoConstraints = false
-
+        
         view.addArrangedSubview(loginField)
         view.addArrangedSubview(separator)
         view.addArrangedSubview(passwordField)
-
+        
         view.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return view
     }()
     
     private lazy var loginButton: CustomButton = {
-        let button = CustomButton(custom: true, initAction: .logIn, color: UIColor(named: "ColorSet"))
-        button.backgroundColor = .white
-        button.layer.backgroundColor = button.color?.cgColor
-        button.titleLabel?.textColor = .white
-        button.layer.cornerRadius = 10
-
+        
+        let buttonAction = {[weak self] in
+            guard let self = self else { return }
+            self.login()
+        }
+        
+        let button = CustomButton(title: "Log in", color: UIColor(named: "ColorSet"), action: buttonAction)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return button
     }()
     
@@ -153,7 +157,6 @@ final class LogInViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
         
-        loginButton.addTarget(self, action: #selector(login(_:)), for: .touchUpInside)
     }
     
     private func addSubviews() {
@@ -170,7 +173,7 @@ final class LogInViewController: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-        
+            
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -183,14 +186,14 @@ final class LogInViewController: UIViewController {
     
     private func setKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
-
+        
         notificationCenter.addObserver(
             self,
             selector: #selector(self.willShowKeyboard(_:)),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
-
+        
         notificationCenter.addObserver(
             self,
             selector: #selector(self.willHideKeyboard(_:)),
@@ -198,7 +201,7 @@ final class LogInViewController: UIViewController {
             object: nil
         )
     }
-
+    
     private func removeKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
@@ -214,12 +217,12 @@ final class LogInViewController: UIViewController {
             logoImage.widthAnchor.constraint(equalToConstant: 100),
             logoImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
             logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        
+            
             loginView.heightAnchor.constraint(equalToConstant: 100),
             loginView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120),
             loginView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-        
+            
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.topAnchor.constraint(equalTo: loginView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -227,24 +230,7 @@ final class LogInViewController: UIViewController {
         ])
     }
     
-    
-    // MARK: - @Objc Actions
-    
-    @objc private func willShowKeyboard(_ notification: NSNotification) {
-        guard let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height else {
-            return
-        }
-        
-        if contentView.frame.height > keyboardHeight {
-            scrollView.contentInset.bottom = keyboardHeight
-        }
-    }
-    
-    @objc func willHideKeyboard(_ notification: NSNotification) {
-        scrollView.contentInset.bottom = 0.0
-    }
-    
-    @objc func login(_ button: UIButton) {
+    private func login() {
         guard var viewControllers = navigationController?.viewControllers else { return }
         
         loginField.endEditing(true)
@@ -314,6 +300,24 @@ final class LogInViewController: UIViewController {
         
 
     }
+
+    
+    // MARK: - @Objc Actions
+    
+    @objc private func willShowKeyboard(_ notification: NSNotification) {
+        guard let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height else {
+            return
+        }
+        
+        if contentView.frame.height > keyboardHeight {
+            scrollView.contentInset.bottom = keyboardHeight
+        }
+    }
+    
+    @objc func willHideKeyboard(_ notification: NSNotification) {
+        scrollView.contentInset.bottom = 0.0
+    }
+    
 }
 
 extension LogInViewController: UITextFieldDelegate {

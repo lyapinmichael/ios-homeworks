@@ -8,13 +8,27 @@
 import UIKit
 import StorageService
 
+enum CellReuseID: String {
+        case base = "BaseTableViewCell_ReuseID"
+        case post = "CustomTableViewCell_ReuseID"
+        case photos = "PhotosTablewViewCell_ReuseID"
+    }
+    
+enum HeaderFooterReuseID: String {
+    case profileHeader = "ProfileSectionHeader_ReuseID"
+    case profileFooter = "ProfileSectionFooter_ReuseID"
+}
+
+
 final class ProfileViewController: UIViewController {
    
     // MARK: - Data
     
-    fileprivate let postData = Post.make()
-    let user: User
+//    fileprivate let postData = Post.make()
+//    let user: User
     // MARK: - Private Properties. Subviews
+    
+    private var viewModel: ProfileViewModelProtocol
     
     private lazy var profileView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
@@ -31,22 +45,14 @@ final class ProfileViewController: UIViewController {
         return view
     }()
     
-    private enum CellReuseID: String {
-            case base = "BaseTableViewCell_ReuseID"
-            case post = "CustomTableViewCell_ReuseID"
-            case photos = "PhotosTablewViewCell_ReuseID"
-        }
-        
-    private enum HeaderFooterReuseID: String {
-        case profileHeader = "ProfileSectionHeader_ReuseID"
-        case profileFooter = "ProfileSectionFooter_ReuseID"
-    }
-    
+   
     // MARK: - Init
     
     init(with user: User) {
-        self.user = user
+    
+        self.viewModel = ProfileViewModel(withUser: user)
         super.init(nibName: nil, bundle: nil)
+      
     }
     
     required init?(coder: NSCoder) {
@@ -60,6 +66,7 @@ final class ProfileViewController: UIViewController {
         
         setupView()
         viewWillLayoutSubviews()
+        bindViewModel()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -110,7 +117,7 @@ final class ProfileViewController: UIViewController {
         
         let profileHeader = ProfileHeaderView()
         profileHeader.delegate = self
-        profileHeader.update(with: self.user)
+        profileHeader.update(with: viewModel.user)
         profileView.setAndLayout(headerView: profileHeader)
         
         
@@ -142,21 +149,24 @@ final class ProfileViewController: UIViewController {
             profileView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
+
+    //MARK: - Public methods
     
-    // MARK: - Public methods
-    
-    func isScrollAndSelectionEnabled(_ flag: Bool) {
-        switch flag {
-        case true:
-            profileView.isScrollEnabled = true
-            profileView.allowsSelection = true
-        case false:
-            profileView.isScrollEnabled = false
-            profileView.allowsSelection = false
+    func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            guard let self = self else { return }
+            
+            switch state {
+            case .initial:
+                print("Initial state")
+            case let .printStatus(status):
+                print (status)
+            case let .setStatus(status):
+                self.viewModel.user.status = status
+                print ("Status set to \"\(status)\"")
+            }
         }
     }
-    
-
   
     // MARK: - Objc methods
     
@@ -164,6 +174,7 @@ final class ProfileViewController: UIViewController {
         view.endEditing(true)
     }
 }
+
 
 // MARK: - TableView Data Source extension
 
@@ -178,7 +189,7 @@ extension ProfileViewController: UITableViewDataSource {
         if section == 0 {
             return 1
         } else {
-            return postData.count
+            return viewModel.postData.count
         }
     }
     
@@ -193,7 +204,7 @@ extension ProfileViewController: UITableViewDataSource {
                 withIdentifier: CellReuseID.post.rawValue,
                 for: indexPath
             ) as! PostTableViewCell
-            cell.updateContent(postData[indexPath.row])
+            cell.updateContent(viewModel.postData[indexPath.row])
             return cell
         }
     }
@@ -227,5 +238,34 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
     
+}
+
+
+// MARK: - Profile Header delegate extension
+
+extension ProfileViewController: ProfileHeaderViewDelegate {
+    
+    func setTabBarColor(_ color: UIColor) {
+        tabBarController?.tabBar.standardAppearance.backgroundColor = color
+    }
+    
+    func isScrollAndSelectionEnabled(_ flag: Bool) {
+        switch flag {
+        case true:
+            profileView.isScrollEnabled = true
+            profileView.allowsSelection = true
+        case false:
+            profileView.isScrollEnabled = false
+            profileView.allowsSelection = false
+        }
+    }
+    
+    func printStatus(_ status: String) {
+        viewModel.updateState(withInput: .didTapPrintStatusButton(status))
+    }
+    
+    func setStatus(_ status: String) {
+        viewModel.updateState(withInput: .didTapSetStatusButton(status))
+    }
 }
 

@@ -18,6 +18,8 @@
 		EC1FF4E629984F31007A589E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC1FF4E529984F31007A589E /* Assets.xcassets */; };
 		EC1FF4E929984F31007A589E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC1FF4E729984F31007A589E /* LaunchScreen.storyboard */; };
 		EC22BF4429F69D1C0024E0B4 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC22BF4329F69D1C0024E0B4 /* FeedModel.swift */; };
+		EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */; };
+		EC22BF4C29F830020024E0B4 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC22BF4B29F830020024E0B4 /* ProfileHeaderView.swift */; };
 		EC2799B629EA950C008E949B /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B529EA950C008E949B /* Checker.swift */; };
 		EC2799B829EA9744008E949B /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B729EA9744008E949B /* LoginInspector.swift */; };
 		EC2DA9B629E94A0A002149CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B529E94A0A002149CF /* User.swift */; };
@@ -34,7 +36,6 @@
 		ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5D0729B3B9E800EC2F21 /* Photo.swift */; };
 		ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB02D7B29B64A00002DD75B /* PhotosCollectionViewCell.swift */; };
 		ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */; };
-		ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */; };
 		ECFCC60A29EB4930003C4D4A /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFCC60929EB4930003C4D4A /* LoginFactory.swift */; };
 		ECFCC60D29F04DA2003C4D4A /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = ECFCC60C29F04DA2003C4D4A /* iOSIntPackage */; };
 		ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */; };
@@ -74,6 +75,8 @@
 		EC1FF4E829984F31007A589E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC1FF4EA29984F31007A589E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC22BF4329F69D1C0024E0B4 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
+		EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		EC22BF4B29F830020024E0B4 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderView.swift; path = ../../../../../../../.Trash/ProfileHeaderView.swift; sourceTree = "<group>"; };
 		EC2799B529EA950C008E949B /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		EC2799B729EA9744008E949B /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		EC2DA9B529E94A0A002149CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -93,7 +96,6 @@
 		ECAA5D0729B3B9E800EC2F21 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		ECB02D7B29B64A00002DD75B /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		ECFCC60929EB4930003C4D4A /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
 		ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,13 +218,14 @@
 			children = (
 				EC84CED129B5E00300DDC6A9 /* Photos */,
 				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
-				ECC95B21299AD6870059A8FF /* ProfileHeaderView.swift */,
 				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
 				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
+				EC22BF4B29F830020024E0B4 /* ProfileHeaderView.swift */,
 				ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */,
 				ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
 				ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */,
+				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -356,13 +359,14 @@
 				ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */,
 				EC2DA9BA29E96C60002149CF /* UsersStore.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
-				ECC95B22299AD6870059A8FF /* ProfileHeaderView.swift in Sources */,
 				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
+				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
 				ECAA5CFE29B0AEA600EC2F21 /* UITableViewExtension.swift in Sources */,
 				ECAA5D0029B0C41D00EC2F21 /* PostTableViewCell.swift in Sources */,
 				ECFCC60A29EB4930003C4D4A /* LoginFactory.swift in Sources */,
 				EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */,
+				EC22BF4C29F830020024E0B4 /* ProfileHeaderView.swift in Sources */,
 				ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */,
 				EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */,
 				EC2DA9B629E94A0A002149CF /* User.swift in Sources */,

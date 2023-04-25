@@ -81,7 +81,17 @@ final class ProfileHeaderView: UIView {
     }()
     
     private lazy var statusButton: CustomButton = {
-        let statusButton = CustomButton(title: "Print status")
+        
+        let buttonAction = { [weak self] in
+            guard let status = self?.profileStatusLabel.text else {
+                print("Nothing to see here")
+                return
+            }
+            
+            print (status)
+        }
+        
+        let statusButton = CustomButton(title: "Print status", action: buttonAction)
     
         statusButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -186,14 +196,6 @@ final class ProfileHeaderView: UIView {
         addSubview(profileNameLabel)
         addSubview(profileStatusLabel)
         
-        statusButton.buttonAction = { [weak self] in
-            guard let status = self?.profileStatusLabel.text else {
-                print("Nothing to see here")
-                return
-            }
-            
-            print (status)
-        }
         addSubview(statusButton)
         
         statusField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)

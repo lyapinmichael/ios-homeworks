@@ -50,9 +50,8 @@ final class FeedViewController: UIViewController {
     }()
     
     private lazy var checkGuessButton: CustomButton = {
-       let button = CustomButton(title: "Check!", color: UIColor(named: "ColorSet"))
-        
-        button.buttonAction = { [weak self] in
+       
+        let buttonAction = { [weak self] in
             
             self?.guesserTextField.endEditing(true)
             
@@ -64,6 +63,9 @@ final class FeedViewController: UIViewController {
             self?.feedModel.check(text)
             
         }
+        
+        let button = CustomButton(title: "Check!", color: UIColor(named: "ColorSet"), action: buttonAction)
+        
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -164,9 +166,9 @@ final class FeedViewController: UIViewController {
     @objc func didCheckGuess(_ notification: NSNotification) {
         let message: String
         
-        guard let isTrue = notification.userInfo?["isChecked"] as? Bool else { return }
+        guard let isChecked = notification.userInfo?["isChecked"] as? Bool else { return }
         
-        switch isTrue {
+        switch isChecked {
         case true:
             message = "Congrats! You're right!"
             checkResultLabel.text = "Right"

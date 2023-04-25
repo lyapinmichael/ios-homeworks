@@ -112,11 +112,13 @@ final class LogInViewController: UIViewController {
     }()
     
     private lazy var loginButton: CustomButton = {
-        let button = CustomButton(title: "Log in", color: UIColor(named: "ColorSet"))
         
-        button.buttonAction = {[weak self] in
-            self?.login()
+        let buttonAction = {[weak self] in
+            guard let self = self else { return }
+            self.login()
         }
+        
+        let button = CustomButton(title: "Log in", color: UIColor(named: "ColorSet"), action: buttonAction)
         
         button.translatesAutoresizingMaskIntoConstraints = false
         

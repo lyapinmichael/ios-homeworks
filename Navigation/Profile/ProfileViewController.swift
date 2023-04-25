@@ -8,24 +8,22 @@
 import UIKit
 import StorageService
 
-enum CellReuseID: String {
-        case base = "BaseTableViewCell_ReuseID"
-        case post = "CustomTableViewCell_ReuseID"
-        case photos = "PhotosTablewViewCell_ReuseID"
-    }
-    
-enum HeaderFooterReuseID: String {
-    case profileHeader = "ProfileSectionHeader_ReuseID"
-    case profileFooter = "ProfileSectionFooter_ReuseID"
-}
-
-
 final class ProfileViewController: UIViewController {
    
-    // MARK: - Data
+    //MARK: - Private enums for cells and header reuse is
     
-//    fileprivate let postData = Post.make()
-//    let user: User
+    private enum CellReuseID: String {
+            case base = "BaseTableViewCell_ReuseID"
+            case post = "CustomTableViewCell_ReuseID"
+            case photos = "PhotosTablewViewCell_ReuseID"
+        }
+        
+    private enum HeaderFooterReuseID: String {
+        case profileHeader = "ProfileSectionHeader_ReuseID"
+        case profileFooter = "ProfileSectionFooter_ReuseID"
+    }
+
+    
     // MARK: - Private Properties. Subviews
     
     private var viewModel: ProfileViewModelProtocol

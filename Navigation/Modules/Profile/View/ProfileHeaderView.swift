@@ -7,13 +7,22 @@
 
 import UIKit
 
+protocol ProfileHeaderViewDelegate: AnyObject {
+    
+    func setTabBarColor(_ color: UIColor)
+    func isScrollAndSelectionEnabled(_ flag: Bool)
+    func printStatus(_ status: String)
+    func setStatus(_ status: String)
+    
+}
+
 // MARK: - ProfileHeaderView class
 
 final class ProfileHeaderView: UIView {
     
     // MARK: - Delegate
     
-    var delegate: ProfileViewController!
+    weak var delegate: ProfileHeaderViewDelegate?
     
     // MARK: - Private properties
     
@@ -87,8 +96,8 @@ final class ProfileHeaderView: UIView {
                 print("Nothing to see here")
                 return
             }
+            self?.delegate?.printStatus(status)
             
-            print (status)
         }
         
         let statusButton = CustomButton(title: "Print status", action: buttonAction)
@@ -123,7 +132,7 @@ final class ProfileHeaderView: UIView {
 
     private func tapOnProfilePicture() {
     
-        delegate.isScrollAndSelectionEnabled(false)
+        delegate?.isScrollAndSelectionEnabled(false)
         
         profilePictureOrigin = profilePictureView.center
         
@@ -152,7 +161,7 @@ final class ProfileHeaderView: UIView {
                 self.profilePictureView.center = CGPoint(x: UIScreen.main.bounds.midX,
                                                          y: UIScreen.main.bounds.midY - self.profilePictureOrigin.y)
                 self.profilePictureView.transform = CGAffineTransform(scaleX: scaleX, y: scaleX)
-                self.delegate.tabBarController?.tabBar.standardAppearance.backgroundColor = .black
+                self.delegate?.setTabBarColor(.black)
 
             },
             completion: {_ in
@@ -178,14 +187,14 @@ final class ProfileHeaderView: UIView {
             self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.width / 2
             self.profilePictureView.layer.borderWidth = 3
             self.pictureBackground.backgroundColor = closedBackgroundColor
-            self.delegate.tabBarController?.tabBar.standardAppearance.backgroundColor = .white
+            self.delegate?.setTabBarColor(.white)
             self.crossButton.alpha = 1
             
         }, completion: {_ in
             self.crossButton.isHidden = true
             self.crossButton.isUserInteractionEnabled = false
             self.pictureBackground.isHidden = true
-            self.delegate.isScrollAndSelectionEnabled(true)
+            self.delegate?.isScrollAndSelectionEnabled(true)
             self.profilePictureView.isUserInteractionEnabled = true
             
         })
@@ -210,6 +219,8 @@ final class ProfileHeaderView: UIView {
         addSubview(crossButton)
         
     }
+    
+    // MARK: Constraints
     
     private func setConstraints() {
 
@@ -300,20 +311,21 @@ final class ProfileHeaderView: UIView {
         statusButton.setTitle("Set status", for: .normal)
         
         statusButton.buttonAction = {[weak self] in
+            guard let self = self else { return }
             
+            guard let status = textField.text else { return }
+            guard status != "" else { return }
+                    
+            self.profileStatusLabel.text = status
+            self.delegate?.setStatus(status)
+            self.statusButton.setTitle("Print status", for: .normal)
             
-            self?.profileStatusLabel.text = textField.text
-            textField.text = nil
-            self?.statusButton.setTitle("Print status", for: .normal)
-            
-            self?.statusButton.buttonAction = {[weak self] in
+            self.statusButton.buttonAction = {[weak self] in
                 guard let status = self?.profileStatusLabel.text else {
                     print("Nothing to see here")
                     return
                 }
-                
-                print (status)
-                
+                self?.delegate?.printStatus(status)
             }
         }
     }

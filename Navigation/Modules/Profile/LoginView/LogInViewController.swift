@@ -19,6 +19,7 @@ final class LogInViewController: UIViewController {
     
     // MARK: - Public properties
     
+    weak var coordinator: ProfileCoordinator?
     var loginDelegate: LogInViewControllerDelegate?
     
     // MARK: - Private properties
@@ -231,7 +232,6 @@ final class LogInViewController: UIViewController {
     }
     
     private func login() {
-        guard var viewControllers = navigationController?.viewControllers else { return }
         
         loginField.endEditing(true)
         passwordField.endEditing(true)
@@ -247,7 +247,7 @@ final class LogInViewController: UIViewController {
             
             guard password != nil && password != "" else { throw LoginInspectorErrors.emptyPassword }
             
-            let userService: UserService
+            let userService: UserServiceProtocol
             
             userService = CurrentUserService()
             
@@ -255,11 +255,8 @@ final class LogInViewController: UIViewController {
             
             if loginDelegate!.check(login: login!, password: password!) {
                 
+                coordinator?.proceedToProfile()
                 
-                _ = viewControllers.popLast()
-                
-                viewControllers.append(ProfileViewController(with: authorisedUser))
-                navigationController?.setViewControllers(viewControllers, animated: true)
             } else { throw LoginInspectorErrors.wrongLoginOrPassword }
         }
         

@@ -8,7 +8,7 @@
 import Foundation
 import StorageService
 
-protocol ProfileViewModelProtocol {
+protocol ProfileViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((ProfileViewModel.State) -> Void)? { get set }
     var user: User { get }
     var postData: [Post] { get }
@@ -45,14 +45,21 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     
     // MARK: - Public properties
     
+    ///Coordinator
+    weak var coordinator: ProfileCoordinator?
+    
     var onStateDidChange: ((State) -> Void)?
     
     var user: User
     var postData = Post.make()
     
+    // MARK: - Init
     init(withUser user: User) {
         self.user = user
     }
+    
+    
+    // MARK: - Public methods
     
     func updateState(withInput input: ViewInput) {
         switch input {

@@ -9,6 +9,8 @@ import UIKit
 
 class PostViewController: UIViewController {
     
+    weak var coordinator: FeedCoordinator?
+    
     private lazy var barButtonItem: UIBarButtonItem = {
         var barButton = UIBarButtonItem()
         barButton.image = UIImage(systemName: "info.circle")
@@ -28,9 +30,9 @@ class PostViewController: UIViewController {
     }
     
     @objc private func barButtronPressed(_ sender: UIBarButtonItem) {
-        let infoViewController = InfoViewController()
-        infoViewController.modalPresentationStyle = .pageSheet
-        present(infoViewController, animated: true)
+        
+        coordinator?.present(.info)
+        
     }
     
 }

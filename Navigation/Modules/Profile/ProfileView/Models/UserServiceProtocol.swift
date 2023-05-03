@@ -1,40 +1,26 @@
 //
-//  User.swift
+//  UserService.swift
 //  Navigation
 //
-//  Created by Ляпин Михаил on 14.04.2023.
+//  Created by Ляпин Михаил on 29.04.2023.
 //
 
 import Foundation
-import UIKit
+import UIKit.UIImage
 
-protocol UserService {
+protocol UserServiceProtocol {
     var user: User { get set }
     
     func authorize(login: String) -> User?
 }
 
-extension UserService {
+extension UserServiceProtocol {
     func authorize(login: String) -> User? {
         return login == user.login ? user : nil
     }
 }
 
-class User {
-    let login: String
-    let fullName: String
-    let avatar: UIImage?
-    var status: String?
-    
-    init(login: String, fullName: String, avatar: UIImage? = nil, status: String? = nil) {
-        self.login = login
-        self.fullName = fullName
-        self.avatar = avatar
-        self.status = status
-    }
-}
-
-class CurrentUserService: UserService {
+class CurrentUserService: UserServiceProtocol {
     
     var user: User = User(login: "furiousVader66",
                           fullName: "DarthVader",
@@ -42,9 +28,10 @@ class CurrentUserService: UserService {
                           status: "Join the Dark side!..")
 }
 
-class TestUserService: UserService {
+class TestUserService: UserServiceProtocol {
     
     var user = User(login: "test",
                         fullName: "TestUser")
 
 }
+

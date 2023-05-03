@@ -10,8 +10,12 @@ import StorageService
 
 final class FeedViewController: UIViewController {
 
+    // MARK: - Public properties
+    
+    weak var coordinator: FeedCoordinator?
+    
     // MARK: - Private properties
-    private let postsArray = Post.make()
+  
     private let feedModel = FeedModel()
     
     private lazy var stackView: UIStackView = {
@@ -150,10 +154,8 @@ final class FeedViewController: UIViewController {
     
     @objc func buttonPressed (_ sender: UIButton) {
         
-        let post = postsArray[0]
-        let postViewController = PostViewController()
-        postViewController.title = post.title
-        navigationController?.pushViewController(postViewController, animated: true)
+     
+        coordinator?.present(.post)
     
     }
     

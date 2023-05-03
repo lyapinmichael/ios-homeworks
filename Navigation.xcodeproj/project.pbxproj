@@ -14,8 +14,12 @@
 		EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06901B29A6B0CB004513A4 /* LogInViewController.swift */; };
 		EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423229FCF78600F74818 /* MainCoordinator.swift */; };
 		EC12423529FCF7B500F74818 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */; };
-		EC12423C29FCF9F300F74818 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423B29FCF9F300F74818 /* ProfileHeaderView.swift */; };
 		EC12424129FCFCC000F74818 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424029FCFCC000F74818 /* Module.swift */; };
+		EC12424729FD049000F74818 /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424629FD049000F74818 /* AppFactory.swift */; };
+		EC12424929FD0B3D00F74818 /* UserServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424829FD0B3D00F74818 /* UserServiceProtocol.swift */; };
+		EC12424B29FD0F3900F74818 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */; };
+		EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */; };
+		EC12425229FDBCEA00F74818 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */; };
 		EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4DC29984F30007A589E /* AppDelegate.swift */; };
 		EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4DE29984F30007A589E /* SceneDelegate.swift */; };
 		EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4E029984F30007A589E /* MainTabBarController.swift */; };
@@ -25,6 +29,7 @@
 		EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */; };
 		EC2799B629EA950C008E949B /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B529EA950C008E949B /* Checker.swift */; };
 		EC2799B829EA9744008E949B /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B729EA9744008E949B /* LoginInspector.swift */; };
+		EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */; };
 		EC2DA9B629E94A0A002149CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B529E94A0A002149CF /* User.swift */; };
 		EC2DA9BA29E96C60002149CF /* UsersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B929E96C60002149CF /* UsersStore.swift */; };
 		EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */; };
@@ -73,8 +78,11 @@
 		EC12423229FCF78600F74818 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
-		EC12423B29FCF9F300F74818 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileHeaderView.swift; path = ../../../../../../../../../.Trash/ProfileHeaderView.swift; sourceTree = "<group>"; };
 		EC12424029FCFCC000F74818 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
+		EC12424629FD049000F74818 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
+		EC12424829FD0B3D00F74818 /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
+		EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
 		EC1FF4D929984F30007A589E /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC1FF4DC29984F30007A589E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC1FF4DE29984F30007A589E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +94,7 @@
 		EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		EC2799B529EA950C008E949B /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		EC2799B729EA9744008E949B /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
+		EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RootVC.swift"; sourceTree = "<group>"; };
 		EC2DA9B529E94A0A002149CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EC2DA9B929E96C60002149CF /* UsersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStore.swift; sourceTree = "<group>"; };
 		EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -130,8 +139,10 @@
 		EC12423129FCF77100F74818 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
 				EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */,
+				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
+				EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */,
+				EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -139,7 +150,6 @@
 		EC12423629FCF94D00F74818 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				EC12423F29FCFA5500F74818 /* LoginView */,
 				EC12423829FCF9AB00F74818 /* Profile */,
 				EC12423729FCF95500F74818 /* Feed  */,
 				EC12424029FCFCC000F74818 /* Module.swift */,
@@ -159,9 +169,8 @@
 		EC12423829FCF9AB00F74818 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				EC12423E29FCFA2500F74818 /* Models */,
-				EC12423929FCF9C500F74818 /* View */,
-				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
+				EC12424C29FDAAEE00F74818 /* ProfileView */,
+				EC12423F29FCFA5500F74818 /* LoginView */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -170,11 +179,10 @@
 			isa = PBXGroup;
 			children = (
 				EC12423D29FCF9F800F74818 /* Photos */,
-				EC12423B29FCF9F300F74818 /* ProfileHeaderView.swift */,
 				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
+				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
 				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
 				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
-				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
 				ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
 			);
@@ -195,6 +203,7 @@
 			children = (
 				EC2DA9B529E94A0A002149CF /* User.swift */,
 				ECAA5D0729B3B9E800EC2F21 /* Photo.swift */,
+				EC12424829FD0B3D00F74818 /* UserServiceProtocol.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,8 +234,27 @@
 			children = (
 				ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */,
 				ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */,
+				EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EC12424529FD048300F74818 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				EC12424629FD049000F74818 /* AppFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		EC12424C29FDAAEE00F74818 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
+				EC12423929FCF9C500F74818 /* View */,
+				EC12423E29FCFA2500F74818 /* Models */,
+			);
+			path = ProfileView;
 			sourceTree = "<group>";
 		};
 		EC1FF4D029984F30007A589E = {
@@ -254,6 +282,7 @@
 				EC12424429FCFD8A00F74818 /* Extensions */,
 				EC9720D7299855430090FE5A /* MainTabBar */,
 				EC12423129FCF77100F74818 /* Coordinators */,
+				EC12424529FD048300F74818 /* Factory */,
 				EC12423629FCF94D00F74818 /* Modules */,
 				EC2DA9B429E949FC002149CF /* Models */,
 				EC9720D8299855730090FE5A /* Resources */,
@@ -425,16 +454,19 @@
 			files = (
 				EC2799B829EA9744008E949B /* LoginInspector.swift in Sources */,
 				ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */,
+				EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */,
 				ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */,
 				EC2799B629EA950C008E949B /* Checker.swift in Sources */,
 				EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */,
 				EC06901A29A61AC5004513A4 /* InfoViewController.swift in Sources */,
 				EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */,
+				EC12425229FDBCEA00F74818 /* ProfileHeaderView.swift in Sources */,
 				EC22BF4429F69D1C0024E0B4 /* FeedModel.swift in Sources */,
+				EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */,
 				ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */,
+				EC12424B29FD0F3900F74818 /* ProfileCoordinator.swift in Sources */,
 				EC2DA9BA29E96C60002149CF /* UsersStore.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
-				EC12423C29FCF9F300F74818 /* ProfileHeaderView.swift in Sources */,
 				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
 				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
@@ -446,8 +478,10 @@
 				ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */,
 				EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */,
 				EC2DA9B629E94A0A002149CF /* User.swift in Sources */,
+				EC12424729FD049000F74818 /* AppFactory.swift in Sources */,
 				EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */,
 				EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */,
+				EC12424929FD0B3D00F74818 /* UserServiceProtocol.swift in Sources */,
 				EC12424129FCFCC000F74818 /* Module.swift in Sources */,
 				ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */,
 				EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */,

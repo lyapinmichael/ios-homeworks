@@ -46,9 +46,9 @@ final class ProfileViewController: UIViewController {
    
     // MARK: - Init
     
-    init(with user: User) {
+    init(with viewModel: ProfileViewModelProtocol) {
     
-        self.viewModel = ProfileViewModel(withUser: user)
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
       
     }

@@ -14,11 +14,11 @@ final class PhotosViewController: UIViewController {
     
     // MARK: - Public properties
     
-    let imagePublisherFacade = ImagePublisherFacade()
+    let imageProcessor = ImageProcessor()
     
     // MARK: - Private properties
     
-    fileprivate var photos: [UIImage] = []
+    private var photos = Photo.shared.testPhotos
     
     private enum Constants {
         static let spacing: CGFloat = 8
@@ -49,29 +49,28 @@ final class PhotosViewController: UIViewController {
         return photosCollection
     }()
     
+    private lazy var processBarButton: UIBarButtonItem = {
+       let processBarButton = UIBarButtonItem(image: UIImage(systemName: "bolt.horizontal.fill"),
+                                              style: .plain,
+                                              target: self,
+                                              action: #selector(barButtonPressed))
+        return processBarButton
+    }()
+    
     // MARK: - Lyfecicle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
-        imagePublisherFacade.subscribe(self)
-        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 12, userImages:  Photo.shared.testPhotos)
+        navigationItem.rightBarButtonItem = processBarButton
         
         setupPhotosCollection()
         addSubviews()
         setConstraints()
     
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        imagePublisherFacade.rechargeImageLibrary()
-        imagePublisherFacade.removeSubscription(for: self)
-        
-    }
+
     
     
     // MARK: - Private methods
@@ -95,6 +94,41 @@ final class PhotosViewController: UIViewController {
         ])
     }
     
+    private func filterImagesOnThreadMeasuringTime() {
+        imageProcessor.processImagesOnThread(sourceImages: photos,
+                                             filter: .colorInvert,
+                                             qos: .utility,
+                                             completion: {images in
+            print("Completion closure running in thread \(Thread.current)")
+            
+            DispatchQueue.main.async {
+                print ("Now returning to thread \(Thread.current)")
+                self.photos = images.map {
+                    guard let cgImage = $0 else {fatalError("something went wrong while getting images")}
+                    return UIImage(cgImage: cgImage)
+                }
+                self.photosCollection.reloadSections(IndexSet(integer: 0))
+            }
+        })
+    }
+    
+    // MARK: - Objc methods
+    
+    @objc private func barButtonPressed() {
+        let clock = ContinuousClock()
+        let result = clock.measure(filterImagesOnThreadMeasuringTime)
+        
+        print(result)
+        
+        /// Elapsed time depending on QoS:
+        ///
+        /// with QoS .userInteractive elapsed time equals 0.000414542 seconds
+        /// with QoS .utility elapsed time equals 0.000516208 seconds
+        /// with QoS .userInitiated elapsed time equals 0.00073225 seconds
+        /// with QoS .default elapsed time equals 0.000742334 seconds
+        /// with QoS .background elapsed time equals 0.001048792 seconds
+    }
+    
 }
 
 // MARK: - DataSource extension
@@ -112,7 +146,6 @@ extension PhotosViewController: UICollectionViewDataSource {
         cell.updateContent(with: photos[indexPath.row])
         return cell
     }
-
 }
 
 // MARK: - ViewDelegateFlowLayout extension
@@ -144,17 +177,5 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         Constants.spacing
     }
-    
-}
-
-// MARK: - ImageLibrarySubscriber protocol extension
-
-extension PhotosViewController: ImageLibrarySubscriber {
-    
-    func receive(images: [UIImage]) {
-        photos = images
-        photosCollection.reloadData()
-    }
-    
     
 }

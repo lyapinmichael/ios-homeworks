@@ -95,38 +95,40 @@ final class PhotosViewController: UIViewController {
     }
     
     private func filterImagesOnThreadMeasuringTime() {
+        
+        let startDate = Date()
+        
         imageProcessor.processImagesOnThread(sourceImages: photos,
                                              filter: .colorInvert,
-                                             qos: .utility,
+                                             qos: .background,
                                              completion: {images in
             print("Completion closure running in thread \(Thread.current)")
-            
+
+            self.photos = images
+                .compactMap { $0 }
+                .map { UIImage(cgImage: $0) }
             DispatchQueue.main.async {
-                print ("Now returning to thread \(Thread.current)")
-                self.photos = images.map {
-                    guard let cgImage = $0 else {fatalError("something went wrong while getting images")}
-                    return UIImage(cgImage: cgImage)
-                }
                 self.photosCollection.reloadSections(IndexSet(integer: 0))
             }
+            
+            print("Time elapsed \(Date().timeIntervalSince(startDate)) seconds")
+            
         })
     }
     
     // MARK: - Objc methods
     
     @objc private func barButtonPressed() {
-        let clock = ContinuousClock()
-        let result = clock.measure(filterImagesOnThreadMeasuringTime)
         
-        print(result)
+        filterImagesOnThreadMeasuringTime()
         
         /// Elapsed time depending on QoS:
         ///
-        /// with QoS .userInteractive elapsed time equals 0.000414542 seconds
-        /// with QoS .utility elapsed time equals 0.000516208 seconds
-        /// with QoS .userInitiated elapsed time equals 0.00073225 seconds
-        /// with QoS .default elapsed time equals 0.000742334 seconds
-        /// with QoS .background elapsed time equals 0.001048792 seconds
+        /// with QoS .userInteractive elapsed time equals 1.012807011604309
+        /// with QoS .userInitiated elapsed time equals 1.0154860019683838 seconds
+        /// with QoS .default elapsed time equals 1.0388319492340088 seconds
+        /// with QoS .utility elapsed time equals 1.264422059059143 seconds
+        /// with QoS .background elapsed time equals 3.8558869361877442 seconds
     }
     
 }

@@ -14,11 +14,11 @@ final class PhotosViewController: UIViewController {
     
     // MARK: - Public properties
     
-    let imagePublisherFacade = ImagePublisherFacade()
+    let imageProcessor = ImageProcessor()
     
     // MARK: - Private properties
     
-    fileprivate var photos: [UIImage] = []
+    private var photos = Photo.shared.testPhotos
     
     private enum Constants {
         static let spacing: CGFloat = 8
@@ -49,29 +49,28 @@ final class PhotosViewController: UIViewController {
         return photosCollection
     }()
     
+    private lazy var processBarButton: UIBarButtonItem = {
+       let processBarButton = UIBarButtonItem(image: UIImage(systemName: "bolt.horizontal.fill"),
+                                              style: .plain,
+                                              target: self,
+                                              action: #selector(barButtonPressed))
+        return processBarButton
+    }()
+    
     // MARK: - Lyfecicle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
-        imagePublisherFacade.subscribe(self)
-        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 12, userImages:  Photo.shared.testPhotos)
+        navigationItem.rightBarButtonItem = processBarButton
         
         setupPhotosCollection()
         addSubviews()
         setConstraints()
     
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        imagePublisherFacade.rechargeImageLibrary()
-        imagePublisherFacade.removeSubscription(for: self)
-        
-    }
+
     
     
     // MARK: - Private methods
@@ -95,6 +94,43 @@ final class PhotosViewController: UIViewController {
         ])
     }
     
+    private func filterImagesOnThreadMeasuringTime() {
+        
+        let startDate = Date()
+        
+        imageProcessor.processImagesOnThread(sourceImages: photos,
+                                             filter: .colorInvert,
+                                             qos: .background,
+                                             completion: {images in
+            print("Completion closure running in thread \(Thread.current)")
+
+            self.photos = images
+                .compactMap { $0 }
+                .map { UIImage(cgImage: $0) }
+            DispatchQueue.main.async {
+                self.photosCollection.reloadSections(IndexSet(integer: 0))
+            }
+            
+            print("Time elapsed \(Date().timeIntervalSince(startDate)) seconds")
+            
+        })
+    }
+    
+    // MARK: - Objc methods
+    
+    @objc private func barButtonPressed() {
+        
+        filterImagesOnThreadMeasuringTime()
+        
+        /// Elapsed time depending on QoS:
+        ///
+        /// with QoS .userInteractive elapsed time equals 1.012807011604309
+        /// with QoS .userInitiated elapsed time equals 1.0154860019683838 seconds
+        /// with QoS .default elapsed time equals 1.0388319492340088 seconds
+        /// with QoS .utility elapsed time equals 1.264422059059143 seconds
+        /// with QoS .background elapsed time equals 3.8558869361877442 seconds
+    }
+    
 }
 
 // MARK: - DataSource extension
@@ -112,7 +148,6 @@ extension PhotosViewController: UICollectionViewDataSource {
         cell.updateContent(with: photos[indexPath.row])
         return cell
     }
-
 }
 
 // MARK: - ViewDelegateFlowLayout extension
@@ -144,17 +179,5 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         Constants.spacing
     }
-    
-}
-
-// MARK: - ImageLibrarySubscriber protocol extension
-
-extension PhotosViewController: ImageLibrarySubscriber {
-    
-    func receive(images: [UIImage]) {
-        photos = images
-        photosCollection.reloadData()
-    }
-    
     
 }

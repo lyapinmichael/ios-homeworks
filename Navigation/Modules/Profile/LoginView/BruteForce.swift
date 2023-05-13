@@ -11,7 +11,7 @@ import Foundation
 
 final class BruteForce {
     
-    static func attack(passwordToUnlock: String) {
+    static func attack(passwordToUnlock: String) -> String {
         print("Starting brute force attack...")
         
         let ALLOWED_CHARACTERS:   [String] = String().printable.map { String($0) }
@@ -24,6 +24,7 @@ final class BruteForce {
         }
         
         print("Password \(password) hacked successfully")
+        return password
     
     }
     

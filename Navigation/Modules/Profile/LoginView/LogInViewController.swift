@@ -83,8 +83,8 @@ final class LogInViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         
-        /// Default password to be deleted later:
-        textField.text = testPassword
+//        /// Default password to be deleted later:
+//        textField.text = testPassword
         return textField
     }()
     
@@ -149,12 +149,14 @@ final class LogInViewController: UIViewController {
             let serialQueue = DispatchQueue(label: "serialQueue1")
             
             serialQueue.async {
-                BruteForce.attack(passwordToUnlock: self.testPassword)
+                let hackedPassword = BruteForce.attack(passwordToUnlock: self.testPassword)
                 
                 DispatchQueue.main.async {
+                    self.passwordField.text = hackedPassword
+                    self.passwordField.isSecureTextEntry = false
                     self.loginButton.isEnabled = true
                     self.loadingSpinner.stopAnimating()
-                    self.passwordField.isSecureTextEntry = false
+                    
                 }
             }
             

@@ -26,6 +26,8 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties. Subviews
     
+    private var timer: Timer?
+    
     private var viewModel: ProfileViewModelProtocol
     
     private lazy var profileView: UITableView = {
@@ -57,6 +59,13 @@ final class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Deinit
+    
+    deinit {
+        timer?.invalidate()
+        timer = nil
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -65,6 +74,7 @@ final class ProfileViewController: UIViewController {
         setupView()
         viewWillLayoutSubviews()
         bindViewModel()
+        presentToastWithTimer()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -148,6 +158,21 @@ final class ProfileViewController: UIViewController {
         ])
     }
 
+    private func presentToastWithTimer() {
+        
+        let toast = ToastContoller()
+        
+        present(toast, animated: true)
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 3,
+                                     repeats: false,
+                                     block: { _ in
+            toast.dismiss(animated: true)
+        })
+        timer?.tolerance = 0.3
+        
+        
+    }
     //MARK: - Public methods
     
     func bindViewModel() {

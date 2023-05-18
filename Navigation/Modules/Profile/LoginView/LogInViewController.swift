@@ -22,6 +22,8 @@ final class LogInViewController: UIViewController {
     weak var coordinator: ProfileCoordinator?
     var loginDelegate: LogInViewControllerDelegate?
     
+    var testPassword = "dumm"
+    
     // MARK: - Private properties
     
     private lazy var scrollView: UIScrollView = {
@@ -81,9 +83,18 @@ final class LogInViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         
-        /// Default password to be deleted later:
-        textField.text = "isThisPasswordStrongEnough?"
+//        /// Default password to be deleted later:
+//        textField.text = testPassword
         return textField
+    }()
+    
+    private lazy var loadingSpinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.isHidden = true
+        spinner.hidesWhenStopped = true
+        
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
     }()
     
     private lazy var loginView: UIStackView = {
@@ -125,6 +136,42 @@ final class LogInViewController: UIViewController {
         
         return button
     }()
+    
+    private lazy var hackPasswordButton: CustomButton = {
+       
+        let buttonAction = {[weak self] in
+            guard let self = self else { return }
+            
+            self.loginButton.isEnabled = false
+            self.loadingSpinner.isHidden = false
+            self.loadingSpinner.startAnimating()
+            
+            let serialQueue = DispatchQueue(label: "serialQueue1")
+            
+            serialQueue.async {
+                let hackedPassword = BruteForce.attack(passwordToUnlock: self.testPassword)
+                
+                DispatchQueue.main.async {
+                    self.passwordField.text = hackedPassword
+                    self.passwordField.isSecureTextEntry = false
+                    self.loginButton.isEnabled = true
+                    self.loadingSpinner.stopAnimating()
+                    
+                }
+            }
+            
+            
+            
+        }
+        
+        let button = CustomButton(title: "Hack password!", color: UIColor(named: "ColorSet"), action: buttonAction)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+        
+    }()
+
     
     
     // MARK: - Lifecycle
@@ -211,7 +258,10 @@ final class LogInViewController: UIViewController {
     private func addContentSubviews() {
         contentView.addSubview(logoImage)
         contentView.addSubview(loginView)
+        contentView.addSubview(loadingSpinner)
         contentView.addSubview(loginButton)
+        contentView.addSubview(hackPasswordButton)
+       
         
         NSLayoutConstraint.activate([
             logoImage.heightAnchor.constraint(equalToConstant: 100),
@@ -224,10 +274,18 @@ final class LogInViewController: UIViewController {
             loginView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
+            loadingSpinner.centerYAnchor.constraint(equalTo: passwordField.centerYAnchor),
+            loadingSpinner.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor, constant: -12),
+
+            
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.topAnchor.constraint(equalTo: loginView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+    
+            hackPasswordButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
+            hackPasswordButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            hackPasswordButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     
@@ -247,11 +305,11 @@ final class LogInViewController: UIViewController {
             
             guard password != nil && password != "" else { throw LoginInspectorErrors.emptyPassword }
             
-            let userService: UserServiceProtocol
-            
-            userService = CurrentUserService()
-            
-            guard let authorisedUser = userService.authorize(login: login!) else { throw LoginInspectorErrors.loginNotRegistered }
+//            let userService: UserServiceProtocol
+//
+//            userService = CurrentUserService()
+//
+//          guard let authorisedUser = userService.authorize(login: login!) else { throw LoginInspectorErrors.loginNotRegistered }
             
             if loginDelegate!.check(login: login!, password: password!) {
                 

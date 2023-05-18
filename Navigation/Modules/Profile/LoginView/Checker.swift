@@ -17,7 +17,7 @@ class Checker {
     //MARK: Private properties
     
     private let login: String = "furiousVader66"
-    private let password: String = "isThisPasswordStrongEnough?"
+    private let password: String = "dumm"
     
     // MARK: - Private methods
     

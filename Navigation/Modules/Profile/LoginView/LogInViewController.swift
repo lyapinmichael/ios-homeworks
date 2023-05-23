@@ -137,40 +137,6 @@ final class LogInViewController: UIViewController {
         return button
     }()
     
-    private lazy var hackPasswordButton: CustomButton = {
-       
-        let buttonAction = {[weak self] in
-            guard let self = self else { return }
-            
-            self.loginButton.isEnabled = false
-            self.loadingSpinner.isHidden = false
-            self.loadingSpinner.startAnimating()
-            
-            let serialQueue = DispatchQueue(label: "serialQueue1")
-            
-            serialQueue.async {
-                let hackedPassword = BruteForce.attack(passwordToUnlock: self.testPassword)
-                
-                DispatchQueue.main.async {
-                    self.passwordField.text = hackedPassword
-                    self.passwordField.isSecureTextEntry = false
-                    self.loginButton.isEnabled = true
-                    self.loadingSpinner.stopAnimating()
-                    
-                }
-            }
-            
-            
-            
-        }
-        
-        let button = CustomButton(title: "Hack password!", color: UIColor(named: "ColorSet"), action: buttonAction)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        return button
-        
-    }()
 
     
     
@@ -260,7 +226,6 @@ final class LogInViewController: UIViewController {
         contentView.addSubview(loginView)
         contentView.addSubview(loadingSpinner)
         contentView.addSubview(loginButton)
-        contentView.addSubview(hackPasswordButton)
        
         
         NSLayoutConstraint.activate([
@@ -281,11 +246,8 @@ final class LogInViewController: UIViewController {
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.topAnchor.constraint(equalTo: loginView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
     
-            hackPasswordButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
-            hackPasswordButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            hackPasswordButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     
@@ -299,63 +261,59 @@ final class LogInViewController: UIViewController {
         
         /// Closure, that checks password and login, and handles exceptions
         
-        let checkLoginPassword = { [self] (login: String?, password: String?) throws in
-           
+        let checkLoginPassword = { [weak self] (login: String?, password: String?) throws in
+            
+            guard let self = self else { return }
+            
             guard login != nil && login != "" else { throw LoginInspectorErrors.emptyLogin }
             
             guard password != nil && password != "" else { throw LoginInspectorErrors.emptyPassword }
             
-//            let userService: UserServiceProtocol
-//
-//            userService = CurrentUserService()
-//
-//          guard let authorisedUser = userService.authorize(login: login!) else { throw LoginInspectorErrors.loginNotRegistered }
-            
-            if loginDelegate!.check(login: login!, password: password!) {
-                
-                coordinator?.proceedToProfile()
-                
-            } else { throw LoginInspectorErrors.wrongLoginOrPassword }
+            let userService: UserServiceProtocol = CurrentUserService()
+            userService.authorize(login: login!) { [weak self] result in
+                switch result {
+                case .success(let user):
+                    self?.coordinator?.proceedToProfile(user)
+                case .failure(let error):
+                    if case .loginNotRegistered(let errorMessage) = error {
+                        self?.showAlert(message: errorMessage)
+                    }
+                }
+            }
         }
-        
-        /// Closure, that shows alert message
-        
-        let showAlert = { (message: String) -> Void in
-            
-            let alert = UIAlertController(title: "Authorization error",
-                                          message: message,
-                                          preferredStyle: .alert)
-            
-            let dismissAction = UIAlertAction(title: "Close",
-                                              style: .cancel)
-            
-            alert.addAction(dismissAction)
-            
-            self.present(alert,
-                         animated: true,
-                         completion: {self.loginField.text = nil})
-            
-        }
-        
         /// Main logic of function
         
         do {
             try checkLoginPassword(login, password)
         } catch LoginInspectorErrors.emptyLogin {
-            showAlert("Please enter registered login")
+            self.showAlert(message: "Please enter registered login", title: "Authorization error")
         } catch LoginInspectorErrors.emptyPassword {
-            showAlert("Please enter password")
+            self.showAlert(message: "Please enter password", title: "Authorization error")
         } catch LoginInspectorErrors.loginNotRegistered {
-            showAlert("User with login \(login) not registered")
+            self.showAlert(message: "User with login \(login) is not registered", title: "Authorization error")
         } catch LoginInspectorErrors.wrongLoginOrPassword {
-            showAlert("Wrong login or password")
+            self.showAlert(message: "Wrong login or password", title: "Authorization error")
         } catch {
-            showAlert("Unknow error occured")
+            preconditionFailure("Something bad happened, continueing is dangerous and might hurt.")
         }
-        
-
     }
-
+    
+    private func showAlert(message: String, title: String? = nil) {
+        
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        let dismissAction = UIAlertAction(title: "Close",
+                                          style: .cancel)
+        
+        alert.addAction(dismissAction)
+        
+        self.present(alert,
+                     animated: true,
+                     completion: {self.loginField.text = nil})
+        
+    }
     
     // MARK: - @Objc Actions
     

@@ -20,7 +20,6 @@
 		EC12424B29FD0F3900F74818 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */; };
 		EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */; };
 		EC12425229FDBCEA00F74818 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */; };
-		EC193DA52A0EA11E0056F46D /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC193DA42A0EA11E0056F46D /* BruteForce.swift */; };
 		EC193DA72A0EA26D0056F46D /* String+printableReplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */; };
 		EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4DC29984F30007A589E /* AppDelegate.swift */; };
 		EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4DE29984F30007A589E /* SceneDelegate.swift */; };
@@ -87,7 +86,6 @@
 		EC12424829FD0B3D00F74818 /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
 		EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
-		EC193DA42A0EA11E0056F46D /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
 		EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+printableReplace.swift"; sourceTree = "<group>"; };
 		EC1FF4D929984F30007A589E /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC1FF4DC29984F30007A589E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -221,7 +219,6 @@
 		EC12423F29FCFA5500F74818 /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
-				EC193DA42A0EA11E0056F46D /* BruteForce.swift */,
 				EC2799B529EA950C008E949B /* Checker.swift */,
 				ECFCC60929EB4930003C4D4A /* LoginFactory.swift */,
 				EC2799B729EA9744008E949B /* LoginInspector.swift */,
@@ -491,7 +488,6 @@
 				ECFCC60A29EB4930003C4D4A /* LoginFactory.swift in Sources */,
 				EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */,
 				ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */,
-				EC193DA52A0EA11E0056F46D /* BruteForce.swift in Sources */,
 				EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */,
 				EC2DA9B629E94A0A002149CF /* User.swift in Sources */,
 				EC12424729FD049000F74818 /* AppFactory.swift in Sources */,

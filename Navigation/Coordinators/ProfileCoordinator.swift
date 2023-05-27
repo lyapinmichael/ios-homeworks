@@ -31,8 +31,8 @@ final class ProfileCoordinator: ModuleCoordinator {
         return viewController
     }
     
-    func proceedToProfile() {
-        let user = factory.userService.user
+    func proceedToProfile(_ user: User) {
+//        let user = factory.userService.user
         let viewModel = ProfileViewModel(withUser: user)
         viewModel.coordinator = self
         

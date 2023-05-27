@@ -11,12 +11,17 @@ import UIKit.UIImage
 protocol UserServiceProtocol {
     var user: User { get set }
     
-    func authorize(login: String) -> User?
+    func authorize(login: String, completion: @escaping (Result<User, LoginInspectorErrors>) -> Void)
 }
 
 extension UserServiceProtocol {
-    func authorize(login: String) -> User? {
-        return login == user.login ? user : nil
+    func authorize(login: String, completion: @escaping (Result<User, LoginInspectorErrors>) -> Void)  {
+        if login == user.login {
+            completion(.success(user))
+        } else {
+            let errorMessage = "User with login \(login) not registered"
+            completion(.failure(.loginNotRegistered(errorMessage: errorMessage)))
+        }
     }
 }
 

@@ -8,7 +8,8 @@
 import Foundation
 
 enum LoginInspectorErrors: Error {
-    case loginNotRegistered
+
+    case loginNotRegistered(errorMessage: String)
     case wrongLoginOrPassword
     case emptyLogin
     case emptyPassword

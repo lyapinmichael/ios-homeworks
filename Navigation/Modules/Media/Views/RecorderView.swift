@@ -1,51 +1,56 @@
 //
-//  MusicPlayer.swift
+//  Recorder.swift
 //  Navigation
 //
-//  Created by Ляпин Михаил on 27.05.2023.
+//  Created by Ляпин Михаил on 30.05.2023.
 //
 
 import UIKit
 
-protocol MusicPlayerDelegate: AnyObject {
-   
+protocol RecorderViewDelegate: AnyObject {
     
-    func switchPlayPauseButton(_ state:MusicPlayer.PlayPauseButtonState) -> Void
+    func togglePlayPauseButton(_ state: RecorderView.PlayPauseButtonState)
+    func toggleRecordButton(_ state: RecorderView.RecordButtonState)
+  
+    
 }
 
-class MusicPlayer: UIView {
+class RecorderView: UIView {
+  
     
-    // MARK: - Embedded enums
+    
+    // MARK: Embedden enums
     
     enum PlayPauseButtonState {
         case play
         case pause
     }
+
+    enum RecordButtonState {
+        case normal
+        case recording
+    }
     
-    // MARK: - Public properties
+    // MARK: Public properties
     
-    var viewModel: MusicPlayerViewModel?
+    var viewModel: RecorderViewModel?
     
-    // MARK: - Private properties
+    // MARK: Private properties
     
-    // MARK: UI elements (subviews)
-    
-    // TODO: Make a progress bar indicating current time position in playing track
     private lazy var mainStack: UIStackView = {
-        let stackView = UIStackView()
+       let stackView = UIStackView()
         stackView.backgroundColor = .white
         stackView.layer.cornerRadius = 30
         
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 25
         
-        stackView.addArrangedSubview(nowPlayingLabel)
-        stackView.addArrangedSubview(trackNameLabel)
-        stackView.addArrangedSubview(artistLabel)
         stackView.addArrangedSubview(buttonsStack)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        
         return stackView
     }()
     
@@ -56,38 +61,12 @@ class MusicPlayer: UIView {
         stackView.distribution = .fillEqually
         stackView.spacing = 25
         
-        stackView.addArrangedSubview(previousButton)
+        stackView.addArrangedSubview(recordButton)
         stackView.addArrangedSubview(playPauseButton)
         stackView.addArrangedSubview(stopButton)
-        stackView.addArrangedSubview(nextButton)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
-    }()
-    
-    private lazy var trackNameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 25)
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var artistLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .semibold)
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var nowPlayingLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Now playing:"
-        label.font = .systemFont(ofSize: 18)
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
     }()
     
     private lazy var playPauseButton: UIButton = {
@@ -121,13 +100,13 @@ class MusicPlayer: UIView {
         return button
     }()
     
-    private lazy var nextButton: UIButton = {
+    private lazy var recordButton: UIButton = {
         let button = UIButton(configuration: UIButton.Configuration.gray())
         
-        button.setImage(UIImage(systemName: "forward.fill"), for: .normal)
+        button.setImage(UIImage(systemName: "record.circle"), for: .normal)
         
         let action = UIAction(handler: {_ in
-            self.viewModel?.updateState(withInput: .didTapNextButton)
+            self.viewModel?.updateState(withInput: .didTapRecordButton)
         })
         
         button.addAction(action, for: .touchUpInside)
@@ -136,35 +115,20 @@ class MusicPlayer: UIView {
         return button
     }()
     
-    private lazy var previousButton: UIButton = {
-        let button = UIButton(configuration: UIButton.Configuration.gray())
-        
-        button.setImage(UIImage(systemName: "backward.fill"), for: .normal)
-        
-        let action = UIAction(handler: {_ in
-            self.viewModel?.updateState(withInput: .didTapPreviousButton)
-        })
-        
-        button.addAction(action, for: .touchUpInside)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    // MARK: Init
     
-    // MARK: - Init
-    init(viewModel: MusicPlayerViewModel?) {
+    init(viewModel: RecorderViewModel?) {
         super.init(frame: .zero)
         self.viewModel = viewModel
         self.viewModel?.delegate = self
         setup()
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Private methods
+    // MARK: Private methods
     
     private func setup() {
         bindViewModel()
@@ -192,36 +156,58 @@ class MusicPlayer: UIView {
             switch state {
             case .initial:
                 return
+            
             case .play:
-                viewModel?.player.play()
-                self.trackNameLabel.text = viewModel?.currentTrack.trackName
-                self.artistLabel.text = viewModel?.currentTrack.artist
-                self.backgroundColor = .systemTeal
+                togglePlayPauseButton(.play)
+                
             case .pause:
-                viewModel?.player.stop()
-                self.backgroundColor = .systemOrange
+                togglePlayPauseButton(.pause)
+                
+            case .record:
+                self.toggleRecordButton(.recording)
+                self.trasportButtonsAreEnabled(false)
+                
+                
             case .stop:
-                self.trackNameLabel.text = nil
-                self.artistLabel.text = nil
-                viewModel?.player.stop()
-                
-                viewModel?.player.currentTime = 0
-                self.backgroundColor = nil
-                
+                self.trasportButtonsAreEnabled(true)
+                self.togglePlayPauseButton(.play)
+                self.toggleRecordButton(.normal)
             }
         }
     }
+    
+    private func trasportButtonsAreEnabled(_ value: Bool) {
+        switch value {
+        case true:
+            self.playPauseButton.isEnabled = true
+            self.stopButton.isEnabled = true
+        case false:
+            self.stopButton.isEnabled = false
+            self.playPauseButton.isEnabled = false
+        }
+        
+    }
+    
 }
 
-extension MusicPlayer: MusicPlayerDelegate {
-    func switchPlayPauseButton(_ state: PlayPauseButtonState) {
+extension RecorderView: RecorderViewDelegate {
+    func togglePlayPauseButton(_ state: PlayPauseButtonState) {
         switch state {
         case .play:
-            playPauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            self.playPauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
         case .pause:
-            playPauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            self.playPauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         }
     }
     
-    
+    func toggleRecordButton(_ state: RecordButtonState) {
+        switch state {
+        case .recording:
+            self.recordButton.setImage(UIImage(systemName: "record.circle.fill"), for: .normal)
+            self.recordButton.tintColor = .red
+        case .normal:
+            self.recordButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
+            self.recordButton.tintColor = nil
+        }
+    }
 }

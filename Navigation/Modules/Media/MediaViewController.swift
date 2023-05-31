@@ -25,7 +25,11 @@ final class MediaViewController: UIViewController {
         let musicPlayerViewModel = MusicPlayerViewModel()
         let musicPlayer = MusicPlayer(viewModel: musicPlayerViewModel)
         
+        let recorderViewModel = RecorderViewModel()
+        let recorderView = RecorderView(viewModel: recorderViewModel)
+        
         stackView.addArrangedSubview(musicPlayer)
+        stackView.addArrangedSubview(recorderView)
 
         
         stackView.translatesAutoresizingMaskIntoConstraints = false

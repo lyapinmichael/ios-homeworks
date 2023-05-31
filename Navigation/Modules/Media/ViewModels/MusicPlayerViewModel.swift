@@ -10,11 +10,9 @@ import AVFoundation
 
 protocol MusicPlayerViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((MusicPlayerViewModel.State) -> Void)? { get set }
-    
-    func updateState(withInput input: MusicPlayerViewModel.ViewInput)
-
     var player: AVAudioPlayer { get }
     
+    func updateState(withInput input: MusicPlayerViewModel.ViewInput)
     func prepareToPlay(_ track: AudioFile)
 }
 

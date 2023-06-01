@@ -21,7 +21,7 @@ protocol RecorderViewModelProtocol: ViewModelProtocol {
 // TODO: combine recorderviewmodel and player viewmodel into one class, based more on recorderVM
 // TODO: enhance recorder view delegate protocol and music player view delegate protocol and combine them into one
 
-class RecorderViewModel: RecorderViewModelProtocol {
+class RecorderViewModel: NSObject, RecorderViewModelProtocol {
     
     // MARK: Embedded enums
     
@@ -62,17 +62,17 @@ class RecorderViewModel: RecorderViewModelProtocol {
         case .didTapPlayPauseButton:
             guard state != .play else {
                 state = .pause
-                audioPlayer?.stop()
+                audioPlayer?.pause()
                 return
             }
+            
+            play()
             state = .play
-            audioPlayer?.play()
-        
             
         case .didTapRecordButton:
             guard state != .record else {
-                state = .stop
                 stopRecording()
+                state = .stop
                 return
             }
             
@@ -86,9 +86,9 @@ class RecorderViewModel: RecorderViewModelProtocol {
             
             
         case .didTapStopButton:
-            state = .stop
             audioPlayer?.stop()
             audioPlayer?.currentTime = 0
+            state = .stop
         }
     }
     
@@ -136,6 +136,7 @@ class RecorderViewModel: RecorderViewModelProtocol {
                     AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
                 ]
             recorder = try AVAudioRecorder(url: url, settings: settings)
+            recorder?.delegate = self
             recorder?.prepareToRecord()
             recorder?.record()
             print("recording")
@@ -151,18 +152,47 @@ class RecorderViewModel: RecorderViewModelProtocol {
         recorder?.stop()
         print("recording stopped")
         recorder = nil
-        
-        do {
-            try audioPlayer = AVAudioPlayer(contentsOf: getRecordingFileURL())
-            audioPlayer?.prepareToPlay()
-        } catch {
-            print(error)
-            assertionFailure("Failed to create audioPlayer and prepare it to play")
-        }
+      
     }
     
     private func getRecordingFileURL() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0].appendingPathComponent("recording", conformingTo: .mpeg)
     }
+    
+    private func play() {
+        
+        guard audioPlayer != nil else { return }
+        
+        audioPlayer?.play()
+        
+    }
 }
+
+extension RecorderViewModel: AVAudioPlayerDelegate {
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        state = .stop
+    }
+    
+}
+
+extension RecorderViewModel: AVAudioRecorderDelegate {
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if flag {
+            do {
+                try audioPlayer = AVAudioPlayer(contentsOf: getRecordingFileURL())
+                audioPlayer?.delegate = self
+                audioPlayer?.prepareToPlay()
+                
+                
+            } catch {
+                print(error)
+                assertionFailure("Failed to create audioPlayer and prepare it to play")
+            }
+        }
+    }
+}
+
+

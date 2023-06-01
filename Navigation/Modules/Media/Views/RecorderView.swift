@@ -170,7 +170,7 @@ class RecorderView: UIView {
                 
             case .stop:
                 self.trasportButtonsAreEnabled(true)
-                self.togglePlayPauseButton(.play)
+                self.togglePlayPauseButton(.pause)
                 self.toggleRecordButton(.normal)
             }
         }
@@ -194,9 +194,9 @@ extension RecorderView: RecorderViewDelegate {
     func togglePlayPauseButton(_ state: PlayPauseButtonState) {
         switch state {
         case .play:
-            self.playPauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        case .pause:
             self.playPauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        case .pause:
+            self.playPauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
         }
     }
     

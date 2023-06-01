@@ -38,14 +38,14 @@
 		EC650C4A29DB55BE00BF938E /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; };
 		EC650C4B29DB55BE00BF938E /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EC650C5029DB55C900BF938E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720E12998565E0090FE5A /* Post.swift */; };
-		EC69DEB02A23E3A70096D9CE /* dreams.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DEAF2A23E3A70096D9CE /* dreams.mp3 */; };
-		EC69DEB72A24A9810096D9CE /* creativeminds.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DEB62A24A9810096D9CE /* creativeminds.mp3 */; };
-		EC69DEB92A24A99F0096D9CE /* jazzyfrenchy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DEB82A24A99F0096D9CE /* jazzyfrenchy.mp3 */; };
-		EC69DEBB2A24A9AD0096D9CE /* allthat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DEBA2A24A9AD0096D9CE /* allthat.mp3 */; };
-		EC69DEBD2A24A9BA0096D9CE /* photoalbum.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DEBC2A24A9BA0096D9CE /* photoalbum.mp3 */; };
 		EC69DEBF2A24A9F00096D9CE /* AudioFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEBE2A24A9F00096D9CE /* AudioFileModel.swift */; };
 		EC69DEC32A25DABE0096D9CE /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEC22A25DABE0096D9CE /* RecorderView.swift */; };
 		EC69DEC52A25DFE10096D9CE /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEC42A25DFE10096D9CE /* RecorderViewModel.swift */; };
+		EC69DECF2A28D7C60096D9CE /* photoalbum.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECA2A28D7C50096D9CE /* photoalbum.mp3 */; };
+		EC69DED02A28D7C60096D9CE /* allthat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECB2A28D7C50096D9CE /* allthat.mp3 */; };
+		EC69DED12A28D7C60096D9CE /* jazzyfrenchy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECC2A28D7C50096D9CE /* jazzyfrenchy.mp3 */; };
+		EC69DED22A28D7C60096D9CE /* creativeminds.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */; };
+		EC69DED32A28D7C60096D9CE /* dreams.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECE2A28D7C60096D9CE /* dreams.mp3 */; };
 		EC7F04732A22857100C167F0 /* MediaCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F04722A22857100C167F0 /* MediaCoordinator.swift */; };
 		EC7F04782A2286CE00C167F0 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F04772A2286CE00C167F0 /* MediaViewController.swift */; };
 		EC7F047B2A22A2E300C167F0 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F047A2A22A2E300C167F0 /* MusicPlayer.swift */; };
@@ -116,15 +116,15 @@
 		EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		EC650C4429DB55BE00BF938E /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC650C4629DB55BE00BF938E /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
-		EC69DEAF2A23E3A70096D9CE /* dreams.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = dreams.mp3; path = ../../../../../../../../Downloads/dreams.mp3; sourceTree = "<group>"; };
 		EC69DEB12A23E3B60096D9CE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		EC69DEB62A24A9810096D9CE /* creativeminds.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = creativeminds.mp3; path = ../../../../../../../../Downloads/creativeminds.mp3; sourceTree = "<group>"; };
-		EC69DEB82A24A99F0096D9CE /* jazzyfrenchy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = jazzyfrenchy.mp3; path = ../../../../../../../../Downloads/jazzyfrenchy.mp3; sourceTree = "<group>"; };
-		EC69DEBA2A24A9AD0096D9CE /* allthat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = allthat.mp3; path = ../../../../../../../../Downloads/allthat.mp3; sourceTree = "<group>"; };
-		EC69DEBC2A24A9BA0096D9CE /* photoalbum.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = photoalbum.mp3; path = ../../../../../../../../Downloads/photoalbum.mp3; sourceTree = "<group>"; };
 		EC69DEBE2A24A9F00096D9CE /* AudioFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileModel.swift; sourceTree = "<group>"; };
 		EC69DEC22A25DABE0096D9CE /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
 		EC69DEC42A25DFE10096D9CE /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
+		EC69DECA2A28D7C50096D9CE /* photoalbum.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = photoalbum.mp3; sourceTree = "<group>"; };
+		EC69DECB2A28D7C50096D9CE /* allthat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = allthat.mp3; sourceTree = "<group>"; };
+		EC69DECC2A28D7C50096D9CE /* jazzyfrenchy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jazzyfrenchy.mp3; sourceTree = "<group>"; };
+		EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = creativeminds.mp3; sourceTree = "<group>"; };
+		EC69DECE2A28D7C60096D9CE /* dreams.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreams.mp3; sourceTree = "<group>"; };
 		EC7F04722A22857100C167F0 /* MediaCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCoordinator.swift; sourceTree = "<group>"; };
 		EC7F04772A2286CE00C167F0 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		EC7F047A2A22A2E300C167F0 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
@@ -347,11 +347,11 @@
 		EC69DEAE2A23E3900096D9CE /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				EC69DEBA2A24A9AD0096D9CE /* allthat.mp3 */,
-				EC69DEBC2A24A9BA0096D9CE /* photoalbum.mp3 */,
-				EC69DEB62A24A9810096D9CE /* creativeminds.mp3 */,
-				EC69DEB82A24A99F0096D9CE /* jazzyfrenchy.mp3 */,
-				EC69DEAF2A23E3A70096D9CE /* dreams.mp3 */,
+				EC69DECB2A28D7C50096D9CE /* allthat.mp3 */,
+				EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */,
+				EC69DECE2A28D7C60096D9CE /* dreams.mp3 */,
+				EC69DECC2A28D7C50096D9CE /* jazzyfrenchy.mp3 */,
+				EC69DECA2A28D7C50096D9CE /* photoalbum.mp3 */,
 				EC69DEB12A23E3B60096D9CE /* README.md */,
 			);
 			path = Music;
@@ -520,13 +520,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC69DEB92A24A99F0096D9CE /* jazzyfrenchy.mp3 in Resources */,
+				EC69DED12A28D7C60096D9CE /* jazzyfrenchy.mp3 in Resources */,
+				EC69DED22A28D7C60096D9CE /* creativeminds.mp3 in Resources */,
+				EC69DED32A28D7C60096D9CE /* dreams.mp3 in Resources */,
+				EC69DECF2A28D7C60096D9CE /* photoalbum.mp3 in Resources */,
 				EC1FF4E929984F31007A589E /* LaunchScreen.storyboard in Resources */,
-				EC69DEB72A24A9810096D9CE /* creativeminds.mp3 in Resources */,
-				EC69DEBD2A24A9BA0096D9CE /* photoalbum.mp3 in Resources */,
-				EC69DEBB2A24A9AD0096D9CE /* allthat.mp3 in Resources */,
-				EC69DEB02A23E3A70096D9CE /* dreams.mp3 in Resources */,
 				EC1FF4E629984F31007A589E /* Assets.xcassets in Resources */,
+				EC69DED02A28D7C60096D9CE /* allthat.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

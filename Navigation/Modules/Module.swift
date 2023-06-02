@@ -15,6 +15,7 @@ struct Module {
     enum ModuleType {
         case feed
         case profile
+        case media
         
     }
     
@@ -30,6 +31,8 @@ extension Module.ModuleType {
             return UITabBarItem(title: "Feed", image: UIImage(systemName: "house.circle"), tag: 0) 
         case .profile:
             return UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), tag: 1)
+        case .media:
+            return UITabBarItem(title: "Media", image: UIImage(systemName: "play.circle"), tag: 2)
         }
     }
 }

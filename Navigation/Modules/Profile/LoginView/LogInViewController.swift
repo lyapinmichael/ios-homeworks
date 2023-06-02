@@ -269,6 +269,7 @@ final class LogInViewController: UIViewController {
             
             guard password != nil && password != "" else { throw LoginInspectorErrors.emptyPassword }
             
+            // TODO: Fix ignoring password and only checking login while authorizing
             let userService: UserServiceProtocol = CurrentUserService()
             userService.authorize(login: login!) { [weak self] result in
                 switch result {

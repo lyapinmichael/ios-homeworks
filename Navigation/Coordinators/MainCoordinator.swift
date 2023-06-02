@@ -26,14 +26,17 @@ final class MainCoorditanor: Coordinator {
     func start() -> UIViewController {
         let feedCoordinator = FeedCoordinator(moduleType: .feed, factory: factory)
         let profileCoordinator = ProfileCoordinator(moduleType: .profile, factory: factory)
+        let mediaCoordinator = MediaCoordinator(moduleType: .media, factory: factory)
        
         let mainTabBarController = MainTabBarController(viewControllers: [
             feedCoordinator.start(),
-            profileCoordinator.start()
+            profileCoordinator.start(),
+            mediaCoordinator.start()
         ])
         
         addChildCoordinator(feedCoordinator)
         addChildCoordinator(profileCoordinator)
+        addChildCoordinator(mediaCoordinator)
         
         return mainTabBarController
     }

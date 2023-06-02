@@ -32,6 +32,14 @@ final class AppFactory {
             
             return Module(moduleType: type, viewModel: nil, view: view)
             
+        case .media:
+            
+            let mediaViewContoller = MediaViewController()
+            let view = UINavigationController(rootViewController: mediaViewContoller)
+            ///
+            /// TODO: if View Model will be needed for Media module, make sure that it is **Coordinator** that instantiates View Model and passes it to View
+            /// 
+            return Module(moduleType: type, viewModel: nil, view: view)
         }
     }
     

@@ -193,19 +193,19 @@ class MusicPlayer: UIView {
             case .initial:
                 return
             case .play:
-                viewModel?.player.play()
+                viewModel?.player?.play()
                 self.trackNameLabel.text = viewModel?.currentTrack.trackName
                 self.artistLabel.text = viewModel?.currentTrack.artist
                 self.backgroundColor = .systemTeal
             case .pause:
-                viewModel?.player.stop()
+                viewModel?.player?.stop()
                 self.backgroundColor = .systemOrange
             case .stop:
                 self.trackNameLabel.text = nil
                 self.artistLabel.text = nil
-                viewModel?.player.stop()
+                viewModel?.player?.stop()
                 
-                viewModel?.player.currentTime = 0
+                viewModel?.player?.currentTime = 0
                 self.backgroundColor = nil
                 
             }

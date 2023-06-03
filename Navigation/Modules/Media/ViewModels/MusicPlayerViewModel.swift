@@ -10,7 +10,7 @@ import AVFoundation
 
 protocol MusicPlayerViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((MusicPlayerViewModel.State) -> Void)? { get set }
-    var player: AVAudioPlayer { get }
+    var player: AVAudioPlayer? { get }
     
     func updateState(withInput input: MusicPlayerViewModel.ViewInput)
     func prepareToPlay(_ track: AudioFile)
@@ -45,7 +45,7 @@ class MusicPlayerViewModel: MusicPlayerViewModelProtocol {
 
     var onStateDidChange: ((State) -> Void)?
     
-    var player: AVAudioPlayer = AVAudioPlayer()
+    var player: AVAudioPlayer?
     var tracksArray: [AudioFile]
     var currentTrack: AudioFile
     
@@ -154,7 +154,7 @@ class MusicPlayerViewModel: MusicPlayerViewModelProtocol {
     func prepareToPlay(_ track: AudioFile) {
         do {
             player = try AVAudioPlayer(contentsOf: URL.init(filePath: track.pathToFile))
-            player.prepareToPlay()
+            player?.prepareToPlay()
         } catch {
             print(error)
         }

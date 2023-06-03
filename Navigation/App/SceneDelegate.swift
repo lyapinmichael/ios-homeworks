@@ -25,6 +25,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         self.mainCoordinator = mainCoordinator
         
+        let appConfigutation: AppConfigutation = .starships("https://swapi.dev/api/starships/22")
+        NetworkService.request(forConfiguration: appConfigutation) { result in
+            switch result {
+            case .success(let loadedData):
+                switch appConfigutation {
+                case .planets:
+                    if let planetName = loadedData["name"] {
+                        print("Welcome to planet \(planetName)!")
+                    }
+                case .people:
+                    if let personName = loadedData["name"] {
+                        print("Meet \(personName)!")
+                    }
+                case .starships:
+                    if let starshipName = loadedData["name"], let starshipCost = loadedData["cost_in_credits"] {
+                        print("Look! \(starshipName) just flew by. It costs \(starshipCost) credits btw.")
+                    }
+                }
+            case .failure(let error):
+                print("Something went wrong: \n\n\(error)")
+            }
+           
+        }
+        
         window?.rootViewController = mainCoordinator.start()
         window?.makeKeyAndVisible()
         

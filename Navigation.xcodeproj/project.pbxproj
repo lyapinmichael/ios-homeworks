@@ -46,6 +46,7 @@
 		EC69DED12A28D7C60096D9CE /* jazzyfrenchy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECC2A28D7C50096D9CE /* jazzyfrenchy.mp3 */; };
 		EC69DED22A28D7C60096D9CE /* creativeminds.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */; };
 		EC69DED32A28D7C60096D9CE /* dreams.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECE2A28D7C60096D9CE /* dreams.mp3 */; };
+		EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */; };
 		EC7F04732A22857100C167F0 /* MediaCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F04722A22857100C167F0 /* MediaCoordinator.swift */; };
 		EC7F04782A2286CE00C167F0 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F04772A2286CE00C167F0 /* MediaViewController.swift */; };
 		EC7F047B2A22A2E300C167F0 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F047A2A22A2E300C167F0 /* MusicPlayer.swift */; };
@@ -125,6 +126,7 @@
 		EC69DECC2A28D7C50096D9CE /* jazzyfrenchy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jazzyfrenchy.mp3; sourceTree = "<group>"; };
 		EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = creativeminds.mp3; sourceTree = "<group>"; };
 		EC69DECE2A28D7C60096D9CE /* dreams.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreams.mp3; sourceTree = "<group>"; };
+		EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		EC7F04722A22857100C167F0 /* MediaCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCoordinator.swift; sourceTree = "<group>"; };
 		EC7F04772A2286CE00C167F0 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		EC7F047A2A22A2E300C167F0 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 		EC1FF4DB29984F30007A589E /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				EC69DEDA2A2B7A8E0096D9CE /* Services */,
 				EC9720D6299855340090FE5A /* App */,
 				EC12424429FCFD8A00F74818 /* Extensions */,
 				EC9720D7299855430090FE5A /* MainTabBar */,
@@ -371,6 +374,14 @@
 			children = (
 			);
 			path = Recordings;
+			sourceTree = "<group>";
+		};
+		EC69DEDA2A2B7A8E0096D9CE /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		EC7F04762A22868600C167F0 /* Media */ = {
@@ -566,6 +577,7 @@
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
 				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
+				EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */,
 				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
 				EC12423529FCF7B500F74818 /* CoordinatorProtocol.swift in Sources */,
 				ECAA5CFE29B0AEA600EC2F21 /* UITableViewExtension.swift in Sources */,

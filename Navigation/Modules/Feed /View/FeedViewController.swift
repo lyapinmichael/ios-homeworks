@@ -86,6 +86,13 @@ final class FeedViewController: UIViewController {
         return label
     }()
     
+    private lazy var barButtonItem: UIBarButtonItem = {
+        var barButton = UIBarButtonItem()
+        barButton.image = UIImage(systemName: "info.circle")
+        barButton.target = self
+        barButton.action = #selector(barButtronPressed(_:))
+        return barButton
+    }()
     // MARK: - Private methods
 
     private func setupStackView() {
@@ -130,6 +137,7 @@ final class FeedViewController: UIViewController {
         
         title = "Feed"
         view.backgroundColor = .white
+        navigationItem.rightBarButtonItem = barButtonItem
         
         view.addSubview(stackView)
         setupStackView()
@@ -161,6 +169,13 @@ final class FeedViewController: UIViewController {
     
     @objc func dismissKeyboard () {
         guesserTextField.endEditing(true)
+        
+    }
+    
+    
+    @objc private func barButtronPressed(_ sender: UIBarButtonItem) {
+        
+        coordinator?.present(.info)
         
     }
     

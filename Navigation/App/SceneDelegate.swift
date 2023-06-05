@@ -25,11 +25,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         self.mainCoordinator = mainCoordinator
         
-        let appConfigutation: AppConfigutation = .starships("https://swapi.dev/api/starships/22")
-        NetworkService.request(forConfiguration: appConfigutation) { result in
+        let configuration = AppConfigutation.planets
+        NetworkService.request(requestURL: configuration.url("22"), completion: { result in
             switch result {
             case .success(let loadedData):
-                switch appConfigutation {
+                switch configuration  {
                 case .planets:
                     if let planetName = loadedData["name"] {
                         print("Welcome to planet \(planetName)!")
@@ -46,8 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             case .failure(let error):
                 print("Something went wrong: \n\n\(error)")
             }
-           
-        }
+        })
         
         window?.rootViewController = mainCoordinator.start()
         window?.makeKeyAndVisible()

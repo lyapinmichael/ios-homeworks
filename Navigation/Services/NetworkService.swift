@@ -7,10 +7,16 @@
 
 import Foundation
 
-enum AppConfigutation {
-    case starships(String)
-    case people(String)
-    case planets(String)
+enum AppConfigutation: String, CaseIterable {
+    case starships = "https://swapi.dev/api/starships/"
+    case people = "https://swapi.dev/api/people/"
+    case planets = "https://swapi.dev/api/planets/"
+    
+    var url: (String) -> URL? {
+        { endpoint in
+            URL(string: self.rawValue + endpoint)
+        }
+    }
 }
 
 enum NetworkError: Error {
@@ -22,21 +28,10 @@ enum NetworkError: Error {
 
 struct NetworkService {
     
-    static func request(forConfiguration config: AppConfigutation, completion: @escaping ((Result<[String:Any], Error>) -> Void)) {
+    static func request(requestURL: URL?, completion: @escaping ((Result<[String:Any], Error>) -> Void)) {
         let session = URLSession(configuration: .default)
-        var requestString: String
         
-        switch config {
-        case .planets(let planetString):
-            requestString = planetString
-        case .people(let personString):
-            requestString = personString
-        case .starships(let starshipString):
-            requestString = starshipString
-            
-        }
-        
-        guard let url = URL(string: requestString) else {
+        guard let url = requestURL else {
             assertionFailure("Bad string: cannot initialize URL")
             return
         }

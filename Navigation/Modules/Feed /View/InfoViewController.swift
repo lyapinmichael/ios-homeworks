@@ -11,31 +11,27 @@ final class InfoViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private lazy var mainStack: UIStackView = {
-       let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .equalCentering
+    private var residents: [PlanetResident] = []
+    
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
         
-        stackView.addArrangedSubview(todoLabel)
-        stackView.addArrangedSubview(getTodoButton)
-        stackView.addArrangedSubview(getPlanetOrbitalPeriodButton)
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
     }()
     
     private lazy var todoLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray5
+        label.backgroundColor = .systemGray6
         label.clipsToBounds = true
         label.layer.cornerRadius = 20
-
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
         paragraphStyle.firstLineHeadIndent = 10
         paragraphStyle.headIndent = 10
         
-        let attributedString = NSAttributedString(string: "Press button below",
+        let attributedString = NSAttributedString(string: "Loading...",
                                                   attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
         label.attributedText = attributedString
@@ -43,38 +39,45 @@ final class InfoViewController: UIViewController {
         label.numberOfLines = 0
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.heightAnchor.constraint(equalToConstant: 80).isActive = true
         return label
     }()
     
-    private lazy var getTodoButton: UIButton = {
+    private lazy var planetOrbitPeriodLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .systemGray6
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         
-        var button = UIButton()
-
-        button.setTitle("Press to request Todo from API", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.setTitleColor(.lightGray, for: .highlighted)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.firstLineHeadIndent = 10
+        paragraphStyle.headIndent = 10
         
-        button.addTarget(self, action: #selector(getTodo(_:)), for: .touchUpInside)
+        let attributedString = NSAttributedString(string: "Loading...",
+                                                  attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        label.attributedText = attributedString
+        label.font = .systemFont(ofSize: 18)
+        label.numberOfLines = 0
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    
-    private lazy var getPlanetOrbitalPeriodButton: UIButton = {
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: view.frame, style: .plain)
         
-        var button = UIButton()
-
-        button.setTitle("Press to request Planet's orbital period", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.setTitleColor(.lightGray, for: .highlighted)
+        tableView.layer.cornerRadius = 20
+        tableView.layer.borderWidth = 0.5
+        tableView.layer.borderColor = UIColor.systemGray.cgColor
         
-        button.addTarget(self, action: #selector(getPlanetsOrbitalPeriod), for: .touchUpInside)
+        tableView.dataSource = self
+        tableView.delegate = self
         
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
+    
     
     // MARK: - Lifecycle
     
@@ -83,32 +86,59 @@ final class InfoViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        view.addSubview(mainStack)
+        setupSubviews()
         
-        let safeAreaGuide = view.safeAreaLayoutGuide
-        
-        var stackHeight: CGFloat  { CGFloat (self.mainStack.arrangedSubviews.count) * 80
-        }
-        
-        NSLayoutConstraint.activate([
-            mainStack.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20.0),
-            mainStack.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20.0),
-            mainStack.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
-            mainStack.heightAnchor.constraint(equalToConstant: stackHeight)
-        ])
+        getTodo()
+        getPlanetData()
         
         
     }
-
+    
     // MARK: - Private methods
     
+    private func setupSubviews() {
+        
+        
+        view.addSubview(contentView)
+        contentView.addSubview(todoLabel)
+        contentView.addSubview(planetOrbitPeriodLabel)
+        contentView.addSubview(tableView)
+        
+        let safeAreaGuide = view.safeAreaLayoutGuide
+        
+        
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
+            
+            todoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32),
+            todoLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            todoLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -16),
+            todoLabel.heightAnchor.constraint(equalToConstant: 80),
+            
+            planetOrbitPeriodLabel.topAnchor.constraint(equalTo: todoLabel.bottomAnchor, constant: 16),
+            planetOrbitPeriodLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            planetOrbitPeriodLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -16),
+            planetOrbitPeriodLabel.heightAnchor.constraint(equalToConstant: 80),
+            
+            tableView.topAnchor.constraint(equalTo: planetOrbitPeriodLabel.bottomAnchor, constant: 16),
+            tableView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            tableView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -16),
+            tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            
+        ])
+    }
+    
+    // Presents an alert informing that something went wrong
     private func presentAlert() {
         let title = "Error occured"
         let message = "Something went wrong while trying to get requested information. Please, try again later."
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
-       
+        
         
         let closeHandler: ((UIAlertAction) -> Void) = {_ in
             alert.dismiss(animated: true)
@@ -122,11 +152,13 @@ final class InfoViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    // MARK: - Objc methods
     
-    @objc private func getTodo(_ sender: UIButton) {
+    // Loads Todo item from API
+    private func getTodo() {
         
-        NetworkService.requestTodo(number: 73) { result in
+        NetworkService.requestTodo(number: 70) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let todo):
                 
@@ -139,6 +171,7 @@ final class InfoViewController: UIViewController {
                 print(error)
                 
                 DispatchQueue.main.async {
+                    self.todoLabel.text = "Failed to load data"
                     self.presentAlert()
                 }
             }
@@ -146,27 +179,89 @@ final class InfoViewController: UIViewController {
         }
     }
     
-    @objc private func getPlanetsOrbitalPeriod() {
+    // Loads data about specific planet form SWApi
+    private func getPlanetData() {
         
-        NetworkService.requestTatooineOrbitalPeriod(number: 1) { result in
+        NetworkService.requestPlanetData(number: 1) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let planetData):
                 
+                self.getResidentsData(residentURLs: planetData.residents)
+                
                 DispatchQueue.main.async {
-                    self.todoLabel.text = "\(planetData.name)'s orbital period is \(planetData.orbitalPeriod) days."
+                    self.planetOrbitPeriodLabel.text = "\(planetData.name)'s orbital period is \(planetData.orbitalPeriod) days."
                 }
+                
                 
             case .failure(let error):
                 
                 DispatchQueue.main.async {
+                    self.planetOrbitPeriodLabel.text = "Failed to load data"
                     self.presentAlert()
                 }
                 
                 print(error)
             }
         }
+    }
+    
+    private func getResidentsData(residentURLs: [String]) {
         
+        self.residents = []
+        let dispatchGroup = DispatchGroup()
+        
+        for i in residentURLs {
+            dispatchGroup.enter()
+            NetworkService.requestRezidentsOfPlanet(urlString: i, completion: { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                    
+                case .success(let resident):
+                    self.residents.append(resident)
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    
+                }
+                dispatchGroup.leave()
+            })
+            
+        }
+        
+        dispatchGroup.notify(queue: .main, execute: {
+     
+                self.tableView.reloadData()
+        })
+    }
+}
+
+extension InfoViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return residents.count
+
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       let cell = UITableViewCell()
+        
+        cell.backgroundColor = .systemGray6
+        var configutation = UIListContentConfiguration.cell()
+        configutation.text = residents[indexPath.row].name
+        cell.contentConfiguration = configutation
+        
+        return cell
         
     }
+}
 
+extension InfoViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "List of planet residents:"
+    }
 }

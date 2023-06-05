@@ -62,6 +62,7 @@
 		ECCBCDDD2A165EE100F05304 /* ToastPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */; };
 		ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D0F2A2CE230002BEE93 /* Todo.swift */; };
 		ECF59D122A2D0525002BEE93 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D112A2D0525002BEE93 /* Planet.swift */; };
+		ECF59D162A2D2515002BEE93 /* PlanetResident.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D152A2D2515002BEE93 /* PlanetResident.swift */; };
 		ECFCC60A29EB4930003C4D4A /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFCC60929EB4930003C4D4A /* LoginFactory.swift */; };
 		ECFCC60D29F04DA2003C4D4A /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = ECFCC60C29F04DA2003C4D4A /* iOSIntPackage */; };
 		ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */; };
@@ -149,6 +150,7 @@
 		ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresentationController.swift; sourceTree = "<group>"; };
 		ECF59D0F2A2CE230002BEE93 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		ECF59D112A2D0525002BEE93 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		ECF59D152A2D2515002BEE93 /* PlanetResident.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetResident.swift; sourceTree = "<group>"; };
 		ECFCC60929EB4930003C4D4A /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
 		ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -340,6 +342,7 @@
 				EC2DA9B929E96C60002149CF /* UsersStore.swift */,
 				ECF59D0F2A2CE230002BEE93 /* Todo.swift */,
 				ECF59D112A2D0525002BEE93 /* Planet.swift */,
+				ECF59D152A2D2515002BEE93 /* PlanetResident.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				EC12424929FD0B3D00F74818 /* UserServiceProtocol.swift in Sources */,
 				EC7F047D2A233DBF00C167F0 /* MusicPlayerViewModel.swift in Sources */,
 				EC12424129FCFCC000F74818 /* Module.swift in Sources */,
+				ECF59D162A2D2515002BEE93 /* PlanetResident.swift in Sources */,
 				ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */,
 				EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */,
 				EC7F04782A2286CE00C167F0 /* MediaViewController.swift in Sources */,

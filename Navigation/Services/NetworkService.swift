@@ -14,6 +14,7 @@ enum AppConfigutation {
 }
 
 enum NetworkError: Error {
+    case badURL
     case statsusCodeNot200
     case dataNil
     case cannotCastAnswer
@@ -155,7 +156,7 @@ struct NetworkService {
         
     }
     
-    static func requestTatooineOrbitalPeriod(number: Int, completion: @escaping ((Result<Planet, Error>) -> Void)) {
+    static func requestPlanetData(number: Int, completion: @escaping ((Result<Planet, Error>) -> Void)) {
         
         guard let url = URL(string: "https://swapi.dev/api/planets/" + String(number)) else {
                 assertionFailure("Bad string: cannot initialize URL")
@@ -191,6 +192,50 @@ struct NetworkService {
             do {
                 let planetData = try JSONDecoder().decode(Planet.self, from: data)
                 completion(.success(planetData))
+            } catch {
+                print(error)
+            }
+        }
+        dataTask.resume()
+    }
+    
+    static func requestRezidentsOfPlanet(urlString: String, completion: @escaping ((Result<PlanetResident, Error>) -> Void)) {
+        
+        guard let url = URL(string: urlString) else {
+                assertionFailure("Bad string: cannot initialize URL")
+                completion(.failure(NetworkError.badURL))
+                return
+        }
+        
+        let session = URLSession(configuration: .default)
+        
+        let dataTask = session.dataTask(with: url) {data, response, error in
+            if let error {
+                print(error.localizedDescription)
+                completion(.failure(error))
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                print("Bad response")
+                completion(.failure(NetworkError.statsusCodeNot200))
+                return
+            }
+            
+            if response.statusCode != 200 {
+                print("Failed to get response from API, status code != 200")
+                completion(.failure(NetworkError.statsusCodeNot200))
+                return
+            }
+            
+            guard let data else {
+                print("No data was returned by API, data = nil")
+                completion(.failure(NetworkError.dataNil))
+                return
+            }
+            
+            do {
+                let residentData = try JSONDecoder().decode(PlanetResident.self, from: data)
+                completion(.success(residentData))
             } catch {
                 print(error)
             }

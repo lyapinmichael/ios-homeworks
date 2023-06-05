@@ -9,6 +9,10 @@ import UIKit
 
 final class InfoViewController: UIViewController {
     
+    private enum CellID: String {
+        case base = "baseCellID"
+    }
+    
     // MARK: - Private properties
     
     private var residents: [PlanetResident] = []
@@ -73,6 +77,7 @@ final class InfoViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: CellID.base.rawValue)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -247,8 +252,10 @@ extension InfoViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let cell = UITableViewCell()
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellID.base.rawValue) else {
+            let cell = UITableViewCell()
+            return cell
+        }
         cell.backgroundColor = .systemGray6
         var configutation = UIListContentConfiguration.cell()
         configutation.text = residents[indexPath.row].name

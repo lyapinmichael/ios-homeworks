@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 enum LoginInspectorErrors: Error {
 
@@ -13,11 +14,47 @@ enum LoginInspectorErrors: Error {
     case wrongLoginOrPassword
     case emptyLogin
     case emptyPassword
+    case authResultIsNil
     
 }
 
-struct LoginInspector: LogInViewControllerDelegate {
-    func check(login: String, password: String) -> Bool {
-        return Checker.shared.check(login: login, password: password)
+//MARK: - LogInViewControllerDelegate Protocol
+
+protocol LogInViewControllerDelegate: AnyObject {
+    
+    func checkCredentials(email: String, password: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void))
+    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void))
+    func signOut()
+}
+
+class LoginInspector: LogInViewControllerDelegate {
+    
+    func checkCredentials(email: String, password: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void)) {
+        CheckerService().checkCredentials(email: email, password: password) { result in 
+            completion(result)
+        }
+    }
+    
+    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void)) {
+        CheckerService().signUp(email: email, password: password) { result in
+            
+            if case .success = result {
+                let user = Auth.auth().currentUser
+                let changeRequest = user?.createProfileChangeRequest()
+                changeRequest?.displayName = fullName
+                
+                changeRequest?.commitChanges() { error in
+                    guard error != nil else { return }
+                    completion(.failure(error!))
+                }
+            }
+            
+            completion(result)
+        }
+    }
+    
+    func signOut() {
+        try? Auth.auth().signOut()
+        
     }
 }

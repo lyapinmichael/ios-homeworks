@@ -12,7 +12,7 @@ struct UsersStore {
     static var all: [User] = [ User(login: "furiousVader66",
                                     fullName: "Darth Vader",
                                     avatar: UIImage(named: "DarthVader")),
-                               User(login: "mighty_master_yoda",
+                               User(login: "mighty_master_yoda", // login = "mighty_yoda@mail.com" password = "password"
                                     fullName: "Master Yoda",
                                     avatar: UIImage(named: "MasterYoda"))
     ]

@@ -6,12 +6,7 @@
 //
 
 import UIKit
-
-//MARK: - LogInViewControllerDelegate Protocol
-
-protocol LogInViewControllerDelegate {
-    func check(login: String, password: String) -> Bool
-}
+import FirebaseAuth
 
 // MARK: - LogInViewController: UIViewController()
 
@@ -20,9 +15,10 @@ final class LogInViewController: UIViewController {
     // MARK: - Public properties
     
     weak var coordinator: ProfileCoordinator?
-    var loginDelegate: LogInViewControllerDelegate?
+    private var loginDelegate: LogInViewControllerDelegate?
     
-    var testPassword = "dumm"
+    var testLogin = "furiousVader777@samplemail.com"
+    var testPassword = "password"
     
     // MARK: - Private properties
     
@@ -61,14 +57,14 @@ final class LogInViewController: UIViewController {
         let textField = CustomTextField()
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.placeholder = "Email or phone"
+        textField.placeholder = "Email"
         textField.autocapitalizationType = .none
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         
         /// Default login to be deleted later:
-        textField.text = "furiousVader66"
+        textField.text = testLogin
         return textField
     }()
     
@@ -77,15 +73,37 @@ final class LogInViewController: UIViewController {
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.placeholder = "Password"
+        textField.textContentType = .oneTimeCode
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         
-//        /// Default password to be deleted later:
-//        textField.text = testPassword
+        /// Default password to be deleted later:
+        textField.text = testPassword
         return textField
+    }()
+    
+    private lazy var showHideTextButton: UIButton = {
+        let action = UIAction { [weak self] action in
+            guard let self = self else { return }
+            
+            self.passwordField.isSecureTextEntry.toggle()
+            
+            switch self.passwordField.isSecureTextEntry {
+            case true:
+                self.showHideTextButton.setImage(UIImage(systemName: "eye"), for:.normal)
+            case false:
+                self.showHideTextButton.setImage(UIImage(systemName: "eye.slash"), for:.normal)
+            }
+        }
+        
+        let button = UIButton(primaryAction: action)
+        button.setImage(UIImage(systemName: "eye"), for: .normal)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private lazy var loadingSpinner: UIActivityIndicatorView = {
@@ -127,10 +145,28 @@ final class LogInViewController: UIViewController {
         
         let buttonAction = {[weak self] in
             guard let self = self else { return }
-            self.login()
+            self.tryLogin()
         }
         
         let button = CustomButton(title: "Log in", color: UIColor(named: "ColorSet"), action: buttonAction)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    private lazy var signUpButton: CustomButton = {
+       
+        let buttonAction = { [weak self] in
+            guard let self = self else { return }
+            
+            let signupController = SignUpViewController()
+            signupController.delegate = self
+            signupController.signupDelegate = loginDelegate
+            self.present(signupController, animated: true)
+        }
+        
+        let button = CustomButton(title: "Sign up", color: UIColor(named: "ColorSet"), action: buttonAction)
         
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -144,6 +180,7 @@ final class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginDelegate = LoginInspector()
         
         setup()
         addSubviews()
@@ -153,7 +190,7 @@ final class LogInViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.navigationController?.navigationBar.isHidden = true
         setKeyboardObservers()
     }
     
@@ -163,6 +200,28 @@ final class LogInViewController: UIViewController {
         removeKeyboardObservers()
     }
     
+    // MARK: - Public methods
+    
+    func login(login: String, password: String) {
+        loginDelegate?.checkCredentials(email: login, password: password) { [weak self] result in
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let authResult):
+                guard let userEmail = authResult.user.email else {
+                    assertionFailure("Bad email. Check auth settings.")
+                    return
+                }
+        
+                self.coordinator?.proceedToProfile(User(login: userEmail, fullName: authResult.user.displayName ?? "DefaultUsername"))
+                
+            case .failure(let error):
+                
+                self.presentAlert(message: error.localizedDescription)
+            }
+        }
+    }
     
     // MARK: - Private methods
     
@@ -176,6 +235,7 @@ final class LogInViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
+        
         
     }
     
@@ -224,8 +284,10 @@ final class LogInViewController: UIViewController {
     private func addContentSubviews() {
         contentView.addSubview(logoImage)
         contentView.addSubview(loginView)
+        contentView.addSubview(showHideTextButton)
         contentView.addSubview(loadingSpinner)
         contentView.addSubview(loginButton)
+        contentView.addSubview(signUpButton)
        
         
         NSLayoutConstraint.activate([
@@ -239,83 +301,46 @@ final class LogInViewController: UIViewController {
             loginView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
+            showHideTextButton.centerYAnchor.constraint(equalTo: passwordField.centerYAnchor),
+            showHideTextButton.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor, constant: -8),
+            showHideTextButton.heightAnchor.constraint(equalTo: passwordField.heightAnchor, constant: -4),
+            
             loadingSpinner.centerYAnchor.constraint(equalTo: passwordField.centerYAnchor),
             loadingSpinner.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor, constant: -12),
 
-            
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.topAnchor.constraint(equalTo: loginView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
+            signUpButton.heightAnchor.constraint(equalToConstant: 50),
+            signUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
+            signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
     
         ])
     }
     
-    private func login() {
+    private func tryLogin() {
         
         loginField.endEditing(true)
         passwordField.endEditing(true)
         
-        let login = loginField.text ?? ""
-        let password = passwordField.text ?? ""
-        
-        /// Closure, that checks password and login, and handles exceptions
-        
-        let checkLoginPassword = { [weak self] (login: String?, password: String?) throws in
-            
-            guard let self = self else { return }
-            
-            guard login != nil && login != "" else { throw LoginInspectorErrors.emptyLogin }
-            
-            guard password != nil && password != "" else { throw LoginInspectorErrors.emptyPassword }
-            
-            // TODO: Fix ignoring password and only checking login while authorizing
-            let userService: UserServiceProtocol = CurrentUserService()
-            userService.authorize(login: login!) { [weak self] result in
-                switch result {
-                case .success(let user):
-                    self?.coordinator?.proceedToProfile(user)
-                case .failure(let error):
-                    if case .loginNotRegistered(let errorMessage) = error {
-                        self?.showAlert(message: errorMessage)
-                    }
-                }
-            }
+        guard let login = loginField.text, !login.isEmpty else {
+            presentAlert(message: "Please, fill in login")
+            return
         }
-        /// Main logic of function
         
-        do {
-            try checkLoginPassword(login, password)
-        } catch LoginInspectorErrors.emptyLogin {
-            self.showAlert(message: "Please enter registered login", title: "Authorization error")
-        } catch LoginInspectorErrors.emptyPassword {
-            self.showAlert(message: "Please enter password", title: "Authorization error")
-        } catch LoginInspectorErrors.loginNotRegistered {
-            self.showAlert(message: "User with login \(login) is not registered", title: "Authorization error")
-        } catch LoginInspectorErrors.wrongLoginOrPassword {
-            self.showAlert(message: "Wrong login or password", title: "Authorization error")
-        } catch {
-            preconditionFailure("Something bad happened, continueing is dangerous and might hurt.")
+        guard let password = passwordField.text, !password.isEmpty else {
+            presentAlert(message: "Please, fill in password")
+            return
         }
+        
+        self.login(login: login, password: password)
+   
     }
     
-    private func showAlert(message: String, title: String? = nil) {
         
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      preferredStyle: .alert)
-        
-        let dismissAction = UIAlertAction(title: "Close",
-                                          style: .cancel)
-        
-        alert.addAction(dismissAction)
-        
-        self.present(alert,
-                     animated: true,
-                     completion: {self.loginField.text = nil})
-        
-    }
-    
     // MARK: - @Objc Actions
     
     @objc private func willShowKeyboard(_ notification: NSNotification) {
@@ -333,6 +358,7 @@ final class LogInViewController: UIViewController {
     }
     
 }
+
 
 extension LogInViewController: UITextFieldDelegate {
     

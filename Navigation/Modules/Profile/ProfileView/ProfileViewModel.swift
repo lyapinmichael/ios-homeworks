@@ -33,6 +33,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     enum ViewInput {
         case didTapPrintStatusButton(String)
         case didTapSetStatusButton(String)
+        case didTapLogOutButton
     }
     
     // MARK: - Private properties
@@ -67,6 +68,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             state = .printStatus(status)
         case let .didTapSetStatusButton(status):
             state = .setStatus(status)
+        case .didTapLogOutButton:
+            coordinator?.logOut()
         }
     }
 }

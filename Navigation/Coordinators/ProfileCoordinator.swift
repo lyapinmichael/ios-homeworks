@@ -44,8 +44,17 @@ final class ProfileCoordinator: ModuleCoordinator {
         _ = viewControllers.popLast()
         viewControllers.append(ProfileViewController(with: viewModel))
         navigationController?.setViewControllers(viewControllers, animated: true)
-        
+    }
     
+    func logOut() {
+        let navigationController = (module?.view as? UINavigationController)
+        guard var viewControllers = navigationController?.viewControllers else { return }
+        
+        _ = viewControllers.popLast()
+        let loginViewController = LogInViewController()
+        loginViewController.coordinator = self
+        viewControllers.append(loginViewController)
+        navigationController?.setViewControllers(viewControllers, animated: true)
     }
     
     

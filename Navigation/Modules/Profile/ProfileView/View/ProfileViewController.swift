@@ -84,13 +84,20 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = false
+        let logOutAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.updateState(withInput: .didTapLogOutButton)
+        }
+        let logOutButton = UIBarButtonItem(title: "Log Out", primaryAction: logOutAction)
+        navigationItem.rightBarButtonItem = logOutButton
 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         self.navigationController?.navigationBar.isHidden = false
+        self.presentedViewController?.dismiss(animated: true)
     }
 
     override func viewWillLayoutSubviews() {

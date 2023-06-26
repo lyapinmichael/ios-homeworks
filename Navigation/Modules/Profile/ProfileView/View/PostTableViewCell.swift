@@ -10,6 +10,10 @@ import StorageService
 
 final class PostTableViewCell: UITableViewCell {
     
+    weak var delegate: ProfileViewController?
+    
+    private var post: Post?
+    
     private lazy var postTitle: UILabel = {
         let title = UILabel()
         title.numberOfLines = 2
@@ -64,6 +68,9 @@ final class PostTableViewCell: UITableViewCell {
         addSubviews()
         setConstraints()
         backgroundColor = .white
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addToFavourites))
+        doubleTap.numberOfTapsRequired = 2
+        self.contentView.addGestureRecognizer(doubleTap)
 
     }
     
@@ -105,12 +112,14 @@ final class PostTableViewCell: UITableViewCell {
             
             viewsLabel.topAnchor.constraint(equalTo: postText.bottomAnchor),
             viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            contentView.bottomAnchor.constraint(equalTo: likesLabel.bottomAnchor, constant: 16)
             
+            contentView.bottomAnchor.constraint(equalTo: likesLabel.bottomAnchor, constant: 16)
         ])
     }
     
     func updateContent(_ data: Post) {
+        
+        self.post = data
         
         postTitle.text = data.title
         
@@ -135,5 +144,21 @@ final class PostTableViewCell: UITableViewCell {
         likesLabel.frame.maxY 
     }
     
+    @objc private func addToFavourites() {
+        
+        guard let post = self.post else { return }
+        
+        FavouritePostsService.shared.add(post: post, completion: { [weak self] result in
+            
+            switch result {
+            case .success(_):
+                self?.delegate?.presentToast(message: "Added to favourites")
+            case .failure(let error):
+                if case .alreadyInFavourites = error {
+                    self?.delegate?.presentToast(message: "Post is already in favorites")
+                }
+            }
+        })
+    }
 
-}
+ }

@@ -16,6 +16,7 @@ struct Module {
         case feed
         case profile
         case media
+        case favouritePosts
         
     }
     
@@ -33,6 +34,8 @@ extension Module.ModuleType {
             return UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), tag: 1)
         case .media:
             return UITabBarItem(title: "Media", image: UIImage(systemName: "play.circle"), tag: 2)
+        case .favouritePosts:
+            return UITabBarItem(title: "Favourite Posts", image: UIImage(systemName: "star.fill"), tag: 3)
         }
     }
 }

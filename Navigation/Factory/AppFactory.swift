@@ -39,6 +39,15 @@ final class AppFactory {
             /// TODO: if View Model will be needed for Media module, make sure that it is **Coordinator** that instantiates View Model and passes it to View
             /// 
             return Module(moduleType: type, viewModel: nil, view: view)
+            
+        case .favouritePosts:
+            
+            let favouritePostsTableController = FavouritePostsTableController()
+            let view = UINavigationController(rootViewController: favouritePostsTableController)
+            view.title = "Favourite posts"
+            
+            return Module(moduleType: .favouritePosts, viewModel: nil, view: view)
+            
         }
     }
     

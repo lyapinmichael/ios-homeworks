@@ -27,16 +27,19 @@ final class MainCoorditanor: Coordinator {
         let feedCoordinator = FeedCoordinator(moduleType: .feed, factory: factory)
         let profileCoordinator = ProfileCoordinator(moduleType: .profile, factory: factory)
         let mediaCoordinator = MediaCoordinator(moduleType: .media, factory: factory)
+        let favouritePostsCoordinator = FavouritePostsCoordinator(moduleType: .favouritePosts, factory: factory)
        
         let mainTabBarController = MainTabBarController(viewControllers: [
             feedCoordinator.start(),
             profileCoordinator.start(),
-            mediaCoordinator.start()
+            mediaCoordinator.start(),
+            favouritePostsCoordinator.start()
         ])
         
         addChildCoordinator(feedCoordinator)
         addChildCoordinator(profileCoordinator)
         addChildCoordinator(mediaCoordinator)
+        addChildCoordinator(favouritePostsCoordinator)
         
         return mainTabBarController
     }

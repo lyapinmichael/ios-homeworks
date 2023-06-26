@@ -35,6 +35,7 @@
 		EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */; };
 		EC2DA9B629E94A0A002149CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B529E94A0A002149CF /* User.swift */; };
 		EC2DA9BA29E96C60002149CF /* UsersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B929E96C60002149CF /* UsersStore.swift */; };
+		EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFD59A62A45B3AC009E90F9 /* FavouritePostsService.swift */; };
 		EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */; };
 		EC650C4729DB55BE00BF938E /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = EC650C4629DB55BE00BF938E /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC650C4A29DB55BE00BF938E /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; };
@@ -72,6 +73,9 @@
 		ECFCC60A29EB4930003C4D4A /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFCC60929EB4930003C4D4A /* LoginFactory.swift */; };
 		ECFCC60D29F04DA2003C4D4A /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = ECFCC60C29F04DA2003C4D4A /* iOSIntPackage */; };
 		ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */; };
+		ECFD599E2A45ACA0009E90F9 /* FavouritePostsTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFD599D2A45ACA0009E90F9 /* FavouritePostsTableController.swift */; };
+		ECFD59A02A45AD41009E90F9 /* FavouritePostsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFD599F2A45AD41009E90F9 /* FavouritePostsCoordinator.swift */; };
+		ECFD59A32A45B1F3009E90F9 /* FavouritePost.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ECFD59A12A45B1F3009E90F9 /* FavouritePost.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +172,10 @@
 		ECF59D1F2A3086DC002BEE93 /* UIViewController+PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentAlert.swift"; sourceTree = "<group>"; };
 		ECFCC60929EB4930003C4D4A /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
 		ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		ECFD599D2A45ACA0009E90F9 /* FavouritePostsTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePostsTableController.swift; sourceTree = "<group>"; };
+		ECFD599F2A45AD41009E90F9 /* FavouritePostsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePostsCoordinator.swift; sourceTree = "<group>"; };
+		ECFD59A22A45B1F3009E90F9 /* FavouritePosts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavouritePosts.xcdatamodel; sourceTree = "<group>"; };
+		ECFD59A62A45B3AC009E90F9 /* FavouritePostsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePostsService.swift; sourceTree = "<group>"; };
 		FC7C7A0CC28B1F26C37C9760 /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -221,6 +229,7 @@
 				EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */,
 				EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */,
 				EC7F04722A22857100C167F0 /* MediaCoordinator.swift */,
+				ECFD599F2A45AD41009E90F9 /* FavouritePostsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -228,10 +237,11 @@
 		EC12423629FCF94D00F74818 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				EC7F04762A22868600C167F0 /* Media */,
-				EC12423829FCF9AB00F74818 /* Profile */,
-				EC12424029FCFCC000F74818 /* Module.swift */,
 				EC12423729FCF95500F74818 /* Feed  */,
+				EC12423829FCF9AB00F74818 /* Profile */,
+				EC7F04762A22868600C167F0 /* Media */,
+				ECFD599C2A45ABEF009E90F9 /* FavouritePosts */,
+				EC12424029FCFCC000F74818 /* Module.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -364,8 +374,9 @@
 		EC1FF4DB29984F30007A589E /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				EC69DEDA2A2B7A8E0096D9CE /* Services */,
+				ECFD59A12A45B1F3009E90F9 /* FavouritePost.xcdatamodeld */,
 				EC9720D6299855340090FE5A /* App */,
+				EC69DEDA2A2B7A8E0096D9CE /* Services */,
 				EC12424429FCFD8A00F74818 /* Extensions */,
 				EC9720D7299855430090FE5A /* MainTabBar */,
 				EC12423129FCF77100F74818 /* Coordinators */,
@@ -424,6 +435,7 @@
 		EC69DEDA2A2B7A8E0096D9CE /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				ECFD59A62A45B3AC009E90F9 /* FavouritePostsService.swift */,
 				EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */,
 				ECF59D1B2A2F67A5002BEE93 /* CheckerService.swift */,
 			);
@@ -475,6 +487,14 @@
 				EC1FF4E729984F31007A589E /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		ECFD599C2A45ABEF009E90F9 /* FavouritePosts */ = {
+			isa = PBXGroup;
+			children = (
+				ECFD599D2A45ACA0009E90F9 /* FavouritePostsTableController.swift */,
+			);
+			path = FavouritePosts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -672,6 +692,7 @@
 				EC7F04732A22857100C167F0 /* MediaCoordinator.swift in Sources */,
 				ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */,
 				EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */,
+				ECFD59A02A45AD41009E90F9 /* FavouritePostsCoordinator.swift in Sources */,
 				EC69DEC52A25DFE10096D9CE /* RecorderViewModel.swift in Sources */,
 				ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */,
 				EC2799B629EA950C008E949B /* Checker.swift in Sources */,
@@ -692,6 +713,7 @@
 				ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
 				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
+				ECFD599E2A45ACA0009E90F9 /* FavouritePostsTableController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
 				EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */,
 				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
@@ -711,6 +733,7 @@
 				EC69DEC32A25DABE0096D9CE /* RecorderView.swift in Sources */,
 				EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */,
 				EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */,
+				EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */,
 				EC12424929FD0B3D00F74818 /* UserService.swift in Sources */,
 				EC7F047D2A233DBF00C167F0 /* MusicPlayerViewModel.swift in Sources */,
 				EC12424129FCFCC000F74818 /* Module.swift in Sources */,
@@ -718,6 +741,7 @@
 				ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */,
 				EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */,
 				EC7F04782A2286CE00C167F0 /* MediaViewController.swift in Sources */,
+				ECFD59A32A45B1F3009E90F9 /* FavouritePost.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,6 +1059,19 @@
 			productName = iOSIntPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		ECFD59A12A45B1F3009E90F9 /* FavouritePost.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				ECFD59A22A45B1F3009E90F9 /* FavouritePosts.xcdatamodel */,
+			);
+			currentVersion = ECFD59A22A45B1F3009E90F9 /* FavouritePosts.xcdatamodel */;
+			path = FavouritePost.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EC1FF4D129984F30007A589E /* Project object */;
 }

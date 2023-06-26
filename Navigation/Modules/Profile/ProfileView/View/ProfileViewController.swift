@@ -74,7 +74,7 @@ final class ProfileViewController: UIViewController {
         setupView()
         viewWillLayoutSubviews()
         bindViewModel()
-        presentToastWithTimer()
+        presentToast()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -165,10 +165,17 @@ final class ProfileViewController: UIViewController {
         ])
     }
 
-    private func presentToastWithTimer() {
+    func presentToast(message: String? = nil) {
         
-        let toast = ToastContoller()
+        var toast: ToastContoller
         
+        if let message = message {
+            toast = ToastContoller(message: message)
+        } else {
+            toast = ToastContoller()
+        }
+        
+
         present(toast, animated: true)
         
         timer = Timer.scheduledTimer(withTimeInterval: 3,
@@ -234,6 +241,7 @@ extension ProfileViewController: UITableViewDataSource {
                 withIdentifier: CellReuseID.post.rawValue,
                 for: indexPath
             ) as! PostTableViewCell
+            cell.delegate = self
             cell.updateContent(viewModel.postData[indexPath.row])
             return cell
         }

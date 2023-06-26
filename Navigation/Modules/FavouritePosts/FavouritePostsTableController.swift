@@ -39,6 +39,7 @@ class FavouritePostsTableController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
+        cell.selectionStyle = .none
         let favPost = posts[indexPath.row]
         let post = Post(title: favPost.title ?? "nil",
                         author: favPost.author ?? "Unknown author",

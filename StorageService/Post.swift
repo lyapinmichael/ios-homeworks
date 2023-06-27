@@ -61,7 +61,7 @@ public extension Post {
             
             Post(
                 title: "Our masterpiece WIP",
-                author: "Dart Vader",
+                author: "Darth Vader",
                 description: nil,
                 image: "DeathStarWIP",
                 likes: 117, views: 1492,
@@ -83,7 +83,14 @@ public extension Post {
                 image: nil,
                 likes: 781,
                 views: 6995,
-                id: "demoPostID5")
+                id: "demoPostID5"),
+            
+            Post(title: "reposted from Master Yoda",
+                 author: "Master Yoda",
+                 description: "Pass on what you have learned. Strength, mastery, hmm… but weakness, folly, failure, also. Yes, failure, most of all. The greatest teacher, failure is.",
+                 image: "MasterYoda", likes: 567,
+                 views: 1092,
+                 id: "demoPostID6")
         
         ]
     }

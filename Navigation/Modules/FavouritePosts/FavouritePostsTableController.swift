@@ -13,11 +13,58 @@ class FavouritePostsTableController: UITableViewController {
     weak var coordinator: FavouritePostsCoordinator?
     private var posts: [FavouritePost] = []
     
+    private var _isFiltered = false
+    private var isFiltered: Bool {
+        get {
+            return _isFiltered
+        }
+        set {
+            _isFiltered = newValue
+            discardSearchBarButton.isEnabled = newValue
+        }
+    }
+    
+    private lazy var searchBarButton: UIBarButtonItem = {
+     
+        
+        let action = UIAction { [weak self] _ in
+            
+            guard let self = self else { return }
+            
+            self.presentTextPicker(title: "Filter by Author", message: "Enter Author's name to filter posts", completion: {text in
+                self.posts = FavouritePostsService.shared.filterByAuthorName(text)
+                UIView.transition(with: self.tableView, duration: 0.4, options: .transitionCrossDissolve, animations: {self.tableView.reloadData()}, completion: nil)
+                self.isFiltered = true
+            })
+        }
+        let button = UIBarButtonItem(systemItem: .search, primaryAction: action)
+        return button
+    }()
+    
+    
+    private lazy var discardSearchBarButton: UIBarButtonItem = {
+        let action = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            guard self.isFiltered else { return }
+            self.posts = FavouritePostsService.shared.favouritePosts
+            UIView.transition(with: self.tableView, duration: 0.4, options: .transitionCrossDissolve, animations: {self.tableView.reloadData()}, completion: nil)
+            self.isFiltered = false
+        }
+        
+        let button = UIBarButtonItem(systemItem: .cancel, primaryAction: action)
+        button.isEnabled = isFiltered
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         posts = FavouritePostsService.shared.favouritePosts
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
+        
         navigationItem.title = "Favourite posts"
+
+        navigationItem.rightBarButtonItems = [searchBarButton, discardSearchBarButton]
+        
         
     }
     
@@ -42,7 +89,7 @@ class FavouritePostsTableController: UITableViewController {
         cell.selectionStyle = .none
         let favPost = posts[indexPath.row]
         let post = Post(title: favPost.title ?? "nil",
-                        author: favPost.author ?? "Unknown author",
+                        author: favPost.author?.name ?? "Unknown author",
                         description: favPost.text,
                         image: favPost.imageName,
                         likes: Int(favPost.likes),
@@ -61,7 +108,7 @@ class FavouritePostsTableController: UITableViewController {
         if editingStyle == .delete {
             FavouritePostsService.shared.delete(atIndex: indexPath.row)
             posts = FavouritePostsService.shared.favouritePosts
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .top)
         }
     }
 

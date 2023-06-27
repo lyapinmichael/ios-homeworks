@@ -85,7 +85,7 @@ final class FavouritePostsService {
     
     func filterByAuthorName(_ authorName: String) -> [FavouritePost] {
         let fetchRequest = FavouritePost.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "author.name == %@", authorName)
+        fetchRequest.predicate = NSPredicate(format: "author.name CONTAINS %@", authorName)
         return (try? backgroundContext.fetch(fetchRequest)) ?? []
     }
 }

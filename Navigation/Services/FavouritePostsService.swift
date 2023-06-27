@@ -28,7 +28,11 @@ final class FavouritePostsService {
         return container
     }()
     
-    private lazy var context = persistentContainer.viewContext
+    private lazy var backgroundContext: NSManagedObjectContext = {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        return context
+    }()
     
     var favouritePosts: [FavouritePost] = []
     
@@ -39,7 +43,7 @@ final class FavouritePostsService {
     func fetchPosts() {
         let fetchRequest = FavouritePost.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "views", ascending: true)]
-        favouritePosts = (try? context.fetch(fetchRequest)) ?? []
+        favouritePosts = (try? backgroundContext.fetch(fetchRequest)) ?? []
     }
     
     func add(post: Post, completion: @escaping ((Result<Any, FavouritePostsService.FavouritePostsError>) -> Void)) {
@@ -47,24 +51,41 @@ final class FavouritePostsService {
         guard !favouritePosts.contains(where: {$0.uuid == post.id}) else {
             completion(.failure(.alreadyInFavourites))
             return }
+     
+        /// Этот метод можно было бы оставить с предыдущей реализацией, заменив только свойство background context, но я решил попрактиковаться и сделать его таким образом.
         
-        let newFavoutitePost = FavouritePost.init(context: context)
-        newFavoutitePost.title = post.title
-        newFavoutitePost.author = post.author
-        newFavoutitePost.likes = Int32(post.likes)
-        newFavoutitePost.views = Int32(post.views)
-        newFavoutitePost.text = post.description
-        newFavoutitePost.imageName = post.image
-        newFavoutitePost.uuid = post.id
-        
-        try? context.save()
-        fetchPosts()
-        completion(.success(true))
+        self.persistentContainer.performBackgroundTask({ [weak self] backgroundContext in
+            let author = Author.init(context: backgroundContext)
+            author.name = post.author
+            
+            let newFavoutitePost = FavouritePost.init(context: backgroundContext)
+            newFavoutitePost.title = post.title
+            newFavoutitePost.author = author
+            newFavoutitePost.likes = Int32(post.likes)
+            newFavoutitePost.views = Int32(post.views)
+            newFavoutitePost.text = post.description
+            newFavoutitePost.imageName = post.image
+            newFavoutitePost.uuid = post.id
+            
+            
+            try? backgroundContext.save()
+            
+            DispatchQueue.main.async {
+                self?.fetchPosts()
+                completion(.success(true))
+            }
+        })
     }
     
     func delete(atIndex index: Int) {
-        context.delete(favouritePosts[index])
-        try? context.save()
+        backgroundContext.delete(favouritePosts[index])
+        try? backgroundContext.save()
         fetchPosts()
+    }
+    
+    func filterByAuthorName(_ authorName: String) -> [FavouritePost] {
+        let fetchRequest = FavouritePost.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "author.name == %@", authorName)
+        return (try? backgroundContext.fetch(fetchRequest)) ?? []
     }
 }

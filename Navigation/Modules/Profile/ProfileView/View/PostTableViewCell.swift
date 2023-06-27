@@ -14,6 +14,16 @@ final class PostTableViewCell: UITableViewCell {
     
     private var post: Post?
     
+    private lazy var authorTitle: UILabel = {
+       let title = UILabel()
+        title.numberOfLines = 1
+        title.font = .systemFont(ofSize: 16, weight: .semibold)
+        title.textColor = .darkGray
+        
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
     private lazy var postTitle: UILabel = {
         let title = UILabel()
         title.numberOfLines = 2
@@ -90,12 +100,17 @@ final class PostTableViewCell: UITableViewCell {
         contentView.addSubview(postText)
         contentView.addSubview(likesLabel)
         contentView.addSubview(viewsLabel)
+        contentView.addSubview(authorTitle)
     }
     
     private func setConstraints() {
         
         NSLayoutConstraint.activate([
-            postTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            authorTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            authorTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            authorTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
+            postTitle.topAnchor.constraint(equalTo: authorTitle.bottomAnchor, constant: 8),
             postTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             postTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
@@ -121,6 +136,7 @@ final class PostTableViewCell: UITableViewCell {
         
         self.post = data
         
+        authorTitle.text = data.author
         postTitle.text = data.title
         
         if let postImage = data.image {

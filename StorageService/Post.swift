@@ -61,7 +61,7 @@ public extension Post {
             
             Post(
                 title: "Our masterpiece WIP",
-                author: "Dart Vader",
+                author: "Darth Vader",
                 description: nil,
                 image: "DeathStarWIP",
                 likes: 117, views: 1492,

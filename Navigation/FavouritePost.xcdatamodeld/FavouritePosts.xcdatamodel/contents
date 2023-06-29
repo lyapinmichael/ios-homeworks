@@ -5,6 +5,7 @@
         <relationship name="favouritePost" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FavouritePost" inverseName="author" inverseEntity="FavouritePost"/>
     </entity>
     <entity name="FavouritePost" representedClassName=".FavouritePost" syncable="YES" codeGenerationType="class">
+        <attribute name="dateAdded" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="imageName" optional="YES" attributeType="String"/>
         <attribute name="likes" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
@@ -12,5 +13,10 @@
         <attribute name="uuid" attributeType="String"/>
         <attribute name="views" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="favouritePost" inverseEntity="Author"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="uuid"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
 </model>

@@ -6,11 +6,20 @@
 //
 
 import UIKit
+import CoreData
 import StorageService
 
 class FavouritePostsTableController: UITableViewController {
     
     weak var coordinator: FavouritePostsCoordinator?
+    
+    var fetchResultsController = {
+        let fetchRequest = FavouritePost.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+        let fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: FavouritePostsService.shared.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        return fetchResultsController
+    }()
+    
     private var posts: [FavouritePost] = []
     
     private var _isFiltered = false
@@ -32,8 +41,13 @@ class FavouritePostsTableController: UITableViewController {
             guard let self = self else { return }
             
             self.presentTextPicker(title: "Filter by Author", message: "Enter Author's name to filter posts", completion: {text in
-                self.posts = FavouritePostsService.shared.filterByAuthorName(text)
-                UIView.transition(with: self.tableView, duration: 0.4, options: .transitionCrossDissolve, animations: {self.tableView.reloadData()}, completion: nil)
+                
+                UIView.transition(with: self.tableView, duration: 0.4, options: .transitionCrossDissolve, animations: {
+                    self.fetchResultsController.fetchRequest.predicate = NSPredicate(format: "author.name CONTAINS %@", text)
+                    try? self.fetchResultsController.performFetch()
+                    self.tableView.reloadData()
+                    
+                }, completion: nil)
                 self.isFiltered = true
             })
         }
@@ -46,8 +60,13 @@ class FavouritePostsTableController: UITableViewController {
         let action = UIAction { [weak self] _ in
             guard let self = self else { return }
             guard self.isFiltered else { return }
-            self.posts = FavouritePostsService.shared.favouritePosts
-            UIView.transition(with: self.tableView, duration: 0.4, options: .transitionCrossDissolve, animations: {self.tableView.reloadData()}, completion: nil)
+            
+            UIView.transition(with: self.tableView, duration: 0.4, options: .transitionCrossDissolve, animations: {
+                self.fetchResultsController.fetchRequest.predicate = nil
+                try? self.fetchResultsController.performFetch()
+                self.tableView.reloadData()
+                
+            }, completion: nil)
             self.isFiltered = false
         }
         
@@ -58,7 +77,7 @@ class FavouritePostsTableController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        posts = FavouritePostsService.shared.favouritePosts
+        
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
         
         navigationItem.title = "Favourite posts"
@@ -70,24 +89,25 @@ class FavouritePostsTableController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        posts = FavouritePostsService.shared.favouritePosts
-        tableView.reloadData()
+        fetchResultsController.delegate = self
+        try? fetchResultsController.performFetch()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchResultsController.sections?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return fetchResultsController.sections?[section].numberOfObjects ?? 0
+        
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
         cell.selectionStyle = .none
-        let favPost = posts[indexPath.row]
+        let favPost = fetchResultsController.object(at: indexPath)
         let post = Post(title: favPost.title ?? "nil",
                         author: favPost.author?.name ?? "Unknown author",
                         description: favPost.text,
@@ -106,10 +126,32 @@ class FavouritePostsTableController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            FavouritePostsService.shared.delete(atIndex: indexPath.row)
-            posts = FavouritePostsService.shared.favouritePosts
-            tableView.deleteRows(at: [indexPath], with: .top)
+            let postToDelete = fetchResultsController.object(at: indexPath)
+            FavouritePostsService.shared.delete(postToDelete)
+            
         }
     }
 
+}
+
+extension FavouritePostsTableController: NSFetchedResultsControllerDelegate {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .top)
+            
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .middle)
+            
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .bottom)
+            
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            
+        @unknown default:
+            ()
+        }
+    }
 }

@@ -17,11 +17,11 @@ struct Module {
         case profile
         case media
         case favouritePosts
+        case locationController
         
     }
     
     let moduleType: ModuleType
-    let viewModel: ViewModelProtocol?
     let view: UIViewController
 }
 
@@ -36,6 +36,8 @@ extension Module.ModuleType {
             return UITabBarItem(title: "Media", image: UIImage(systemName: "play.circle"), tag: 2)
         case .favouritePosts:
             return UITabBarItem(title: "Favourite Posts", image: UIImage(systemName: "star.fill"), tag: 3)
+        case .locationController:
+            return UITabBarItem(title: "Location", image: UIImage(systemName: "map"), tag: 4)
         }
     }
 }

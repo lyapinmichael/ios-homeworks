@@ -71,14 +71,12 @@ final class LocationViewModel: NSObject, LocationViewModelProtocol {
     func updateState(with input: ViewInput) {
         switch input {
         case .requestLocation:
-            
-            DispatchQueue.main.async {
-                self.locationManager.startUpdatingLocation()
-            }
-            
+            guard let coordinate = locationManager.location?.coordinate else { return }
+            state = .didUpdateLocation(coordinate)
             
         case .requestLocationAuthorization:
             requestLocationAuthorization()
+            
         case .requestRouteTo(let destinationCoordinate):
             requesRouteTo(destinationCoordinate)
         }

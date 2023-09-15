@@ -72,7 +72,7 @@ final class LogInViewController: UIViewController {
         let textField = CustomTextField()
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.placeholder = "Password"
+        textField.placeholder = NSLocalizedString("password", comment: "")
         textField.textContentType = .oneTimeCode
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
@@ -148,7 +148,8 @@ final class LogInViewController: UIViewController {
             self.tryLogin()
         }
         
-        let button = CustomButton(title: "Log in", color: UIColor(named: "ColorSet"), action: buttonAction)
+        let logInString = NSLocalizedString("signIn", comment: "")
+        let button = CustomButton(title: logInString, color: UIColor(named: "ColorSet"), action: buttonAction)
         
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -166,7 +167,8 @@ final class LogInViewController: UIViewController {
             self.present(signupController, animated: true)
         }
         
-        let button = CustomButton(title: "Sign up", color: UIColor(named: "ColorSet"), action: buttonAction)
+        let signUp = NSLocalizedString("signUp", comment: "")
+        let button = CustomButton(title: signUp, color: UIColor(named: "ColorSet"), action: buttonAction)
         
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -327,12 +329,12 @@ final class LogInViewController: UIViewController {
         passwordField.endEditing(true)
         
         guard let login = loginField.text, !login.isEmpty else {
-            presentAlert(message: "Please, fill in login")
+            presentAlert(message: NSLocalizedString("pleaseFillLogin", comment: ""))
             return
         }
         
         guard let password = passwordField.text, !password.isEmpty else {
-            presentAlert(message: "Please, fill in password")
+            presentAlert(message: NSLocalizedString("pleaseFillLogin", comment: ""))
             return
         }
         

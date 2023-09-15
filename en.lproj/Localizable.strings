@@ -1,0 +1,60 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Ляпин Михаил on 15.09.2023.
+  
+*/
+
+"cancel" = "Cancel";
+"profile" = "Profile";
+"loading" = "Loading";
+"errorOccured" = "Error occured";
+"somethingWentWrong" = "Something went wrong while trying to get requested information. Please, try again later.";
+"close" = "Close";
+"failedToLoadData" = "Failed to load data";
+"planetOrbitalPeriod" = "%@'s orbital period is %@ days.";
+"listOfPlanetResidents" = "List of planet residents";
+"openPost" = "Open post";
+"correctWord" = "Correct word:";
+"check" = "Check!";
+"nothingWasChecked" = "Nothing was checked yet";
+"enterSomething" = "Enter something so it can be checked ";
+"oops" = "Ooops";
+"feed" = "Feed";
+"right" = "Right";
+"rightGuess" = "Congrats! You're right!";
+"wrong" = "Wrong";
+"wrongGuess" = "You're wrong! Try again!";
+"guessWasChecked" = "Guess was checked and...";
+"logOut" = "Log out";
+"photoGallery" = "Photo gallery";
+"nothingToSee" = "Nothing to see here yet...";
+"printStatus" = "Print status";
+"whatsNew" = "What's new?";
+"setStatus" = "Set status";
+"likes" = "Likes: ";
+"views" = "Views: ";
+"addedToFavorites" = "Added to favorites";
+"alreadyInFavorites" = "Post is already in favorites";
+"photos" = "Photos: ";
+"thankUser" = "Thank you for using our app!";
+"password" = "Password";
+"login" = "login";
+"signIn" = "Sign in";
+"signUp" = "Sign up";
+"fillFullName" = "Fill in your full name";
+"fillEmail" = "Fill in your email";
+"fillPassword" = "Fill in password";
+"confirm" = "Confirm";
+"pleaseFillEmail" = "Please, fill valid email";
+"pleaseFillPassword" = "Please, fill in password";
+"pleaseFillName" =  "Please fill in your full name";
+"registrationSuccessfull" = "Registration was successfully finished";
+"nowPlaying" = "Now playing: ";
+"media" = "Media";
+"filterByAuthor" = "Filter by Author";
+"enterAuthorToFilter" = "Enter Author's name to filter posts";
+"favoritePosts" = "Favourite posts";
+"unknownAuthor" = "Unknown author";
+"location" = "Location";

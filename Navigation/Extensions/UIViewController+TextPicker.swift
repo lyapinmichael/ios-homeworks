@@ -19,6 +19,8 @@ extension UIViewController {
                 completion(text)
             }
         }
+        
+        let cancelString = NSLocalizedString("cancel", comment: "")
         let actionCancel = UIAlertAction(title: "Cancel", style: .cancel)
         
         alertController.addAction(actionCancel)

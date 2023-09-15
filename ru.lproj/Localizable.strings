@@ -1,0 +1,61 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Ляпин Михаил on 15.09.2023.
+  
+*/
+
+
+"cancel" = "Отмена";
+"profile" = "Профиль";
+"loading" = "Загрузка";
+"errorOccured" = "Возникла ошибка";
+"somethingWentWrong" = "Что-то пошло не так при попытке загрузить информацию. Пожалуйсста, попробуйте позже";
+"close" = "Закрыть";
+"failedToLoadData" = "Не удалось загрузить данные";
+"planetOrbitalPeriod" = "Орбитальный период планеты %@ составляет %@ дней.";
+"listOfPlanetResidents" = "Список жителей планеты";
+"openPost" = "Открыть пост";
+"correctWord" = "Верное слово:";
+"check" = "Проверить!";
+"nothingWasChecked" = "Ничего пока не проверялось";
+"enterSomething" = "Введите что-нибудь для проверки ";
+"oops" = "Упс";
+"feed" = "Лента ";
+"right" = "Верно";
+"rightGuess" = "Поздравляем! Вы отгадали!";
+"wrong" = "Неверно";
+"wrongGuess" = "Вы ошиблись! Попробуйте снова!";
+"guessWasChecked" = "Догадка была проверена и...";
+"logOut" = "Выйти";
+"photoGallery" = "Фото галерея";
+"nothingToSee" = "Здесь пока ничего нет...";
+"printStatus" = "Напечатать статус";
+"whatsNew" = "Что нового??";
+"setStatus" = "Установить статус";
+"likes" = "Нравится: ";
+"views" = "Просмотры: ";
+"addedToFavorites" = "Добавлено в избранное";
+"alreadyInFavorites" = "Пост уже в избранном";
+"photos" = "Фото: ";
+"thankUser" = "Спасибо за пользование приложением!";
+"password" = "Пароль";
+"login" = "Логин";
+"signIn" = "Войти";
+"signUp" = "Зарегитрирваться";
+"fillFullName" = "Введите ваше имя";
+"fillEmail" = "Введие ваш email";
+"fillPassword" = "Введите пароль";
+"confirm" = "Подтвердить";
+"pleaseFillEmail" = "Пожалуйста, введите валидный email";
+"pleaseFillPassword" = "Пожалуйста, введите пароль";
+"pleaseFillName" =  "Пожалуйста, введите ваше имя";
+"registrationSuccessfull" = "Регистрация успешно завершена";
+"nowPlaying" = "Сейчас играет: ";
+"media" = "Медиа";
+"filterByAuthor" = "Фильтровать по автору";
+"enterAuthorToFilter" = "Введите имя автора для фильтрования постов";
+"favoritePosts" = "Избранные посты";
+"unknownAuthor" = "Неизвестный автор";
+"location" = "Локация";

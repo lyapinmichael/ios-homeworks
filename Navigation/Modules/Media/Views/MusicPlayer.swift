@@ -83,7 +83,7 @@ class MusicPlayer: UIView {
     
     private lazy var nowPlayingLabel: UILabel = {
         let label = UILabel()
-        label.text = "Now playing:"
+        label.text = NSLocalizedString("nowPlaying", comment: "")
         label.font = .systemFont(ofSize: 18)
         
         label.translatesAutoresizingMaskIntoConstraints = false

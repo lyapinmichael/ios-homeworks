@@ -11,7 +11,7 @@ class ToastContoller: UIViewController {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "Thank you for using our app!"
+        label.text = NSLocalizedString("thankUser", comment: "")
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         

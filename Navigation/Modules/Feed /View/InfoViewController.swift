@@ -35,7 +35,8 @@ final class InfoViewController: UIViewController {
         paragraphStyle.firstLineHeadIndent = 10
         paragraphStyle.headIndent = 10
         
-        let attributedString = NSAttributedString(string: "Loading...",
+        let loadingString = NSLocalizedString("loading", comment: "")
+        let attributedString = NSAttributedString(string: loadingString + "...",
                                                   attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
         label.attributedText = attributedString
@@ -57,7 +58,8 @@ final class InfoViewController: UIViewController {
         paragraphStyle.firstLineHeadIndent = 10
         paragraphStyle.headIndent = 10
         
-        let attributedString = NSAttributedString(string: "Loading...",
+        let loadingString = NSLocalizedString("loading", comment: "")
+        let attributedString = NSAttributedString(string: loadingString + "...",
                                                   attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
         label.attributedText = attributedString
@@ -138,8 +140,8 @@ final class InfoViewController: UIViewController {
     
     // Presents an alert informing that something went wrong
     private func presentAlert() {
-        let title = "Error occured"
-        let message = "Something went wrong while trying to get requested information. Please, try again later."
+        let title = NSLocalizedString("errorOccured", comment: "")
+        let message = NSLocalizedString("somethingWentWrong", comment: "")
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
@@ -149,7 +151,8 @@ final class InfoViewController: UIViewController {
             alert.dismiss(animated: true)
         }
         
-        let close = UIAlertAction(title: "Close", style: .default, handler: closeHandler)
+        let closeString = NSLocalizedString("close", comment: "")
+        let close = UIAlertAction(title: closeString, style: .default, handler: closeHandler)
         
         
         alert.addAction(close)
@@ -176,7 +179,8 @@ final class InfoViewController: UIViewController {
                 print(error)
                 
                 DispatchQueue.main.async {
-                    self.todoLabel.text = "Failed to load data"
+                    
+                    self.todoLabel.text = NSLocalizedString("failedToLoadData", comment: "")
                     self.presentAlert()
                 }
             }
@@ -196,14 +200,15 @@ final class InfoViewController: UIViewController {
                 self.getResidentsData(residentURLs: planetData.residents)
                 
                 DispatchQueue.main.async {
-                    self.planetOrbitPeriodLabel.text = "\(planetData.name)'s orbital period is \(planetData.orbitalPeriod) days."
+                    let planetOrbitalPeriod = NSLocalizedString("planetOrbitalPeriod", comment: "Takes planet's name as 1st arg, and planet's orbital period as 2nd arg")
+                    self.planetOrbitPeriodLabel.text = String(format: planetOrbitalPeriod, planetData.name, planetData.orbitalPeriod)
                 }
                 
                 
             case .failure(let error):
                 
                 DispatchQueue.main.async {
-                    self.planetOrbitPeriodLabel.text = "Failed to load data"
+                    self.planetOrbitPeriodLabel.text = NSLocalizedString("failedToLoadData", comment: "")
                     self.presentAlert()
                 }
                 
@@ -269,6 +274,6 @@ extension InfoViewController: UITableViewDataSource {
 extension InfoViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "List of planet residents:"
+        return NSLocalizedString("listOfPlanetResidents", comment: "")
     }
 }

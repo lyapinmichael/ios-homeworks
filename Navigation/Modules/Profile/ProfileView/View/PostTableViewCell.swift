@@ -150,9 +150,9 @@ final class PostTableViewCell: UITableViewCell {
             self.postText.text = postText
         }
         
-        likesLabel.text = "Likes: \(String(data.likes))"
+        likesLabel.text = NSLocalizedString("likes", comment: "") + "\(String(data.likes))"
         
-        viewsLabel.text = "Veiws: \(String(data.views))"
+        viewsLabel.text = NSLocalizedString("views", comment: "") + "\(String(data.views))"
         
     }
     
@@ -168,10 +168,15 @@ final class PostTableViewCell: UITableViewCell {
             
             switch result {
             case .success(_):
-                self?.delegate?.presentToast(message: "Added to favourites")
+                
+                let addedToFavoritesString = NSLocalizedString("addedToFavorites", comment: "")
+                self?.delegate?.presentToast(message: addedToFavoritesString)
+            
             case .failure(let error):
                 if case .alreadyInFavourites = error {
-                    self?.delegate?.presentToast(message: "Post is already in favorites")
+                    
+                    let alreadyInFavoritesString = NSLocalizedString("alreadyInFavorites", comment: "")
+                    self?.delegate?.presentToast(message: alreadyInFavoritesString)
                 }
             }
         })

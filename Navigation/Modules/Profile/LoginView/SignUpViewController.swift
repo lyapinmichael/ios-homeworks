@@ -29,7 +29,6 @@ class SignUpViewController: UIViewController {
 
     private lazy var fullnameField: UITextField = {
         let textField = CustomTextField()
-        textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.placeholder = NSLocalizedString("fillFullName", comment: "")
         textField.autocapitalizationType = .words
@@ -42,7 +41,6 @@ class SignUpViewController: UIViewController {
     
     private lazy var loginField: UITextField = {
         let textField = CustomTextField()
-        textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.placeholder = NSLocalizedString("fillEmail", comment: "")
         textField.autocapitalizationType = .none
@@ -55,7 +53,6 @@ class SignUpViewController: UIViewController {
     
     private lazy var passwordField: UITextField = {
         let textField = CustomTextField()
-        textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.placeholder = NSLocalizedString("fillPassword", comment: "")
         textField.autocapitalizationType = .none
@@ -91,7 +88,8 @@ class SignUpViewController: UIViewController {
     
     private lazy var loginView: UIStackView = {
         let view = UIStackView()
-        view.layer.backgroundColor = UIColor.systemGray6.cgColor
+        view.backgroundColor = Palette.dynamicTextfield
+        
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.borderWidth = 0.3
         view.layer.cornerRadius = 10
@@ -144,7 +142,7 @@ class SignUpViewController: UIViewController {
     //MARK: - Private methods
     
     private func setup() {
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.dynamicBackground
         
         view.addSubview(signUpLabel)
         view.addSubview(loginView)

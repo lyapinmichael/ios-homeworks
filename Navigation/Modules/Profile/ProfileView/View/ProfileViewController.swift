@@ -34,10 +34,10 @@ final class ProfileViewController: UIViewController {
         let view = UITableView(frame: .zero, style: .plain)
         
         #if DEBUG
-        view.backgroundColor = .systemGray5
+        view.backgroundColor = Palette.dynamicBackground
         
         #else
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.dynamicBackground
         
         #endif
         

@@ -44,6 +44,8 @@ final class PhotosViewController: UIViewController {
             PhotosCollectionViewCell.self,
             forCellWithReuseIdentifier: CellReuseID.basePhotoCell.rawValue)
         
+        photosCollection.backgroundColor = Palette.dynamicBackground
+        
         photosCollection.translatesAutoresizingMaskIntoConstraints = false
         
         return photosCollection
@@ -62,7 +64,7 @@ final class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.dynamicBackground
         navigationItem.rightBarButtonItem = processBarButton
         
         setupPhotosCollection()

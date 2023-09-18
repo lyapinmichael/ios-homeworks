@@ -31,10 +31,9 @@ final class ProfileHeaderView: UIView {
         
         profilePictureView.clipsToBounds = true
         profilePictureView.contentMode = .scaleAspectFill
-        profilePictureView.backgroundColor = .white
+        profilePictureView.backgroundColor = Palette.dynamicTextfield
         
         profilePictureView.layer.cornerRadius = profilePictureView.bounds.height / 2
-        profilePictureView.layer.borderColor = UIColor.white.cgColor
         profilePictureView.layer.borderWidth = 3
         profilePictureView.image = UIImage(named: "ImagePlaceholder")
         profilePictureView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +70,6 @@ final class ProfileHeaderView: UIView {
         let profileNameLabel = UILabel()
         
         profileNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        profileNameLabel.textColor = .black
         profileNameLabel.text = "defaultUser"
         profileNameLabel.translatesAutoresizingMaskIntoConstraints = false
     
@@ -112,15 +110,15 @@ final class ProfileHeaderView: UIView {
     private lazy var statusField: CustomTextField = {
         let statusField = CustomTextField()
 
+        statusField.backgroundColor = Palette.dynamicTextfield
+        
         statusField.layer.borderWidth = 1
         statusField.layer.borderColor = UIColor.black.cgColor
         statusField.layer.cornerRadius = 12
-        statusField.layer.backgroundColor = UIColor.white.cgColor
 
         statusField.placeholder = NSLocalizedString("whatsNew", comment: "")
 
         statusField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        statusField.textColor = UIColor.black
         statusField.enablesReturnKeyAutomatically = true
         statusField.returnKeyType = .done
         statusField.delegate = self
@@ -188,7 +186,7 @@ final class ProfileHeaderView: UIView {
             self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.width / 2
             self.profilePictureView.layer.borderWidth = 3
             self.pictureBackground.backgroundColor = closedBackgroundColor
-            self.delegate?.setTabBarColor(.white)
+            self.delegate?.setTabBarColor(Palette.dynamicBars)
             self.crossButton.alpha = 1
             
         }, completion: {_ in

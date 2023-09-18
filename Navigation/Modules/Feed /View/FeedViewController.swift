@@ -42,6 +42,7 @@ final class FeedViewController: UIViewController {
     
     private lazy var guesserTextField: UITextField = {
        let textField = UITextField()
+        textField.backgroundColor = Palette.dynamicTextfield
         textField.placeholder = NSLocalizedString("correctWord", comment: "") + "discombobulate"
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
@@ -136,7 +137,9 @@ final class FeedViewController: UIViewController {
         super.viewDidLoad()
         
         title = NSLocalizedString("feed", comment: "")
-        view.backgroundColor = .white
+    
+        view.backgroundColor = Palette.dynamicBackground
+    
         navigationItem.rightBarButtonItem = barButtonItem
         
         view.addSubview(stackView)

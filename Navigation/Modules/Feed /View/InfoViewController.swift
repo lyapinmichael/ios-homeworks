@@ -91,7 +91,7 @@ final class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.dynamicBackground
         
         setupSubviews()
         
@@ -261,7 +261,7 @@ extension InfoViewController: UITableViewDataSource {
             let cell = UITableViewCell()
             return cell
         }
-        cell.backgroundColor = .systemGray6
+        cell.backgroundColor = Palette.dynamicTextfield
         var configutation = UIListContentConfiguration.cell()
         configutation.text = residents[indexPath.row].name
         cell.contentConfiguration = configutation

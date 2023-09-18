@@ -83,7 +83,7 @@ final class ProfileHeaderView: UIView {
         
         profileStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         profileStatusLabel.textColor = .gray
-        profileStatusLabel.text = "Nothing to see here yet..."
+        profileStatusLabel.text = NSLocalizedString("nothingToSee", comment: "")
         profileStatusLabel.translatesAutoresizingMaskIntoConstraints = false
         
         return profileStatusLabel
@@ -100,7 +100,8 @@ final class ProfileHeaderView: UIView {
             
         }
         
-        let statusButton = CustomButton(title: "Print status", action: buttonAction)
+        let printStatusString = NSLocalizedString("printStatus", comment: "")
+        let statusButton = CustomButton(title: printStatusString, action: buttonAction)
     
         statusButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -116,7 +117,7 @@ final class ProfileHeaderView: UIView {
         statusField.layer.cornerRadius = 12
         statusField.layer.backgroundColor = UIColor.white.cgColor
 
-        statusField.placeholder = "What's new?"
+        statusField.placeholder = NSLocalizedString("whatsNew", comment: "")
 
         statusField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         statusField.textColor = UIColor.black
@@ -308,7 +309,8 @@ final class ProfileHeaderView: UIView {
     
     @objc fileprivate func statusTextChanged(_ textField: UITextField) {
         
-        statusButton.setTitle("Set status", for: .normal)
+        let setStatusString = NSLocalizedString("setStatus", comment: "")
+        statusButton.setTitle(setStatusString, for: .normal)
         
         statusButton.buttonAction = {[weak self] in
             guard let self = self else { return }
@@ -318,11 +320,14 @@ final class ProfileHeaderView: UIView {
                     
             self.profileStatusLabel.text = status
             self.delegate?.setStatus(status)
-            self.statusButton.setTitle("Print status", for: .normal)
+            
+            let printStatusString = NSLocalizedString("printStatus", comment: "")
+            self.statusButton.setTitle(printStatusString, for: .normal)
             
             self.statusButton.buttonAction = {[weak self] in
                 guard let status = self?.profileStatusLabel.text else {
-                    print("Nothing to see here")
+                    
+                    print(NSLocalizedString("nothingToSee", comment: ""))
                     return
                 }
                 self?.delegate?.printStatus(status)

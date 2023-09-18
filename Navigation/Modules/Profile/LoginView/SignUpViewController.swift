@@ -21,7 +21,7 @@ class SignUpViewController: UIViewController {
         label.font = .systemFont(ofSize: 24, weight: .bold, width: .condensed)
         label.textColor = UIColor(named: "ColorSet")
         label.textAlignment = .center
-        label.text = "Sign up"
+        label.text = NSLocalizedString("signUp", comment: "")
         
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -31,7 +31,7 @@ class SignUpViewController: UIViewController {
         let textField = CustomTextField()
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.placeholder = "Fill in your full name"
+        textField.placeholder = NSLocalizedString("fillFullName", comment: "")
         textField.autocapitalizationType = .words
         textField.returnKeyType = .done
         textField.delegate = delegate
@@ -44,7 +44,7 @@ class SignUpViewController: UIViewController {
         let textField = CustomTextField()
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.placeholder = "Fill in your email"
+        textField.placeholder = NSLocalizedString("fillEmail", comment: "")
         textField.autocapitalizationType = .none
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +57,7 @@ class SignUpViewController: UIViewController {
         let textField = CustomTextField()
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.placeholder = "Fill in password"
+        textField.placeholder = NSLocalizedString("fillPassword", comment: "")
         textField.autocapitalizationType = .none
         textField.textContentType = .oneTimeCode
         textField.isSecureTextEntry = true
@@ -125,6 +125,7 @@ class SignUpViewController: UIViewController {
             self.signUp()
         }
         
+        let confirm = NSLocalizedString("confirm", comment: "")
         let button = CustomButton(title: "Confirm", color: UIColor(named: "ColorSet"), action: buttonAction)
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -184,17 +185,18 @@ class SignUpViewController: UIViewController {
         passwordField.endEditing(true)
         
         guard let login = loginField.text, !login.isEmpty else {
-            self.presentAlert(message: "Please, fill valid email")
+            
+            self.presentAlert(message: NSLocalizedString("pleaseFillEmail", comment: ""))
             return
         }
         
         guard let password = passwordField.text, !password.isEmpty else {
-            self.presentAlert(message: "Please, fill in password")
+            self.presentAlert(message: NSLocalizedString("pleaseFillPassword", comment: ""))
             return
         }
         
         guard let fullname = fullnameField.text, !fullname.isEmpty else {
-            self.presentAlert(message: "Please fill in your full name")
+            self.presentAlert(message: NSLocalizedString("pleaseFillName", comment: ""))
             return
         }
         
@@ -210,7 +212,7 @@ class SignUpViewController: UIViewController {
                 self.dismiss(animated: true)
                 
                 
-                self.delegate?.presentAlert(message: "Registration was successfully finished", handler: {
+                self.delegate?.presentAlert(message: NSLocalizedString("registrationSuccessfull", comment: ""), handler: {
                     self.delegate?.login(login: login, password: password)
                 })
             

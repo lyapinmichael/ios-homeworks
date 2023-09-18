@@ -80,7 +80,7 @@ final class LocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = "Media"
+        navigationItem.title = NSLocalizedString("location", comment: "")
     
         setupMapView()
         bindViewModel()

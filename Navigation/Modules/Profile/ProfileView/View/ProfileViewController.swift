@@ -89,7 +89,9 @@ final class ProfileViewController: UIViewController {
             guard let self = self else { return }
             self.viewModel.updateState(withInput: .didTapLogOutButton)
         }
-        let logOutButton = UIBarButtonItem(title: "Log Out", primaryAction: logOutAction)
+        
+        let logOutString = NSLocalizedString("logOut", comment: "")
+        let logOutButton = UIBarButtonItem(title: logOutString, primaryAction: logOutAction)
         navigationItem.rightBarButtonItem = logOutButton
 
     }
@@ -270,7 +272,7 @@ extension ProfileViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 && indexPath.row == 0 {
             let photosCollection = PhotosViewController()
-            photosCollection.title = "Photo gallery"
+            photosCollection.title = NSLocalizedString("photoGallery", comment: "")
             navigationController?.isNavigationBarHidden = false
             navigationController?.pushViewController(photosCollection, animated: true)
         }

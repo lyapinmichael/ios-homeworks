@@ -40,7 +40,9 @@ class FavouritePostsTableController: UITableViewController {
             
             guard let self = self else { return }
             
-            self.presentTextPicker(title: "Filter by Author", message: "Enter Author's name to filter posts", completion: {text in
+            let titleString = NSLocalizedString("filterByAuthor", comment: "")
+            let messageString = NSLocalizedString("enterAuthorToFilter", comment: "")
+            self.presentTextPicker(title: titleString, message: messageString, completion: {text in
                 
                 UIView.transition(with: self.tableView, duration: 0.4, options: .transitionCrossDissolve, animations: {
                     self.fetchResultsController.fetchRequest.predicate = NSPredicate(format: "author.name CONTAINS %@", text)
@@ -80,7 +82,7 @@ class FavouritePostsTableController: UITableViewController {
         
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
         
-        navigationItem.title = "Favourite posts"
+        navigationItem.title = NSLocalizedString("favoritePosts", comment: "")
 
         navigationItem.rightBarButtonItems = [searchBarButton, discardSearchBarButton]
         
@@ -109,7 +111,7 @@ class FavouritePostsTableController: UITableViewController {
         cell.selectionStyle = .none
         let favPost = fetchResultsController.object(at: indexPath)
         let post = Post(title: favPost.title ?? "nil",
-                        author: favPost.author?.name ?? "Unknown author",
+                        author: favPost.author?.name ?? NSLocalizedString("unknownAuthor", comment: ""),
                         description: favPost.text,
                         image: favPost.imageName,
                         likes: Int(favPost.likes),

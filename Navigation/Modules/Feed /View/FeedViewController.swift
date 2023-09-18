@@ -31,7 +31,7 @@ final class FeedViewController: UIViewController {
     private lazy var  button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Open Post", for: .normal)
+        button.setTitle(NSLocalizedString("openPost", comment: ""), for: .normal)
 
         button.setTitleColor(.systemBlue, for: .normal)
         button.setTitleColor(.lightGray, for: .highlighted)
@@ -42,7 +42,7 @@ final class FeedViewController: UIViewController {
     
     private lazy var guesserTextField: UITextField = {
        let textField = UITextField()
-        textField.placeholder = "correct word: discombobulate"
+        textField.placeholder = NSLocalizedString("correctWord", comment: "") + "discombobulate"
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
         
@@ -68,7 +68,7 @@ final class FeedViewController: UIViewController {
             
         }
         
-        let button = CustomButton(title: "Check!", color: UIColor(named: "ColorSet"), action: buttonAction)
+        let button = CustomButton(title: NSLocalizedString("check", comment: ""), color: UIColor(named: "ColorSet"), action: buttonAction)
         
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +80,7 @@ final class FeedViewController: UIViewController {
     private lazy var checkResultLabel: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Nothing was checked yet"
+        label.text = NSLocalizedString("nothingWasChecked", comment: "")
         label.textColor = .gray
         
         return label
@@ -114,13 +114,13 @@ final class FeedViewController: UIViewController {
     
     ///Method presents an alert if button was pressed but no text was entered
     private func alertOnEmptyGuess() {
-        let message = "Enter something so it can be checked "
+        let message = NSLocalizedString("enterSomething", comment: "")
         
-        let alert = UIAlertController(title: "Ooops",
+        let alert = UIAlertController(title: NSLocalizedString("oops", comment: ""),
                                       message: message,
                                       preferredStyle: .alert)
         
-        let dismissAction = UIAlertAction(title: "Close",
+        let dismissAction = UIAlertAction(title: NSLocalizedString("close", comment: ""),
                                           style: .cancel)
         
         alert.addAction(dismissAction)
@@ -135,7 +135,7 @@ final class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Feed"
+        title = NSLocalizedString("feed", comment: "")
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem = barButtonItem
         
@@ -187,20 +187,20 @@ final class FeedViewController: UIViewController {
         
         switch isChecked {
         case true:
-            message = "Congrats! You're right!"
-            checkResultLabel.text = "Right"
+            message = NSLocalizedString("rightGuess", comment: "")
+            checkResultLabel.text = NSLocalizedString("right", comment: "")
             checkResultLabel.textColor = .green
         case false:
-            message = "You're wrong! Try again!"
-            checkResultLabel.text = "Wrong"
+            message = NSLocalizedString("wrongGuess", comment: "")
+            checkResultLabel.text = NSLocalizedString("wrong", comment: "")
             checkResultLabel.textColor = .red
         }
         
-        let alert = UIAlertController(title: "Guess was checked and...",
+        let alert = UIAlertController(title: NSLocalizedString("guessWasChecked", comment: ""),
                                       message: message,
                                       preferredStyle: .alert)
         
-        let dismissAction = UIAlertAction(title: "Close",
+        let dismissAction = UIAlertAction(title: NSLocalizedString("close", comment: ""),
                                           style: .cancel)
         
         alert.addAction(dismissAction)

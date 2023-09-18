@@ -20,7 +20,7 @@ final class AppFactory {
         switch type {
         case .feed:
             let view = UINavigationController(rootViewController: FeedViewController())
-            view.title = "Profile"
+            view.title = NSLocalizedString("profile", comment: "")
             return Module(moduleType: type, view: view)
         
         case .profile:
@@ -44,7 +44,7 @@ final class AppFactory {
             
             let favouritePostsTableController = FavouritePostsTableController()
             let view = UINavigationController(rootViewController: favouritePostsTableController)
-            view.title = "Favourite posts"
+            view.title = NSLocalizedString("favoritePosts", comment: "")
             
             return Module(moduleType: .favouritePosts, view: view)
             

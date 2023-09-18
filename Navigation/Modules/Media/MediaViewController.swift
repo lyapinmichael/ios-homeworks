@@ -41,7 +41,7 @@ final class MediaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Media"
+        title = NSLocalizedString("media", comment: "")
         setup()
     }
     

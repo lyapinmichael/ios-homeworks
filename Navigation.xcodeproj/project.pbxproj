@@ -40,6 +40,7 @@
 		EC55B4532AAB73C100E4714D /* LocationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55B4522AAB73C100E4714D /* LocationCoordinator.swift */; };
 		EC55B4562AAB75BC00E4714D /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55B4552AAB75BC00E4714D /* LocationViewController.swift */; };
 		EC55B4582AAB779100E4714D /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55B4572AAB779100E4714D /* LocationViewModel.swift */; };
+		EC62CC5E2AB4B64B00BD98C5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EC62CC602AB4B64B00BD98C5 /* Localizable.strings */; };
 		EC650C4729DB55BE00BF938E /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = EC650C4629DB55BE00BF938E /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC650C4A29DB55BE00BF938E /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; };
 		EC650C4B29DB55BE00BF938E /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -140,6 +141,9 @@
 		EC55B4522AAB73C100E4714D /* LocationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCoordinator.swift; sourceTree = "<group>"; };
 		EC55B4552AAB75BC00E4714D /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		EC55B4572AAB779100E4714D /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		EC62CC5D2AB4B5B600BD98C5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		EC62CC5F2AB4B64B00BD98C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EC62CC612AB4B64F00BD98C5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EC650C4429DB55BE00BF938E /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC650C4629DB55BE00BF938E /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		EC69DEB12A23E3B60096D9CE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -365,6 +369,7 @@
 		EC1FF4D029984F30007A589E = {
 			isa = PBXGroup;
 			children = (
+				EC62CC602AB4B64B00BD98C5 /* Localizable.strings */,
 				EC1FF4DB29984F30007A589E /* Navigation */,
 				EC650C4529DB55BE00BF938E /* StorageService */,
 				EC1FF4DA29984F30007A589E /* Products */,
@@ -599,6 +604,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = EC1FF4D029984F30007A589E;
 			packageReferences = (
@@ -623,6 +629,7 @@
 				ECF59D1A2A2E4BA4002BEE93 /* GoogleService-Info.plist in Resources */,
 				EC69DED22A28D7C60096D9CE /* creativeminds.mp3 in Resources */,
 				EC69DED32A28D7C60096D9CE /* dreams.mp3 in Resources */,
+				EC62CC5E2AB4B64B00BD98C5 /* Localizable.strings in Resources */,
 				EC69DECF2A28D7C60096D9CE /* photoalbum.mp3 in Resources */,
 				EC1FF4E929984F31007A589E /* LaunchScreen.storyboard in Resources */,
 				EC1FF4E629984F31007A589E /* Assets.xcassets in Resources */,
@@ -792,8 +799,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				EC1FF4E829984F31007A589E /* Base */,
+				EC62CC5D2AB4B5B600BD98C5 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		EC62CC602AB4B64B00BD98C5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EC62CC5F2AB4B64B00BD98C5 /* en */,
+				EC62CC612AB4B64F00BD98C5 /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -803,6 +820,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -863,6 +881,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

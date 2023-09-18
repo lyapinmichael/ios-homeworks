@@ -24,7 +24,7 @@ final class PhotosTableViewCell: UITableViewCell {
     
     private lazy var photosLabel: UILabel = {
         let label = UILabel()
-        label.text = "Photos"
+        label.text = NSLocalizedString("photos", comment: "")
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         

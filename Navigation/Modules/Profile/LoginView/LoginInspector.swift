@@ -15,6 +15,8 @@ enum LoginInspectorErrors: Error {
     case emptyLogin
     case emptyPassword
     case authResultIsNil
+    case credentialsCheckFailure
+    case failedToSignUp
     
 }
 
@@ -22,20 +24,31 @@ enum LoginInspectorErrors: Error {
 
 protocol LogInViewControllerDelegate: AnyObject {
     
-    func checkCredentials(email: String, password: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void))
-    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void))
+    var state: LoginInspectorState { get }
+    
+    func checkCredentials(email: String, password: String, completion: @escaping ((Result<(String?, String?), LoginInspectorErrors>) -> Void))
+    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<String?, LoginInspectorErrors>) -> Void))
     func signOut()
+}
+
+enum LoginInspectorState: Equatable {
+    case didLogin(Bool)
+    case didSignUp(Bool)
 }
 
 class LoginInspector: LogInViewControllerDelegate {
     
-    func checkCredentials(email: String, password: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void)) {
+    typealias State = LoginInspectorState
+    
+    private(set) var state: State = .didLogin(false)
+    
+    func checkCredentials(email: String, password: String, completion: @escaping ((Result<(String?, String?), LoginInspectorErrors>) -> Void)) {
         CheckerService().checkCredentials(email: email, password: password) { result in 
             completion(result)
         }
     }
     
-    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void)) {
+    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<String?, LoginInspectorErrors>) -> Void)) {
         CheckerService().signUp(email: email, password: password) { result in
             
             if case .success = result {
@@ -45,11 +58,13 @@ class LoginInspector: LogInViewControllerDelegate {
                 
                 changeRequest?.commitChanges() { error in
                     guard error != nil else { return }
-                    completion(.failure(error!))
+                    completion(.failure(.failedToSignUp))
                 }
+                
+                completion(.success(user?.email))
+            } else {
+                completion(.failure(.failedToSignUp))
             }
-            
-            completion(result)
         }
     }
     

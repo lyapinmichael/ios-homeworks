@@ -203,9 +203,9 @@ class SignUpViewController: UIViewController {
             guard let self = self else { return }
             
             switch result {
-            case .success(let authResult):
+            case .success(let email):
                
-                guard let userEmail = authResult.user.email else { return }
+                guard let userEmail = email else { return }
                 
                 self.dismiss(animated: true)
                 

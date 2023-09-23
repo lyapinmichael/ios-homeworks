@@ -11,17 +11,21 @@ import FirebaseAuth
 
 protocol CheckerServiceProtocol {
     
-    func checkCredentials(email: String, password: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void))
-    func signUp(email: String, password: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void))
+    func checkCredentials(email: String, password: String, completion: @escaping ((Result<(String?, String?), LoginInspectorErrors>) -> Void))
+    func signUp(email: String, password: String, completion: @escaping ((Result<AuthDataResult, LoginInspectorErrors>) -> Void))
+}
+
+enum CheckerServiceError: Error {
+    case credentialsCheckFailed
 }
 
 class CheckerService: CheckerServiceProtocol {
     
-    func checkCredentials(email: String, password: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void)) {
+    func checkCredentials(email: String, password: String, completion: @escaping ((Result<(String?, String?), LoginInspectorErrors>) -> Void)) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             
             if let error {
-                completion(.failure(error))
+                completion(.failure(.credentialsCheckFailure))
                 return
             }
             
@@ -30,15 +34,15 @@ class CheckerService: CheckerServiceProtocol {
                 return
             }
             
-            completion(.success(result))
+            completion(.success((result.user.email, result.user.displayName)))
         }
     }
     
-    func signUp(email: String, password: String, completion: @escaping ((Result<AuthDataResult, Error>) -> Void)) {
+    func signUp(email: String, password: String, completion: @escaping ((Result<AuthDataResult, LoginInspectorErrors>) -> Void)) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             
             if let error {
-                completion(.failure(error))
+                completion(.failure(.failedToSignUp))
 
                 return
             }

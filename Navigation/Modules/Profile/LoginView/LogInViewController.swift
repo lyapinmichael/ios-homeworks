@@ -209,13 +209,13 @@ final class LogInViewController: UIViewController {
             guard let self = self else { return }
             
             switch result {
-            case .success(let authResult):
-                guard let userEmail = authResult.user.email else {
+            case .success((let userEmail, let userName)):
+                guard let email = userEmail else {
                     assertionFailure("Bad email. Check auth settings.")
                     return
                 }
         
-                self.coordinator?.proceedToProfile(User(login: userEmail, fullName: authResult.user.displayName ?? "DefaultUsername"))
+                self.coordinator?.proceedToProfile(User(login: email, fullName: userName ?? "DefaultUsername"))
                 
             case .failure(let error):
                 

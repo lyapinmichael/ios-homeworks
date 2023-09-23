@@ -17,7 +17,7 @@ final class MediaViewController: UIViewController {
     
     private lazy var contentView: UIStackView = {
         let stackView = UIStackView()
-        stackView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        stackView.backgroundColor = Palette.dynamicBackground
         stackView.axis = .vertical
         
         stackView.distribution = .fillEqually

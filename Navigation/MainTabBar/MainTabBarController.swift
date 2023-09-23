@@ -30,7 +30,7 @@ class MainTabBarController: UITabBarController {
         /// Firstly setting appearance of a tab bar
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = .white
+        tabBarAppearance.backgroundColor = Palette.dynamicBars
         
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
@@ -48,7 +48,7 @@ class MainTabBarController: UITabBarController {
             
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.backgroundColor = .white
+            navBarAppearance.backgroundColor = Palette.dynamicBars
             
             nc.navigationBar.standardAppearance = navBarAppearance
             nc.navigationBar.scrollEdgeAppearance = navBarAppearance

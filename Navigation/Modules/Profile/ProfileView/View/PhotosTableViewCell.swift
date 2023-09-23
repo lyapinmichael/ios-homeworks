@@ -25,7 +25,6 @@ final class PhotosTableViewCell: UITableViewCell {
     private lazy var photosLabel: UILabel = {
         let label = UILabel()
         label.text = NSLocalizedString("photos", comment: "")
-        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +34,6 @@ final class PhotosTableViewCell: UITableViewCell {
     private lazy var arrowImage: UIImageView = {
         let arrow = UIImageView()
         arrow.image = UIImage(systemName: "arrow.forward")
-        arrow.tintColor = .black
         arrow.clipsToBounds = true
         arrow.translatesAutoresizingMaskIntoConstraints = false
         return arrow
@@ -59,6 +57,7 @@ final class PhotosTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = Palette.dynamicBars
         accessoryType = .none
         accessoryView = nil
     

@@ -24,7 +24,7 @@ final class LogInViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = Palette.dynamicBackground
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.clipsToBounds = true
@@ -36,7 +36,7 @@ final class LogInViewController: UIViewController {
     private lazy var contentView: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.dynamicBackground
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -55,7 +55,6 @@ final class LogInViewController: UIViewController {
     
     private lazy var loginField: UITextField = { [unowned self] in
         let textField = CustomTextField()
-        textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.placeholder = "Email"
         textField.autocapitalizationType = .none
@@ -70,7 +69,6 @@ final class LogInViewController: UIViewController {
     
     private lazy var passwordField: UITextField = {
         let textField = CustomTextField()
-        textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.placeholder = NSLocalizedString("password", comment: "")
         textField.textContentType = .oneTimeCode
@@ -117,7 +115,8 @@ final class LogInViewController: UIViewController {
     
     private lazy var loginView: UIStackView = {
         let view = UIStackView()
-        view.layer.backgroundColor = UIColor.systemGray6.cgColor
+        view.backgroundColor = Palette.dynamicTextfield
+        
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.borderWidth = 0.3
         view.layer.cornerRadius = 10

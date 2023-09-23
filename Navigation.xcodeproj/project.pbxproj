@@ -41,6 +41,9 @@
 		EC55B4562AAB75BC00E4714D /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55B4552AAB75BC00E4714D /* LocationViewController.swift */; };
 		EC55B4582AAB779100E4714D /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55B4572AAB779100E4714D /* LocationViewModel.swift */; };
 		EC62CC5E2AB4B64B00BD98C5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EC62CC602AB4B64B00BD98C5 /* Localizable.strings */; };
+		EC62CC632AB78BD100BD98C5 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC62CC622AB78BD100BD98C5 /* String+Localized.swift */; };
+		EC62CC652AB78C2500BD98C5 /* UIColor+Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC62CC642AB78C2500BD98C5 /* UIColor+Themes.swift */; };
+		EC62CC672AB78E3900BD98C5 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC62CC662AB78E3900BD98C5 /* Palette.swift */; };
 		EC650C4729DB55BE00BF938E /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = EC650C4629DB55BE00BF938E /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC650C4A29DB55BE00BF938E /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; };
 		EC650C4B29DB55BE00BF938E /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -144,6 +147,9 @@
 		EC62CC5D2AB4B5B600BD98C5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		EC62CC5F2AB4B64B00BD98C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EC62CC612AB4B64F00BD98C5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EC62CC622AB78BD100BD98C5 /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
+		EC62CC642AB78C2500BD98C5 /* UIColor+Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Themes.swift"; sourceTree = "<group>"; };
+		EC62CC662AB78E3900BD98C5 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		EC650C4429DB55BE00BF938E /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC650C4629DB55BE00BF938E /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		EC69DEB12A23E3B60096D9CE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -344,6 +350,8 @@
 				EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */,
 				ECF59D1F2A3086DC002BEE93 /* UIViewController+PresentAlert.swift */,
 				ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */,
+				EC62CC622AB78BD100BD98C5 /* String+Localized.swift */,
+				EC62CC642AB78C2500BD98C5 /* UIColor+Themes.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -510,6 +518,7 @@
 				EC69DEAE2A23E3900096D9CE /* Music */,
 				EC1FF4E529984F31007A589E /* Assets.xcassets */,
 				EC1FF4E729984F31007A589E /* LaunchScreen.storyboard */,
+				EC62CC662AB78E3900BD98C5 /* Palette.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -725,6 +734,7 @@
 				EC2799B629EA950C008E949B /* Checker.swift in Sources */,
 				EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */,
 				ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */,
+				EC62CC672AB78E3900BD98C5 /* Palette.swift in Sources */,
 				ECF59D1E2A3075E8002BEE93 /* SignUpViewController.swift in Sources */,
 				EC06901A29A61AC5004513A4 /* InfoViewController.swift in Sources */,
 				EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */,
@@ -732,6 +742,7 @@
 				EC22BF4429F69D1C0024E0B4 /* FeedModel.swift in Sources */,
 				ECF59D202A3086DC002BEE93 /* UIViewController+PresentAlert.swift in Sources */,
 				EC69DEBF2A24A9F00096D9CE /* AudioFileModel.swift in Sources */,
+				EC62CC652AB78C2500BD98C5 /* UIColor+Themes.swift in Sources */,
 				EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */,
 				ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */,
 				ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */,
@@ -746,6 +757,7 @@
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
 				EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */,
 				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
+				EC62CC632AB78BD100BD98C5 /* String+Localized.swift in Sources */,
 				EC12423529FCF7B500F74818 /* CoordinatorProtocol.swift in Sources */,
 				ECAA5CFE29B0AEA600EC2F21 /* UITableViewExtension.swift in Sources */,
 				EC193DA72A0EA26D0056F46D /* String+printableReplace.swift in Sources */,

@@ -15,8 +15,7 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
         
 
-        view.backgroundColor = .systemYellow
-
+        view.backgroundColor = Palette.dynamicBackground
         
     }
  

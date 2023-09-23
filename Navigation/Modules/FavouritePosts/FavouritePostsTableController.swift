@@ -80,6 +80,8 @@ class FavouritePostsTableController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = Palette.dynamicBackground
+        
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
         
         navigationItem.title = NSLocalizedString("favoritePosts", comment: "")

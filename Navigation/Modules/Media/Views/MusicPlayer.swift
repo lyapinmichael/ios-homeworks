@@ -33,7 +33,7 @@ class MusicPlayer: UIView {
     // TODO: Make a progress bar indicating current time position in playing track
     private lazy var mainStack: UIStackView = {
         let stackView = UIStackView()
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = Palette.dynamicBars
         stackView.layer.cornerRadius = 30
         
         stackView.axis = .vertical

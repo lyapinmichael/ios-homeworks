@@ -28,7 +28,6 @@ final class PostTableViewCell: UITableViewCell {
         let title = UILabel()
         title.numberOfLines = 2
         title.font = .systemFont(ofSize: 20, weight: .bold)
-        title.textColor = .black
         
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
@@ -56,7 +55,6 @@ final class PostTableViewCell: UITableViewCell {
     private lazy var likesLabel: UILabel = {
         let likes = UILabel()
         likes.font = .systemFont(ofSize: 16, weight: .regular)
-        likes.textColor = .black
         
         likes.translatesAutoresizingMaskIntoConstraints = false
         return likes
@@ -65,7 +63,6 @@ final class PostTableViewCell: UITableViewCell {
     private lazy var viewsLabel: UILabel = {
         let views = UILabel()
         views.font = .systemFont(ofSize: 16, weight: .regular)
-        views.textColor = .black
         
         views.translatesAutoresizingMaskIntoConstraints = false
         return views
@@ -77,7 +74,7 @@ final class PostTableViewCell: UITableViewCell {
         
         addSubviews()
         setConstraints()
-        backgroundColor = .white
+        backgroundColor = Palette.dynamicBars
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addToFavourites))
         doubleTap.numberOfTapsRequired = 2
         self.contentView.addGestureRecognizer(doubleTap)

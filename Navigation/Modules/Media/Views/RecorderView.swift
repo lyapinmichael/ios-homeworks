@@ -39,7 +39,7 @@ class RecorderView: UIView {
     
     private lazy var mainStack: UIStackView = {
        let stackView = UIStackView()
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = Palette.dynamicBars
         stackView.layer.cornerRadius = 30
         
         stackView.axis = .vertical

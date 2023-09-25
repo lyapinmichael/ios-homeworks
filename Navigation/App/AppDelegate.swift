@@ -15,7 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        LocalNotificationService.shared.requestAuthorization()
+        
+        let localNotificationService = LocalNotificationService(
+        )
+        
+        localNotificationService.requestAuthorization()
         return true
     }
 
@@ -34,5 +38,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+   
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        switch response.actionIdentifier {
+        case "checkForUpdates":
+            print("checking for updates...")
+        default:
+            break
+        }
+        
+        completionHandler()
+    }
 }
 

@@ -9,22 +9,20 @@ import Foundation
 import UserNotifications
 
 
-final class LocalNotificationService {
-    
-    static let shared = LocalNotificationService()
+final class LocalNotificationService: NSObject {
     
     private var notificationCenter = UNUserNotificationCenter.current()
     
     func requestAuthorization(){
     
-        notificationCenter.requestAuthorization(options: [.provisional, .alert, .badge, .sound], completionHandler: { [weak self] success, error in
+        notificationCenter.requestAuthorization(options: [.provisional, .alert, .badge, .sound], completionHandler: {  success, error in
             
             if let error {
                 print("Error occured: ", error)
             }
             
             if success {
-                self?.registerForLatestUpdaetsIfPossible()
+                self.registerForLatestUpdaetsIfPossible()
             } else {
                 print("Notification authorizaion restricted")
             }
@@ -35,10 +33,13 @@ final class LocalNotificationService {
     
     func registerForLatestUpdaetsIfPossible() {
         
+       registerUpdatesCategory()
+        
         let notificationContent = UNMutableNotificationContent()
         notificationContent.title = "checkUpdatesNotification".localized
         notificationContent.sound = .default
         notificationContent.badge = 1
+        notificationContent.categoryIdentifier = "updates"
         
         let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: DateComponents(hour: 19, minute: 00), repeats: true)
         
@@ -50,5 +51,15 @@ final class LocalNotificationService {
         
     }
     
+    func registerUpdatesCategory() {
+        
+        let checkForUpdatesAction = UNNotificationAction(identifier: "checkForUpdates", title: "checkForUpdatesUNAction".localized, options: .foreground)
+        
+        let notificationCategory = UNNotificationCategory(identifier: "updates", actions: [checkForUpdatesAction], intentIdentifiers: [])
+        notificationCenter.setNotificationCategories([notificationCategory])
+        
+    }
+    
     
 }
+

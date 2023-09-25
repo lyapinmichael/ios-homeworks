@@ -20,13 +20,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
         
+        UNUserNotificationCenter.current().delegate = self
+        
         let factory = AppFactory(userService: CurrentUserService())
         let mainCoordinator = MainCoorditanor(factory: factory)
         
         window = UIWindow(windowScene: scene)
         self.mainCoordinator = mainCoordinator
         
-        let configuration = AppConfigutation.planets
+        let configuration = AppConfigutation.starships
         NetworkService.request(requestURL: configuration.url("22"), completion: { result in
             switch result {
             case .success(let loadedData):
@@ -84,3 +86,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate: UNUserNotificationCenterDelegate {
+ 
+            
+            func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+                
+                switch response.actionIdentifier {
+                case "checkForUpdates":
+                    print("checking for updates...")
+                    window?.rootViewController?.present(InfoViewController(), animated: true)
+                default:
+                    break
+                }
+                
+                completionHandler()
+            }
+        }

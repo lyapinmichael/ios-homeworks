@@ -66,6 +66,7 @@
 		EC7F047D2A233DBF00C167F0 /* MusicPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F047C2A233DBF00C167F0 /* MusicPlayerViewModel.swift */; };
 		EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */; };
 		ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */; };
+		ECA3C9612AC1D2160069E1B4 /* LocalNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */; };
 		ECAA5CFE29B0AEA600EC2F21 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */; };
 		ECAA5D0029B0C41D00EC2F21 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */; };
 		ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */; };
@@ -187,6 +188,7 @@
 		EC9720DF299856190090FE5A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		EC9720E12998565E0090FE5A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+TextPicker.swift"; sourceTree = "<group>"; };
+		ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationService.swift; sourceTree = "<group>"; };
 		ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 				ECFD59A62A45B3AC009E90F9 /* FavouritePostsService.swift */,
 				EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */,
 				ECF59D1B2A2F67A5002BEE93 /* CheckerService.swift */,
+				ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -837,6 +840,7 @@
 				ECF59D1C2A2F67A5002BEE93 /* CheckerService.swift in Sources */,
 				EC69DEC32A25DABE0096D9CE /* RecorderView.swift in Sources */,
 				EC55B4562AAB75BC00E4714D /* LocationViewController.swift in Sources */,
+				ECA3C9612AC1D2160069E1B4 /* LocalNotificationService.swift in Sources */,
 				EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */,
 				EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */,
 				EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */,

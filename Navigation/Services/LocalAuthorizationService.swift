@@ -57,15 +57,16 @@ final class LocalAuthorizatoinService {
         }
     }
     
-    func authorizeIfPossible(_ authorizationFinished: @escaping (Bool) -> Void) {
+    func authorizeIfPossible(_ authorizationFinished: @escaping (Bool, Error?) -> Void) {
         
         guard canEvaluatePolicy else { return }
         
         context.evaluatePolicy(policy, localizedReason: "LAPolicy".localized, reply: { success, error in
             
             if success {
-                authorizationFinished(true)
+                authorizationFinished(true, nil)
             } else {
+                authorizationFinished(false, error)
                 print("Error occured:\t" + error.debugDescription)
             }
         })

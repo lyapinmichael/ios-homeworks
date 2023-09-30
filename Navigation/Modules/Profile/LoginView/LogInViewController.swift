@@ -184,11 +184,27 @@ final class LogInViewController: UIViewController {
         
         let action = UIAction { [weak self] _ in
             
-            self?.localAuthorizationService.authorizeIfPossible { [weak self] success in
+            self?.localAuthorizationService.authorizeIfPossible { [weak self] success, error  in
                 if success {
-                    
                     guard let self = self else { return }
                     self.login(login: self.testLogin, password: self.testPassword)
+                } else {
+
+                    DispatchQueue.main.async {
+                        
+                        let title = "errorOccured".localized
+                        let message = error?.localizedDescription
+                        let alertController = UIAlertController(title: title,
+                                                                message: message,
+                                                                preferredStyle: .alert)
+                        let action = UIAlertAction(title: "close".localized,
+                                                   style: .destructive) { _ in
+                            alertController.dismiss(animated: true)
+                        }
+                        alertController.addAction(action)
+                        
+                        self?.present(alertController, animated: true)
+                    }
                 }
             }
             

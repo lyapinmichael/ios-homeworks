@@ -60,3 +60,4 @@
 "location" = "Location";
 "checkUpdatesNotification" = "Check last updates";
 "checkForUpdatesUNAction" = "Check for updates";
+"LAPolicy" = "Allow app to use bimometry for safe entrance";

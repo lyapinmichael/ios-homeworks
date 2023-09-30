@@ -17,6 +17,8 @@ final class LogInViewController: UIViewController {
     weak var coordinator: ProfileCoordinator?
     private var loginDelegate: LogInViewControllerDelegate?
     
+    let localAuthorizationService = LocalAuthorizatoinService()
+    
     var testLogin = "furiousVader777@samplemail.com"
     var testPassword = "password"
     
@@ -174,6 +176,33 @@ final class LogInViewController: UIViewController {
         return button
     }()
     
+    private lazy var biometricAuthorizationButton: UIButton = {
+       let button = UIButton()
+        
+        let imageName = localAuthorizationService.biometryType.imageSystemName
+        button.setBackgroundImage(UIImage(systemName: imageName), for: .normal)
+        
+        let action = UIAction { [weak self] _ in
+            
+            self?.localAuthorizationService.authorizeIfPossible { [weak self] success in
+                if success {
+                    
+                    guard let self = self else { return }
+                    self.login(login: self.testLogin, password: self.testPassword)
+                }
+            }
+            
+        }
+        
+        button.addAction(action, for: .touchUpInside)
+        
+        if case .none  =  localAuthorizationService.biometryType {
+            button.isHidden = true
+        }
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     
     
@@ -289,7 +318,7 @@ final class LogInViewController: UIViewController {
         contentView.addSubview(loadingSpinner)
         contentView.addSubview(loginButton)
         contentView.addSubview(signUpButton)
-       
+        contentView.addSubview(biometricAuthorizationButton)
         
         NSLayoutConstraint.activate([
             logoImage.heightAnchor.constraint(equalToConstant: 100),
@@ -308,11 +337,16 @@ final class LogInViewController: UIViewController {
             
             loadingSpinner.centerYAnchor.constraint(equalTo: passwordField.centerYAnchor),
             loadingSpinner.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor, constant: -12),
+            
+            biometricAuthorizationButton.heightAnchor.constraint(equalToConstant: 44),
+            biometricAuthorizationButton.widthAnchor.constraint(equalToConstant: 44),
+            biometricAuthorizationButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            biometricAuthorizationButton.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor),
 
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.topAnchor.constraint(equalTo: loginView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            loginButton.trailingAnchor.constraint(equalTo: biometricAuthorizationButton.leadingAnchor, constant: -16),
             
             signUpButton.heightAnchor.constraint(equalToConstant: 50),
             signUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),

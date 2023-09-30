@@ -115,7 +115,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Private methods
     
     private func setupView() {
-        title = "Profile"
+        title = "profile".localized
         addSubviews()
         setupProfileView()
         setConstraints()

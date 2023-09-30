@@ -8,7 +8,13 @@
 import UIKit
 import StorageService
 
-final class FeedViewController: UIViewController {
+protocol FeedView {
+    
+    func presentAlertOnGuess(isRight flag: Bool)
+
+}
+
+final class FeedViewController: UIViewController, FeedView {
 
     // MARK: - Public properties
     
@@ -16,7 +22,7 @@ final class FeedViewController: UIViewController {
     
     // MARK: - Private properties
   
-    private let feedModel = FeedModel()
+    private let viewModel = FeedViewModel()
     
     private lazy var stackView: UIStackView = {
         
@@ -65,7 +71,7 @@ final class FeedViewController: UIViewController {
                 self?.alertOnEmptyGuess()
                 return
             }
-            self?.feedModel.check(text)
+            self?.viewModel.updateState(withInput: .didTapCheckGuessButton(word: text))
             
         }
         
@@ -95,6 +101,18 @@ final class FeedViewController: UIViewController {
         return barButton
     }()
     // MARK: - Private methods
+    
+    private func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            switch state {
+            case .initial:
+                return
+            case .didCheckGuess(let flag):
+                self?.presentAlertOnGuess(isRight: flag)
+            }
+            
+        }
+    }
 
     private func setupStackView() {
         
@@ -136,6 +154,9 @@ final class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.feedView = self
+        bindViewModel()
+        
         title = NSLocalizedString("feed", comment: "")
     
         view.backgroundColor = Palette.dynamicBackground
@@ -145,20 +166,9 @@ final class FeedViewController: UIViewController {
         view.addSubview(stackView)
         setupStackView()
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(didCheckGuess(_:)),
-                                               name: FeedModelNotification.checkResult,
-                                               object: nil)
-        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapRecognizer)
         
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - ObjcMethods
@@ -183,12 +193,10 @@ final class FeedViewController: UIViewController {
     }
     
     // MARK: Check button action
-    @objc func didCheckGuess(_ notification: NSNotification) {
+    func presentAlertOnGuess(isRight flag: Bool) {
+        
         let message: String
-        
-        guard let isChecked = notification.userInfo?["isChecked"] as? Bool else { return }
-        
-        switch isChecked {
+        switch flag {
         case true:
             message = NSLocalizedString("rightGuess", comment: "")
             checkResultLabel.text = NSLocalizedString("right", comment: "")

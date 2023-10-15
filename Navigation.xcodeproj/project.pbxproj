@@ -67,6 +67,7 @@
 		EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */; };
 		ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */; };
 		ECA3C9612AC1D2160069E1B4 /* LocalNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */; };
+		ECA3C9652AC30F8A0069E1B4 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3C9642AC30F8A0069E1B4 /* LocalAuthorizationService.swift */; };
 		ECAA5CFE29B0AEA600EC2F21 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */; };
 		ECAA5D0029B0C41D00EC2F21 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */; };
 		ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */; };
@@ -189,6 +190,7 @@
 		EC9720E12998565E0090FE5A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+TextPicker.swift"; sourceTree = "<group>"; };
 		ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationService.swift; sourceTree = "<group>"; };
+		ECA3C9642AC30F8A0069E1B4 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
 		ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */,
 				ECF59D1B2A2F67A5002BEE93 /* CheckerService.swift */,
 				ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */,
+				ECA3C9642AC30F8A0069E1B4 /* LocalAuthorizationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -817,6 +820,7 @@
 				EC2DA9BA29E96C60002149CF /* UsersStore.swift in Sources */,
 				ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
+				ECA3C9652AC30F8A0069E1B4 /* LocalAuthorizationService.swift in Sources */,
 				EC55B4532AAB73C100E4714D /* LocationCoordinator.swift in Sources */,
 				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
 				ECFD599E2A45ACA0009E90F9 /* FavouritePostsTableController.swift in Sources */,
@@ -1038,6 +1042,7 @@
 				DEVELOPMENT_TEAM = 6RRYH7RTN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Разрешите использовать биометрию для безопасного входа";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Пожалуйста, разрешите приложению отслеживать место нахождения устройства";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Согласие пользователя на доступ к микрофону";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1069,6 +1074,7 @@
 				DEVELOPMENT_TEAM = 6RRYH7RTN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Разрешите использовать биометрию для безопасного входа";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Пожалуйста, разрешите приложению отслеживать место нахождения устройства";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Согласие пользователя на доступ к микрофону";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

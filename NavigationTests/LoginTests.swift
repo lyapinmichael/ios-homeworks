@@ -18,7 +18,7 @@ final class LoginInspectorTests: XCTestCase {
         let loginInspector = LoginInspectorMock()
         
         loginInspector.fakeLoginResult = .success(("email", "username"))
-        loginInspector.checkCredentials(email: "email", password: "password") { _ in
+        loginInspector.logIn(email: "email", password: "password") { _ in
     
             XCTAssertEqual(loginInspector.state, .didLogin(true))
             
@@ -29,7 +29,7 @@ final class LoginInspectorTests: XCTestCase {
         let loginInspector = LoginInspectorMock()
         
         loginInspector.fakeLoginResult = .failure(.authResultIsNil)
-        loginInspector.checkCredentials(email: "email", password: "password") { _ in
+        loginInspector.logIn(email: "email", password: "password") { _ in
             
             XCTAssertEqual(loginInspector.state, .didLogin(false))
             
@@ -70,7 +70,7 @@ fileprivate final class LoginInspectorMock: LogInViewControllerDelegate {
     var fakeLoginResult: Result<(String?, String?), LoginInspectorErrors>!
     var fakeSignUpResult: Result<String?, LoginInspectorErrors>!
     
-    func checkCredentials(email: String, password: String, completion: @escaping ((Result<(String?, String?), LoginInspectorErrors>) -> Void)) {
+    func logIn(email: String, password: String, completion: @escaping ((Result<(String?, String?), LoginInspectorErrors>) -> Void)) {
         
         switch fakeLoginResult {
         case .success:

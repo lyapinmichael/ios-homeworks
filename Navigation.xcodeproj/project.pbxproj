@@ -31,7 +31,7 @@
 		EC22BF4429F69D1C0024E0B4 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC22BF4329F69D1C0024E0B4 /* FeedViewModel.swift */; };
 		EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */; };
 		EC2799B629EA950C008E949B /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B529EA950C008E949B /* Checker.swift */; };
-		EC2799B829EA9744008E949B /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B729EA9744008E949B /* LoginInspector.swift */; };
+		EC2799B829EA9744008E949B /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B729EA9744008E949B /* AuthenticationService.swift */; };
 		EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */; };
 		EC2DA9B629E94A0A002149CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B529E94A0A002149CF /* User.swift */; };
 		EC2DA9BA29E96C60002149CF /* UsersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B929E96C60002149CF /* UsersStore.swift */; };
@@ -76,11 +76,12 @@
 		ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */; };
 		ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */; };
 		ECCBCDDD2A165EE100F05304 /* ToastPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */; };
+		ECEDC90E2ADC67600043CB75 /* Todo.rtf in Resources */ = {isa = PBXBuildFile; fileRef = ECEDC90D2ADC67600043CB75 /* Todo.rtf */; };
+		ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */; };
 		ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D0F2A2CE230002BEE93 /* Todo.swift */; };
 		ECF59D122A2D0525002BEE93 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D112A2D0525002BEE93 /* Planet.swift */; };
 		ECF59D162A2D2515002BEE93 /* PlanetResident.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D152A2D2515002BEE93 /* PlanetResident.swift */; };
 		ECF59D1A2A2E4BA4002BEE93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECF59D192A2E4BA4002BEE93 /* GoogleService-Info.plist */; };
-		ECF59D1C2A2F67A5002BEE93 /* CheckerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D1B2A2F67A5002BEE93 /* CheckerService.swift */; };
 		ECF59D1E2A3075E8002BEE93 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D1D2A3075E8002BEE93 /* SignUpViewController.swift */; };
 		ECF59D202A3086DC002BEE93 /* UIViewController+PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D1F2A3086DC002BEE93 /* UIViewController+PresentAlert.swift */; };
 		ECFCC60A29EB4930003C4D4A /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFCC60929EB4930003C4D4A /* LoginFactory.swift */; };
@@ -148,7 +149,7 @@
 		EC22BF4329F69D1C0024E0B4 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		EC2799B529EA950C008E949B /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
-		EC2799B729EA9744008E949B /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
+		EC2799B729EA9744008E949B /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RootVC.swift"; sourceTree = "<group>"; };
 		EC2DA9B529E94A0A002149CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EC2DA9B929E96C60002149CF /* UsersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStore.swift; sourceTree = "<group>"; };
@@ -199,11 +200,12 @@
 		ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastContoller.swift; sourceTree = "<group>"; };
 		ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresentationController.swift; sourceTree = "<group>"; };
+		ECEDC90D2ADC67600043CB75 /* Todo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Todo.rtf; sourceTree = "<group>"; };
+		ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		ECF59D0F2A2CE230002BEE93 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		ECF59D112A2D0525002BEE93 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		ECF59D152A2D2515002BEE93 /* PlanetResident.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetResident.swift; sourceTree = "<group>"; };
 		ECF59D192A2E4BA4002BEE93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		ECF59D1B2A2F67A5002BEE93 /* CheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerService.swift; sourceTree = "<group>"; };
 		ECF59D1D2A3075E8002BEE93 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		ECF59D1F2A3086DC002BEE93 /* UIViewController+PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentAlert.swift"; sourceTree = "<group>"; };
 		ECFCC60929EB4930003C4D4A /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
@@ -334,22 +336,11 @@
 			path = Photos;
 			sourceTree = "<group>";
 		};
-		EC12423E29FCFA2500F74818 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				EC2DA9B529E94A0A002149CF /* User.swift */,
-				ECAA5D0729B3B9E800EC2F21 /* Photo.swift */,
-				EC12424829FD0B3D00F74818 /* UserService.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		EC12423F29FCFA5500F74818 /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
 				EC2799B529EA950C008E949B /* Checker.swift */,
 				ECFCC60929EB4930003C4D4A /* LoginFactory.swift */,
-				EC2799B729EA9744008E949B /* LoginInspector.swift */,
 				EC06901B29A6B0CB004513A4 /* LogInViewController.swift */,
 				ECF59D1D2A3075E8002BEE93 /* SignUpViewController.swift */,
 			);
@@ -394,7 +385,6 @@
 			children = (
 				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
 				EC12423929FCF9C500F74818 /* View */,
-				EC12423E29FCFA2500F74818 /* Models */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -402,6 +392,7 @@
 		EC1FF4D029984F30007A589E = {
 			isa = PBXGroup;
 			children = (
+				ECEDC90D2ADC67600043CB75 /* Todo.rtf */,
 				EC62CC602AB4B64B00BD98C5 /* Localizable.strings */,
 				EC1FF4DB29984F30007A589E /* Navigation */,
 				EC650C4529DB55BE00BF938E /* StorageService */,
@@ -444,6 +435,9 @@
 		EC2DA9B429E949FC002149CF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EC2DA9B529E94A0A002149CF /* User.swift */,
+				ECAA5D0729B3B9E800EC2F21 /* Photo.swift */,
+				EC12424829FD0B3D00F74818 /* UserService.swift */,
 				EC2DA9B929E96C60002149CF /* UsersStore.swift */,
 				ECF59D0F2A2CE230002BEE93 /* Todo.swift */,
 				ECF59D112A2D0525002BEE93 /* Planet.swift */,
@@ -507,7 +501,8 @@
 			children = (
 				ECFD59A62A45B3AC009E90F9 /* FavouritePostsService.swift */,
 				EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */,
-				ECF59D1B2A2F67A5002BEE93 /* CheckerService.swift */,
+				EC2799B729EA9744008E949B /* AuthenticationService.swift */,
+				ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */,
 				ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */,
 				ECA3C9642AC30F8A0069E1B4 /* LocalAuthorizationService.swift */,
 			);
@@ -696,6 +691,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECEDC90E2ADC67600043CB75 /* Todo.rtf in Resources */,
 				EC69DED12A28D7C60096D9CE /* jazzyfrenchy.mp3 in Resources */,
 				ECF59D1A2A2E4BA4002BEE93 /* GoogleService-Info.plist in Resources */,
 				EC69DED22A28D7C60096D9CE /* creativeminds.mp3 in Resources */,
@@ -793,13 +789,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC2799B829EA9744008E949B /* LoginInspector.swift in Sources */,
+				EC2799B829EA9744008E949B /* AuthenticationService.swift in Sources */,
 				EC7F04732A22857100C167F0 /* MediaCoordinator.swift in Sources */,
 				ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */,
 				EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */,
 				ECFD59A02A45AD41009E90F9 /* FavouritePostsCoordinator.swift in Sources */,
 				EC69DEC52A25DFE10096D9CE /* RecorderViewModel.swift in Sources */,
 				ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */,
+				ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */,
 				EC2799B629EA950C008E949B /* Checker.swift in Sources */,
 				EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */,
 				ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */,
@@ -841,7 +838,6 @@
 				EC2DA9B629E94A0A002149CF /* User.swift in Sources */,
 				EC12424729FD049000F74818 /* AppFactory.swift in Sources */,
 				EC55B4582AAB779100E4714D /* LocationViewModel.swift in Sources */,
-				ECF59D1C2A2F67A5002BEE93 /* CheckerService.swift in Sources */,
 				EC69DEC32A25DABE0096D9CE /* RecorderView.swift in Sources */,
 				EC55B4562AAB75BC00E4714D /* LocationViewController.swift in Sources */,
 				ECA3C9612AC1D2160069E1B4 /* LocalNotificationService.swift in Sources */,

@@ -8,13 +8,13 @@
 import Foundation
 
 protocol LoginFactory {
-    static func makeLoginInspector() -> LoginInspector
+    static func makeLoginInspector() -> AuthenticationService
 }
 
 struct MyLoginFactory: LoginFactory {
    
-    static func makeLoginInspector() -> LoginInspector {
-        return LoginInspector()
+    static func makeLoginInspector() -> AuthenticationService {
+        return AuthenticationService()
     }
     
     

@@ -8,6 +8,8 @@ target 'Navigation' do
   # Pods for Navigation
   pod "FirebaseCore", "~> 10.10.0"
   pod "FirebaseAuth", "~> 10.10.0"
+  pod "FirebaseFirestore", "~> 10.16.0"
+  pod "FirebaseFirestoreSwift", "~> 10.16.0"
 
 end
 

@@ -226,7 +226,7 @@ final class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginDelegate = LoginInspector()
+        loginDelegate = AuthenticationService()
         
         setup()
         addSubviews()
@@ -249,7 +249,7 @@ final class LogInViewController: UIViewController {
     // MARK: - Public methods
     
     func login(login: String, password: String) {
-        loginDelegate?.checkCredentials(email: login, password: password) { [weak self] result in
+        loginDelegate?.logIn(email: login, password: password) { [weak self] result in
             
             guard let self = self else { return }
             

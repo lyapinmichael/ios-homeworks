@@ -10,12 +10,6 @@ import UIKit
 
 final class AppFactory {
     
-    let userService: UserServiceProtocol
-    
-    init(userService: UserServiceProtocol) {
-        self.userService = userService
-    }
-    
     func makeModule(_ type: Module.ModuleType) -> Module {
         switch type {
         case .feed:

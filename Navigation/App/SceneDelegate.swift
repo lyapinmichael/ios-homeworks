@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         UNUserNotificationCenter.current().delegate = self
         
-        let factory = AppFactory(userService: CurrentUserService())
+        let factory = AppFactory()
         let mainCoordinator = MainCoorditanor(factory: factory)
         
         window = UIWindow(windowScene: scene)

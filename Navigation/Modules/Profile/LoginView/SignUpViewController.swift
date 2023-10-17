@@ -7,14 +7,17 @@
 
 import UIKit
 
+protocol SignUpDelegate: AnyObject, UITextFieldDelegate {
+    func trySignUp(email: String, password: String, fullName: String)
+}
+
 class SignUpViewController: UIViewController {
     
     // MARK: - Public properties
     
-    weak var delegate: LogInViewController?
-    weak var signupDelegate: LogInViewControllerDelegate?
+    weak var delegate: SignUpDelegate?
     
-    // MARK: Private properties
+    // MARK: Subviews
     
     private lazy var signUpLabel: UILabel = {
        let label = UILabel()
@@ -143,6 +146,7 @@ class SignUpViewController: UIViewController {
     
     private func setup() {
         view.backgroundColor = Palette.dynamicBackground
+        view.backgroundColor = Palette.dynamicBackground
         
         view.addSubview(signUpLabel)
         view.addSubview(loginView)
@@ -198,29 +202,10 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        signupDelegate?.signUp(email: login, password: password, fullName: fullname, completion: { [weak self] result in
-            
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let email):
-               
-                guard let userEmail = email else { return }
-                
-                self.dismiss(animated: true)
-                
-                
-                self.delegate?.presentAlert(message: NSLocalizedString("registrationSuccessfull", comment: ""), handler: {
-                    self.delegate?.login(login: login, password: password)
-                })
-            
-            case .failure(let error):
-                self.presentAlert(message: error.localizedDescription)
-            }
-        })
+        delegate?.trySignUp(email: login, password: password, fullName: fullname)
+
         
     }
-
 }
 
 

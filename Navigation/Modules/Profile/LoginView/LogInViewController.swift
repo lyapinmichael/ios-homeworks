@@ -15,7 +15,6 @@ final class LogInViewController: UIViewController {
     // MARK: - Public properties
     
     weak var coordinator: ProfileCoordinator?
-    private var loginDelegate: LogInViewControllerDelegate?
     
     let localAuthorizationService = LocalAuthorizatoinService()
     
@@ -23,6 +22,10 @@ final class LogInViewController: UIViewController {
     var testPassword = "password"
     
     // MARK: - Private properties
+    
+    private var viewModel = AuthenticationViewModel()
+    
+    // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -164,7 +167,6 @@ final class LogInViewController: UIViewController {
             
             let signupController = SignUpViewController()
             signupController.delegate = self
-            signupController.signupDelegate = loginDelegate
             self.present(signupController, animated: true)
         }
         
@@ -187,7 +189,9 @@ final class LogInViewController: UIViewController {
             self?.localAuthorizationService.authorizeIfPossible { [weak self] success, error  in
                 if success {
                     guard let self = self else { return }
-                    self.login(login: self.testLogin, password: self.testPassword)
+                    
+                    // TODO: Refactor to open if user had ever successfully logged in
+                    self.viewModel.updateState(with: .tryLogIn(login: testLogin, password: testPassword))
                 } else {
 
                     DispatchQueue.main.async {
@@ -226,12 +230,11 @@ final class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginDelegate = AuthenticationService()
         
         setup()
-        addSubviews()
-        setConstraints()
+        setupSubviews()
         addContentSubviews()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -246,31 +249,9 @@ final class LogInViewController: UIViewController {
         removeKeyboardObservers()
     }
     
-    // MARK: - Public methods
-    
-    func login(login: String, password: String) {
-        loginDelegate?.logIn(email: login, password: password) { [weak self] result in
-            
-            guard let self = self else { return }
-            
-            switch result {
-            case .success((let userEmail, let userName)):
-                guard let email = userEmail else {
-                    assertionFailure("Bad email. Check auth settings.")
-                    return
-                }
-        
-                self.coordinator?.proceedToProfile(User(login: email, fullName: userName ?? "DefaultUsername"))
-                
-            case .failure(let error):
-                
-                self.presentAlert(message: error.localizedDescription)
-            }
-        }
-    }
-    
     // MARK: - Private methods
     
+    // Method to set up apperance of root view.
     private func setup() {
         
         view.backgroundColor = .white
@@ -278,14 +259,41 @@ final class LogInViewController: UIViewController {
         
     }
     
-    private func addSubviews() {
+    // MARK:  Bind viewModel
+    private func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            switch state {
+            case .initial:
+                return
+                
+            case .didLogIn(userID: let userID):
+                self?.coordinator?.proceedToProfile(User.init(login: "Registered User", fullName: "Dadya Vasya"))
+           
+            case .failedToLogIn(let error):
+                self?.presentAlert(message: "Failed to log in")
+                print(error)
+                
+            case .didSignUp(userID: let userID):
+                self?.presentedViewController?.dismiss(animated: true)
+                self?.presentAlert(message: NSLocalizedString("registrationSuccessfull", comment: "")) { 
+                    self?.coordinator?.proceedToProfile(User.init(login: "New User", fullName: "Tetya Tanya"))
+                }
+               
+                
+            case .failedToSignUp(let error):
+                self?.presentAlert(message: error.localizedDescription)
+                print(error)
+                
+            }
+        }
+    }
+        
+    // Mark following methods set up subviews.
+    private func setupSubviews() {
+        
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        
-    }
-    
-    private func setConstraints() {
         let safeArea = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
@@ -301,30 +309,6 @@ final class LogInViewController: UIViewController {
             contentView.heightAnchor.constraint(equalTo: safeArea.heightAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
-    }
-    
-    
-    private func setKeyboardObservers() {
-        let notificationCenter = NotificationCenter.default
-        
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(self.willShowKeyboard(_:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(self.willHideKeyboard(_:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-    
-    private func removeKeyboardObservers() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.removeObserver(self)
     }
     
     private func addContentSubviews() {
@@ -372,6 +356,31 @@ final class LogInViewController: UIViewController {
         ])
     }
     
+    // Following methods make view scroll whenever keyboard appears,
+    // so that taxtFields are not blocked.
+    private func setKeyboardObservers() {
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.willShowKeyboard(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.willHideKeyboard(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    private func removeKeyboardObservers() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self)
+    }
+    
     private func tryLogin() {
         
         loginField.endEditing(true)
@@ -383,12 +392,11 @@ final class LogInViewController: UIViewController {
         }
         
         guard let password = passwordField.text, !password.isEmpty else {
-            presentAlert(message: NSLocalizedString("pleaseFillLogin", comment: ""))
+            presentAlert(message: NSLocalizedString("pleaseFillPassword", comment: ""))
             return
         }
         
-        self.login(login: login, password: password)
-   
+        viewModel.updateState(with: .tryLogIn(login: login, password: password))
     }
     
         
@@ -410,6 +418,17 @@ final class LogInViewController: UIViewController {
     
 }
 
+// MARK: -  LogInViewController: SignUpDelegate extension
+
+extension LogInViewController: SignUpDelegate {
+    func trySignUp(email: String, password: String, fullName: String) {
+        viewModel.updateState(with: .trySignUp(login: email,
+                                               password: password,
+                                               fullName: fullName))
+    }
+    
+   
+}
 
 extension LogInViewController: UITextFieldDelegate {
     

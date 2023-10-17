@@ -264,7 +264,7 @@ final class ProfileHeaderView: UIView {
         }
         
         if let avatar = user.avatar {
-            profilePictureView.image = avatar
+            profilePictureView.image = UIImage(named: avatar)
         } else {
             profilePictureView.image = UIImage(named: "ImagePlaceholder")
         }

@@ -18,6 +18,10 @@ final class FirestoreService {
         case failedToDecodeUserDocument
     }
     
+    // This property is crucial for further work with firestore.
+    // It is received whenever user logs in, so the app knows user identity,
+    // and knowing user's identity the app then makes queries into Cloud Firestore
+    // to read and write user-specific data, such as posts.
     let userID: String
     
     private let dataBase = Firestore.firestore()

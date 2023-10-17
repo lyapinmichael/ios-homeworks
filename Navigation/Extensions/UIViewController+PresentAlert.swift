@@ -10,7 +10,7 @@ import UIKit
 extension UIViewController {
     
     /// Method used to presend alert which shows some infromation and can take optional no handlers
-    func presentAlert(message: String, title: String? = nil, handler:(() -> Void)? = nil, actionTitle: String? = nil) {
+    func presentAlert(message: String, title: String? = nil, actionTitle: String? = nil, handler:(() -> Void)? = nil) {
         
         let alert = UIAlertController(title: title,
                                       message: message,

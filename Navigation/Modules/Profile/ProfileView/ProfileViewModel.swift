@@ -10,7 +10,7 @@ import StorageService
 
 protocol ProfileViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((ProfileViewModel.State) -> Void)? { get set }
-    var user: User { get }
+    var user: User { get set }
     var postData: [Post] { get }
     
     func updateState(withInput input: ProfileViewModel.ViewInput)

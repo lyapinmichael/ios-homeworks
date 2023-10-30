@@ -266,17 +266,21 @@ final class LogInViewController: UIViewController {
             case .initial:
                 return
                 
-            case .didLogIn(userID: let userID):
-                self?.coordinator?.proceedToProfile(User.init(login: "Registered User", fullName: "Dadya Vasya"))
+            case .didLogIn(let user):
+                self?.coordinator?.proceedToProfile(user)
+                return
            
             case .failedToLogIn(let error):
                 self?.presentAlert(message: "Failed to log in")
                 print(error)
                 
-            case .didSignUp(userID: let userID):
+            case .didSignUp(let user):
                 self?.presentedViewController?.dismiss(animated: true)
                 self?.presentAlert(message: NSLocalizedString("registrationSuccessfull", comment: "")) { 
-                    self?.coordinator?.proceedToProfile(User.init(login: "New User", fullName: "Tetya Tanya"))
+                    
+                    self?.coordinator?.proceedToProfile(user)
+                    print("Logging in...")
+                    return
                 }
                
                 

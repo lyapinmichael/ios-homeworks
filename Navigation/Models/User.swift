@@ -10,16 +10,18 @@ import StorageService
 
 
 struct User: Codable {
+    let id: String
     let login: String
     let fullName: String
-    let avatar: String?
+    let avatarURL: String?
     var status: String?
     var posts: [Post]
     
-    init(login: String, fullName: String, avatar: String? = nil, status: String? = nil, posts: [Post] = []) {
+    init(id: String, login: String, fullName: String, avatar: String? = nil, status: String? = nil, posts: [Post] = []) {
+        self.id = id
         self.login = login
         self.fullName = fullName
-        self.avatar = avatar
+        self.avatarURL = avatar
         self.status = status
         self.posts = posts
     }

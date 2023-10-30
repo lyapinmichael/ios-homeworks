@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 final class AuthenticationViewModel {
     
@@ -13,9 +14,9 @@ final class AuthenticationViewModel {
     
     enum State {
         case initial
-        case didLogIn(userID: String)
+        case didLogIn(User)
         case failedToLogIn(Error)
-        case didSignUp(userID: String)
+        case didSignUp(User)
         case failedToSignUp(Error)
     }
     
@@ -56,8 +57,8 @@ final class AuthenticationViewModel {
         authenticationService.logIn(email: login, password: password) { [weak self] result in
             
             switch result {
-            case .success(let userID):
-                self?.state = .didLogIn(userID: userID)
+            case .success(let user):
+                self?.state = .didLogIn(user)
                 
             case .failure(let error):
                 self?.state = .failedToLogIn(error)
@@ -72,8 +73,8 @@ final class AuthenticationViewModel {
                                      fullName: fullName) { [weak self] result in
             
             switch result {
-            case .success(let userID):
-                self?.state = .didSignUp(userID: userID)
+            case .success(let user):
+                self?.state = .didSignUp(user)
                 
             case .failure(let error):
                 self?.state = .failedToSignUp(error)

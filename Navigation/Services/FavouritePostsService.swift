@@ -50,7 +50,7 @@ final class FavouritePostsService {
             newFavoutitePost.likes = Int32(post.likes)
             newFavoutitePost.views = Int32(post.views)
             newFavoutitePost.text = post.description
-            newFavoutitePost.imageName = post.image
+            newFavoutitePost.imageName = post.imageURL
             newFavoutitePost.uuid = post.id
             newFavoutitePost.dateAdded = Date()
             

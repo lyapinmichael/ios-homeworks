@@ -11,7 +11,7 @@ public struct Post: Codable {
     public let title: String
     public let author: String
     public let description: String?
-    public let image: String?
+    public let imageURL: String?
     public let likes: Int
     public let views: Int
     public let id: String
@@ -20,7 +20,7 @@ public struct Post: Codable {
         self.title = title
         self.author = author
         self.description = description
-        self.image = image
+        self.imageURL = image
         self.likes = likes
         self.views = views
         self.id = UUID().uuidString
@@ -30,7 +30,7 @@ public struct Post: Codable {
         self.title = title
         self.author = author
         self.description = description
-        self.image = image
+        self.imageURL = image
         self.likes = likes
         self.views = views
         self.id = id

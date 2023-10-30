@@ -13,8 +13,8 @@ import FirebaseAuth
 
 protocol AuthenticationDelegate: AnyObject {
     
-    func logIn(email: String, password: String, completion: @escaping ((Result<String, AuthenticationService.AuthenticationErrors>) -> Void))
-    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<String, AuthenticationService.AuthenticationErrors>) -> Void))
+    func logIn(email: String, password: String, completion: @escaping ((Result<User, AuthenticationService.AuthenticationErrors>) -> Void))
+    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<User, AuthenticationService.AuthenticationErrors>) -> Void))
     func signOut()
 }
 
@@ -34,7 +34,7 @@ class AuthenticationService: AuthenticationDelegate {
     
    
     
-    func logIn(email: String, password: String, completion: @escaping ((Result<String, AuthenticationErrors>) -> Void)) {
+    func logIn(email: String, password: String, completion: @escaping ((Result<User, AuthenticationErrors>) -> Void)) {
         
         Auth.auth().signIn(withEmail: email, password: password) {  authResult, error in
             
@@ -43,18 +43,26 @@ class AuthenticationService: AuthenticationDelegate {
                 return
             }
             
-            guard let result = authResult else {
+            guard let authUser = authResult?.user,
+                  let login = authUser.email,
+                  let fullName = authUser.displayName
+            else {
                 completion(.failure(.authResultIsNil))
                 return
             }
             
+            let id = authUser.uid
             
-            completion(.success((result.user.uid)))
+            let user = User(id: id,
+                            login: login,
+                            fullName: fullName)
+            
+            completion(.success((user)))
         }
        
     }
     
-    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<String, AuthenticationErrors>) -> Void)) {
+    func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<User, AuthenticationErrors>) -> Void)) {
         
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             
@@ -70,14 +78,16 @@ class AuthenticationService: AuthenticationDelegate {
             // be modified, so we its .user property of type User, so we can
             // modify it's fields, namely displayName, which we want to pass
             // fullName parameter to
-            guard let user  = authResult?.user else {
+            guard let authUser  = authResult?.user,
+                  let login = authUser.email
+            else {
                 completion(.failure(.authResultIsNil))
                 return
             }
             
 
             // Secondly, we make a request to change profile, then perform changes.
-            let changeRequest = user.createProfileChangeRequest()
+            let changeRequest = authUser.createProfileChangeRequest()
             changeRequest.displayName = fullName
             
             // And finally commit the changes.
@@ -86,7 +96,11 @@ class AuthenticationService: AuthenticationDelegate {
                 completion(.failure(.failedToSignUp))
             }
             
-            completion(.success(user.uid))
+            let user = User(id: authUser.uid,
+                            login: login,
+                            fullName: fullName)
+            
+            completion(.success(user))
         }
     }
     

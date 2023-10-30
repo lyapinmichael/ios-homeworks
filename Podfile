@@ -10,6 +10,7 @@ target 'Navigation' do
   pod "FirebaseAuth", "~> 10.10.0"
   pod "FirebaseFirestore", "~> 10.16.0"
   pod "FirebaseFirestoreSwift", "~> 10.16.0"
+  pod "FirebaseStorage", "~> 10.16.0"
 
 end
 

@@ -18,7 +18,7 @@ protocol ProfileHeaderViewDelegate: AnyObject {
 
 // MARK: - ProfileHeaderView class
 
-final class ProfileHeaderView: UIView {
+final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Delegate
     
@@ -148,7 +148,7 @@ final class ProfileHeaderView: UIView {
         let scaleX = UIScreen.main.bounds.width / profilePictureView.frame.width
         
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 0.2,
             delay: 0,
             options: .curveEaseOut,
             animations: {
@@ -177,7 +177,7 @@ final class ProfileHeaderView: UIView {
         
         let closedBackgroundColor = UIColor.black.withAlphaComponent(0)
         
-        UIView.animate(withDuration: 0.5,
+        UIView.animate(withDuration: 0.2,
                        delay: 0,
                        options: .curveEaseOut,
                        animations: {
@@ -263,37 +263,26 @@ final class ProfileHeaderView: UIView {
             profileStatusLabel.text = status
         }
         
-        if let avatar = user.avatar {
+        if let avatar = user.avatarURL {
             profilePictureView.image = UIImage(named: avatar)
+            let tapOnProfilePicture = UITapGestureRecognizer(
+                target: self,
+                action: #selector(didTapOnProfilePicture)
+            )
+            profilePictureView.addGestureRecognizer(tapOnProfilePicture)
         } else {
             profilePictureView.image = UIImage(named: "ImagePlaceholder")
         }
-        
-        let tapOnProfilePicture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(didTapOnProfilePicture)
-        )
-        profilePictureView.addGestureRecognizer(tapOnProfilePicture)
-        
     }
     
     // MARK: - Override init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         
         setup()
         setConstraints()
-     
     }
-    
-//
-//    override init(reuseIdentifier: String?) {
-//        super.init(reuseIdentifier: reuseIdentifier)
-//
-//        setup()
-//        setConstraints()
-//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -313,9 +302,10 @@ final class ProfileHeaderView: UIView {
         statusButton.buttonAction = {[weak self] in
             guard let self = self else { return }
             
-            guard let status = textField.text else { return }
-            guard status != "" else { return }
-                    
+            guard let status = textField.text, !status.isEmpty else { return }
+            
+            textField.text = nil
+            
             self.profileStatusLabel.text = status
             self.delegate?.setStatus(status)
             

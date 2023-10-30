@@ -30,7 +30,7 @@ final class ProfileViewController: UIViewController {
     
     private var viewModel: ProfileViewModelProtocol
     
-    private lazy var profileView: UITableView = {
+    private lazy var mainTableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
         
         #if DEBUG
@@ -105,12 +105,8 @@ final class ProfileViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        profileView.frame = view.frame        
+        mainTableView.frame = view.frame        
     }
-    
-    
-    
-    
     
     // MARK: - Private methods
     
@@ -122,37 +118,37 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addSubviews() {
-        view.addSubview(profileView)
+        view.addSubview(mainTableView)
     }
     
     private func setupProfileView() {
-        profileView.rowHeight = UITableView.automaticDimension
+        mainTableView.rowHeight = UITableView.automaticDimension
         
         if #available(iOS 15.0, *) {
-            profileView.sectionHeaderTopPadding = 0.0
+            mainTableView.sectionHeaderTopPadding = 0.0
         }
+                
         
-        let profileHeader = ProfileHeaderView()
-        profileHeader.delegate = self
-        profileHeader.update(with: viewModel.user)
-        profileView.setAndLayout(headerView: profileHeader)
-        
-        
-        profileView.register(
+        mainTableView.register(
             PostTableViewCell.self,
             forCellReuseIdentifier: CellReuseID.post.rawValue
         )
         
-        profileView.register(
+        mainTableView.register(
             PhotosTableViewCell.self,
             forCellReuseIdentifier: CellReuseID.photos.rawValue)
 
-        profileView.register(
+        mainTableView.register(
             UITableViewHeaderFooterView.self,
             forHeaderFooterViewReuseIdentifier: HeaderFooterReuseID.profileFooter.rawValue)
         
-        profileView.delegate = self
-        profileView.dataSource = self
+        mainTableView.register(
+            ProfileHeaderView.self,
+            forHeaderFooterViewReuseIdentifier:                HeaderFooterReuseID.profileHeader.rawValue
+        )
+        
+        mainTableView.delegate = self
+        mainTableView.dataSource = self
         
     }
     
@@ -160,10 +156,10 @@ final class ProfileViewController: UIViewController {
         let safeArea = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            profileView.topAnchor.constraint(equalTo: view.topAnchor),
-            profileView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            profileView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            profileView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+            mainTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            mainTableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            mainTableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            mainTableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
 
@@ -189,9 +185,8 @@ final class ProfileViewController: UIViewController {
         
         
     }
-    //MARK: - Public methods
     
-    func bindViewModel() {
+    private func bindViewModel() {
         viewModel.onStateDidChange = { [weak self] state in
             guard let self = self else { return }
             
@@ -203,6 +198,10 @@ final class ProfileViewController: UIViewController {
             case let .setStatus(status):
                 self.viewModel.user.status = status
                 print ("Status set to \"\(status)\"")
+            case .didReceiveUserData:
+                let currentOffset = mainTableView.contentOffset
+                mainTableView.reloadData()
+                mainTableView.setContentOffset(currentOffset, animated: false)
             }
         }
     }
@@ -244,16 +243,27 @@ extension ProfileViewController: UITableViewDataSource {
                 for: indexPath
             ) as! PostTableViewCell
             cell.delegate = self
-            cell.updateContent(viewModel.postData[indexPath.row])
+            let postData = viewModel.postData[indexPath.row]
+            cell.updateContent(post: postData.post, imageData: postData.imageData)
             return cell
         }
     }
-    
 }
 
 // MARK: - Table View delegate extension
 
 extension ProfileViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            let profileHeader = ProfileHeaderView()
+            profileHeader.delegate = self
+            profileHeader.update(with: viewModel.user)
+            return profileHeader
+        } else {
+            return UIView()
+        }
+    }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderFooterReuseID.profileFooter.rawValue)
@@ -292,11 +302,11 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
     func isScrollAndSelectionEnabled(_ flag: Bool) {
         switch flag {
         case true:
-            profileView.isScrollEnabled = true
-            profileView.allowsSelection = true
+            mainTableView.isScrollEnabled = true
+            mainTableView.allowsSelection = true
         case false:
-            profileView.isScrollEnabled = false
-            profileView.allowsSelection = false
+            mainTableView.isScrollEnabled = false
+            mainTableView.allowsSelection = false
         }
     }
     

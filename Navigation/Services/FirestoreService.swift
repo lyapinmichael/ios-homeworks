@@ -16,6 +16,7 @@ final class FirestoreService {
         case failedToFetchUserDocument
         case userDocumnentDoesntExist
         case failedToDecodeUserDocument
+        case failedToCreateNewUserDocument
     }
     
     // This property is crucial for further work with firestore.
@@ -30,12 +31,13 @@ final class FirestoreService {
     private var documentReference: DocumentReference!
     
     private let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
     
     init(userID: String) {
         self.userID = userID
     }
     
-    func fetchUserData(_ completionHandler: @escaping (Result<User, FirestoreServiceError>) -> Void) {
+    func fetchUserData(completionHandler: @escaping (Result<User, FirestoreServiceError>) -> Void) {
         
         rootCollectionReference = dataBase.collection("users")
         documentReference = rootCollectionReference.document(userID)
@@ -61,8 +63,14 @@ final class FirestoreService {
         }
     }
     
-    //TODO: Implement commiting updates to user in firestore
-    func updateUserData(_ updatedUser: User) {
+    func writeUserDocument(_ user: User, completionHandler: @escaping () -> Void) {
+        
+        do {
+            try dataBase.collection("users").document(user.id).setData(from: user)
+            completionHandler()
+        } catch {
+            print(error)
+        }
         
     }
 }

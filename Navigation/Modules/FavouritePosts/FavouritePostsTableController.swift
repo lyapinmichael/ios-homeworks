@@ -108,6 +108,7 @@ class FavouritePostsTableController: UITableViewController {
         
     }
 
+    // TODO: Need refactoring! Non functional! 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
         cell.selectionStyle = .none
@@ -118,7 +119,7 @@ class FavouritePostsTableController: UITableViewController {
                         image: favPost.imageName,
                         likes: Int(favPost.likes),
                         views: Int(favPost.views))
-        (cell as? PostTableViewCell)?.updateContent(post)
+//        (cell as? PostTableViewCell)?.updateContent(postData: post)
         
 
         return cell

@@ -14,8 +14,10 @@ final class PostTableViewCell: UITableViewCell {
     
     private var post: Post?
     
+    private let cloudStorageService = CloudStorageService()
+    
     private lazy var authorTitle: UILabel = {
-       let title = UILabel()
+        let title = UILabel()
         title.numberOfLines = 1
         title.font = .systemFont(ofSize: 16, weight: .semibold)
         title.textColor = .darkGray
@@ -37,7 +39,7 @@ final class PostTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .black
-
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -78,14 +80,14 @@ final class PostTableViewCell: UITableViewCell {
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addToFavourites))
         doubleTap.numberOfTapsRequired = 2
         self.contentView.addGestureRecognizer(doubleTap)
-
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -129,32 +131,31 @@ final class PostTableViewCell: UITableViewCell {
         ])
     }
     
-    func updateContent(_ data: Post) {
+    func updateContent(post: Post, imageData: Data?) {
         
-        self.post = data
+        self.post = post
         
-        authorTitle.text = data.author
-        postTitle.text = data.title
-        
-        if let postImage = data.image {
-            self.postImage.image = UIImage(named: postImage)
+        if let imageData {
+            let postImage = UIImage(data: imageData)
+            self.postImage.image = postImage
         } else {
             self.postImage.image = UIImage(named: "ImagePlaceholder")
             self.postImage.backgroundColor = .systemGray5
         }
         
-        if let postText = data.description {
+        if let postText = post.description {
             self.postText.text = postText
         }
         
-        likesLabel.text = NSLocalizedString("likes", comment: "") + "\(String(data.likes))"
-        
-        viewsLabel.text = NSLocalizedString("views", comment: "") + "\(String(data.views))"
+        authorTitle.text = post.author
+        postTitle.text = post.title
+        likesLabel.text = NSLocalizedString("likes", comment: "") + "\(String(post.likes))"
+        viewsLabel.text = NSLocalizedString("views", comment: "") + "\(String(post.views))"
         
     }
     
     func maxY() -> CGFloat {
-        likesLabel.frame.maxY 
+        likesLabel.frame.maxY
     }
     
     @objc private func addToFavourites() {
@@ -168,7 +169,7 @@ final class PostTableViewCell: UITableViewCell {
                 
                 let addedToFavoritesString = NSLocalizedString("addedToFavorites", comment: "")
                 self?.delegate?.presentToast(message: addedToFavoritesString)
-            
+                
             case .failure(let error):
                 if case .alreadyInFavourites = error {
                     
@@ -178,5 +179,5 @@ final class PostTableViewCell: UITableViewCell {
             }
         })
     }
-
- }
+    
+}

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5D3E35676471EE3AC966E9BB /* Pods_StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B4B10F45FE0E59C99AEA1C /* Pods_StorageService.framework */; };
 		DEE730287124CF2E61A02A26 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC7C7A0CC28B1F26C37C9760 /* Pods_Navigation.framework */; };
+		EC021E252AE3009300CADBD1 /* CloudStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC021E242AE3009300CADBD1 /* CloudStorageService.swift */; };
+		EC021E272AE4060500CADBD1 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC021E262AE4060500CADBD1 /* CacheService.swift */; };
 		EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DB299855C80090FE5A /* ProfileViewController.swift */; };
 		EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720D9299855A80090FE5A /* FeedViewController.swift */; };
 		EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DD299855F20090FE5A /* PostViewController.swift */; };
@@ -126,6 +128,8 @@
 		88452B06FA06FEA31697E7A3 /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
 		9056C63D9B71D715844EFD39 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
 		C0229E4EF4030BB98EEAD2D5 /* Pods-StorageService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.release.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.release.xcconfig"; sourceTree = "<group>"; };
+		EC021E242AE3009300CADBD1 /* CloudStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorageService.swift; sourceTree = "<group>"; };
+		EC021E262AE4060500CADBD1 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		EC06901B29A6B0CB004513A4 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		EC12423229FCF78600F74818 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
@@ -494,8 +498,10 @@
 				EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */,
 				EC2799B729EA9744008E949B /* AuthenticationService.swift */,
 				ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */,
+				EC021E242AE3009300CADBD1 /* CloudStorageService.swift */,
 				ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */,
 				ECA3C9642AC30F8A0069E1B4 /* LocalAuthorizationService.swift */,
+				EC021E262AE4060500CADBD1 /* CacheService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -792,6 +798,7 @@
 				ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */,
 				EC62CC672AB78E3900BD98C5 /* Palette.swift in Sources */,
 				ECF59D1E2A3075E8002BEE93 /* SignUpViewController.swift in Sources */,
+				EC021E272AE4060500CADBD1 /* CacheService.swift in Sources */,
 				EC06901A29A61AC5004513A4 /* InfoViewController.swift in Sources */,
 				EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */,
 				EC12425229FDBCEA00F74818 /* ProfileHeaderView.swift in Sources */,
@@ -834,6 +841,7 @@
 				EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */,
 				EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */,
 				EC7F047D2A233DBF00C167F0 /* MusicPlayerViewModel.swift in Sources */,
+				EC021E252AE3009300CADBD1 /* CloudStorageService.swift in Sources */,
 				EC12424129FCFCC000F74818 /* Module.swift in Sources */,
 				ECF59D162A2D2515002BEE93 /* PlanetResident.swift in Sources */,
 				ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */,

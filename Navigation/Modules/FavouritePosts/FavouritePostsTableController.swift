@@ -108,7 +108,6 @@ class FavouritePostsTableController: UITableViewController {
         
     }
 
-    // TODO: Need refactoring! Non functional! 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
         cell.selectionStyle = .none
@@ -118,8 +117,10 @@ class FavouritePostsTableController: UITableViewController {
                         description: favPost.text,
                         image: favPost.imageName,
                         likes: Int(favPost.likes),
-                        views: Int(favPost.views))
-//        (cell as? PostTableViewCell)?.updateContent(postData: post)
+                        views: Int(favPost.views),
+                        id: favPost.uuid ?? "InvalidID")
+        let imageData = try? CacheService.default.readPostImageCache(from: post.id)
+        (cell as? PostTableViewCell)?.updateContent(post: post, imageData: imageData)
         
 
         return cell

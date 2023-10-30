@@ -26,7 +26,7 @@ public struct Post: Codable {
         self.id = UUID().uuidString
     }
     
-    private init (title: String, author: String, description: String?, image: String?, likes: Int, views: Int, id: String) {
+    public init (title: String, author: String, description: String?, image: String?, likes: Int, views: Int, id: String) {
         self.title = title
         self.author = author
         self.description = description

@@ -72,44 +72,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         
         firestoreService = FirestoreService(userID: user.id)
         
-        firestoreService.fetchUserData { [weak self] result in
-            
-            guard let self else { return }
-            
-            switch result {
-            case .success(let user):
-                self.user = user
-                self.postData = user.posts.compactMap { ($0, nil)}
-                self.state = .didReceiveUserData
-                
-                for (index, post) in postData.enumerated() {
-                    do {
-                        let imageData = try CacheService.default.readPostImageCache(from: post.post.id)
-                        self.postData[index].imageData = imageData
-                        DispatchQueue.main.async {
-                            self.state = .didReceiveUserData
-                        }
-                    } catch {
-                        if case CacheService.CacheServiceError.fileDoesntExists = error {
-                            self.getImage(for: post.post.id)
-                        }
-                    }
-                }
-                
-                
-            case .failure(let error):
-                
-                if case .userDocumnentDoesntExist = error {
-                    self.firestoreService.writeUserDocument(user) {
-                        
-                        // TODO: make some logic here
-                        print("New user document successfully created in database")
-                    }
-                } else {
-                    print(error)
-                }
-            }
-        }
+        self.fetchUserData()
+        self.fetchPostData()
     }
     
     // MARK: - Public methods
@@ -130,6 +94,51 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
     
     // MARK: - Private methods
+    
+    private func fetchUserData() {
+        firestoreService.fetchUserData { [weak self] result in
+            
+            guard let self else { return }
+            
+            switch result {
+            case .success(let user):
+                self.user = user
+                self.fetchPostData()
+            
+            case .failure(let error):
+                
+                if case .userDocumnentDoesntExist = error {
+                    self.firestoreService.writeUserDocument(user) {
+                        
+                        // TODO: make some logic here
+                        print("New user document successfully created in database")
+                    }
+                } else {
+                    print(error)
+                }
+            }
+        }
+        
+    }
+    
+    private func fetchPostData() {
+        for postReference in user.posts {
+            firestoreService.fetchPostData(postReference) { [weak self] result in
+                guard let self else { return }
+                
+                switch result {
+                case .success(let post):
+                    self.postData.append((post, nil))
+                    self.state = .didReceiveUserData
+                    
+                case .failure(let error):
+                    // TODO: make some logic here
+                    print(error)
+                }
+                
+            }
+        }
+    }
     
     private func getImage(for postID: String) {
         

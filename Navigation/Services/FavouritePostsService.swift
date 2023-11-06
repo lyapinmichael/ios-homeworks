@@ -42,6 +42,7 @@ final class FavouritePostsService {
             
             let author = Author.init(context: backgroundContext)
             author.name = post.author
+            author.uuid = post.authorID
             
             let newFavoutitePost = FavouritePost.init(context: backgroundContext)
             

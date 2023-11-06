@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import StorageService
 
 
@@ -15,15 +16,16 @@ struct User: Codable {
     let fullName: String
     let avatarURL: String?
     var status: String?
-    var posts: [Post]
+    var posts: [DocumentReference]
+
     
-    init(id: String, login: String, fullName: String, avatar: String? = nil, status: String? = nil, posts: [Post] = []) {
+    init(id: String, login: String, fullName: String, avatar: String? = nil, status: String? = nil) {
         self.id = id
         self.login = login
         self.fullName = fullName
         self.avatarURL = avatar
         self.status = status
-        self.posts = posts
+        self.posts = []
     }
 }
 

@@ -13,8 +13,14 @@ class FavouritePostsTableController: UITableViewController {
     
     weak var coordinator: FavouritePostsCoordinator?
     
-    var fetchResultsController = {
+    var userID: String = "slkdjfslkjd"
+    
+    lazy var fetchResultsController = {
+        
         let fetchRequest = FavouritePost.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(
+//            format: "author.uuid == %@", "\(somestring)"
+//        )
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         let fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: FavouritePostsService.shared.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         return fetchResultsController
@@ -76,6 +82,8 @@ class FavouritePostsTableController: UITableViewController {
         button.isEnabled = isFiltered
         return button
     }()
+     
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,14 +120,18 @@ class FavouritePostsTableController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
         cell.selectionStyle = .none
         let favPost = fetchResultsController.object(at: indexPath)
+        
+        guard let postID = favPost.uuid else { return UITableViewCell() }
+        
         let post = Post(title: favPost.title ?? "nil",
                         author: favPost.author?.name ?? NSLocalizedString("unknownAuthor", comment: ""),
                         description: favPost.text,
                         image: favPost.imageName,
                         likes: Int(favPost.likes),
-                        views: Int(favPost.views),
-                        id: favPost.uuid ?? "InvalidID")
-        let imageData = try? CacheService.default.readPostImageCache(from: post.id)
+                        views: Int(favPost.views))
+        
+        
+        let imageData = try? CacheService.default.readPostImageCache(from: postID)
         (cell as? PostTableViewCell)?.updateContent(post: post, imageData: imageData)
         
 

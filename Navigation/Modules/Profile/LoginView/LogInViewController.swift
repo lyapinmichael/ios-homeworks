@@ -18,8 +18,11 @@ final class LogInViewController: UIViewController {
     
     let localAuthorizationService = LocalAuthorizatoinService()
     
-    var testLogin = "furiousVader777@samplemail.com"
-    var testPassword = "password"
+//    var testLogin = "furiousVader777@samplemail.com"
+//    var testPassword = "password"
+    
+    var testLogin = "bimba@mail.com"
+    var testPassword = "bimbaclack"
     
     // MARK: - Private properties
     

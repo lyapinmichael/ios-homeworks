@@ -6,29 +6,33 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 public struct Post: Codable {
+    @DocumentID public var id: String?
     public let title: String
     public let author: String
+    public let authorID: String?
     public let description: String?
     public let imageURL: String?
     public let likes: Int
     public let views: Int
-    public let id: String
     
-    public init(title: String, author: String, description: String?, image: String?, likes: Int, views: Int) {
+    public init(title: String, author: String, authorID: String? = nil, description: String?, image: String?, likes: Int, views: Int) {
         self.title = title
         self.author = author
+        self.authorID = authorID
         self.description = description
         self.imageURL = image
         self.likes = likes
         self.views = views
-        self.id = UUID().uuidString
+//        self.id = UUID().uuidString
     }
     
-    public init (title: String, author: String, description: String?, image: String?, likes: Int, views: Int, id: String) {
+    public init (title: String, author: String, authorID: String? = nil, description: String?, image: String?, likes: Int, views: Int, id: String) {
         self.title = title
         self.author = author
+        self.authorID = authorID
         self.description = description
         self.imageURL = image
         self.likes = likes

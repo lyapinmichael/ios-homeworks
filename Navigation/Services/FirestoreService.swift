@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import StorageService
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
@@ -17,6 +18,11 @@ final class FirestoreService {
         case userDocumnentDoesntExist
         case failedToDecodeUserDocument
         case failedToCreateNewUserDocument
+        
+        case failedToFetchPostDocument
+        case postDocumentDoesntExist
+        case failedToDecodePostDocument
+        case failedToCreateNewPostDocument
     }
     
     // This property is crucial for further work with firestore.
@@ -59,6 +65,30 @@ final class FirestoreService {
                 completionHandler(.success(user))
             } catch {
                 completionHandler(.failure(.failedToDecodeUserDocument))
+            }
+        }
+    }
+    
+    func fetchPostData(_ documentReference: DocumentReference, completionHandler: @escaping (Result<Post, FirestoreServiceError>) -> Void) {
+        
+        documentReference.getDocument { querySnapshot, error in
+            
+            if let error {
+                print(error)
+                completionHandler(.failure(.failedToFetchPostDocument))
+            }
+            
+            guard let postDocument = querySnapshot, postDocument.exists else {
+                completionHandler(.failure(.postDocumentDoesntExist))
+                return
+            }
+            
+            do {
+                let post = try postDocument.data(as: Post.self)
+                completionHandler(.success(post))
+            } catch {
+                print(error)
+                completionHandler(.failure(.failedToDecodePostDocument))
             }
         }
     }

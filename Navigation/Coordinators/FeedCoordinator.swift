@@ -10,6 +10,9 @@ import UIKit
 import StorageService
 
 final class FeedCoordinator: ModuleCoordinator {
+   
+    var parentCoordinator: Coordinator?
+    
     var module: Module?
     var moduleType: Module.ModuleType
     var childCoordinators: [Coordinator] = []
@@ -27,12 +30,9 @@ final class FeedCoordinator: ModuleCoordinator {
     }
     
     func start() -> UIViewController {
-        let module = factory.makeModule(moduleType)
+        let module = factory.makeModule(moduleType, coordinator: self)
         let viewController = module.view
         viewController.tabBarItem = moduleType.tabBarItem
-        
-        let rootViewController = (module.view as? UINavigationController)?.rootViewController
-        (rootViewController as? FeedViewController)?.coordinator = self
         
         let navigationController = (module.view as? UINavigationController)
         configureNavBarAppearance(for: navigationController)

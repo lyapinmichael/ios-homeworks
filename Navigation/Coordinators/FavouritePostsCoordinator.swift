@@ -8,7 +8,10 @@
 import Foundation
 import UIKit
 
-final class FavouritePostsCoordinator: Coordinator {
+final class FavouritePostsCoordinator: ModuleCoordinator {
+    
+    var parentCoordinator: Coordinator?
+    
     var module: Module?
     var moduleType: Module.ModuleType
     var childCoordinators: [Coordinator] = []
@@ -21,7 +24,7 @@ final class FavouritePostsCoordinator: Coordinator {
     }
     
     func start() -> UIViewController {
-        let module = factory.makeModule(moduleType)
+        let module = factory.makeModule(moduleType, coordinator: self)
         let viewController = module.view
         viewController.tabBarItem = moduleType.tabBarItem
         

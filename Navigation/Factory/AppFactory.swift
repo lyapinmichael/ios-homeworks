@@ -10,46 +10,50 @@ import UIKit
 
 final class AppFactory {
     
-    func makeModule(_ type: Module.ModuleType) -> Module {
+    func makeModule(_ type: Module.ModuleType, coordinator: ModuleCoordinator) -> Module {
         switch type {
         case .feed:
-            let view = UINavigationController(rootViewController: FeedViewController())
-            view.title = NSLocalizedString("profile", comment: "")
-            return Module(moduleType: type, view: view)
+            let feedView = FeedViewController()
+            feedView.title = NSLocalizedString("profile", comment: "")
+            
+            if let feedCoordinator = coordinator as? FeedCoordinator {
+                feedView.coordinator = feedCoordinator
+            }
+            
+            return Module(moduleType: type, view: UINavigationController(rootViewController: feedView))
         
-        case .profile:
+        case .profile(let user):
             
-            let loginView = LogInViewController()
-        
-            let view = UINavigationController(rootViewController: loginView)
+            let viewModel = ProfileViewModel(withUser: user)
             
-            return Module(moduleType: type, view: view)
+            if let profileCoordinator = coordinator as? ProfileCoordinator {
+                viewModel.coordinator = profileCoordinator
+            }
             
-        case .media:
-            
-            let mediaViewContoller = MediaViewController()
-            let view = UINavigationController(rootViewController: mediaViewContoller)
-            ///
-            /// TODO: if View Model will be needed for Media module, make sure that it is **Coordinator** that instantiates View Model and passes it to View
-            /// 
-            return Module(moduleType: type, view: view)
+            let profileView = ProfileViewController(with: viewModel)
+    
+            return Module(moduleType: type, view: UINavigationController(rootViewController: profileView))
             
         case .favouritePosts:
             
             let favouritePostsTableController = FavouritePostsTableController()
-            let view = UINavigationController(rootViewController: favouritePostsTableController)
-            view.title = NSLocalizedString("favoritePosts", comment: "")
             
-            return Module(moduleType: .favouritePosts, view: view)
+            if let favouritePostsCorrdinator = coordinator as? FavouritePostsCoordinator {
+                favouritePostsTableController.coordinator = favouritePostsCorrdinator
+            }
             
-        case .locationController:
+            favouritePostsTableController.title = NSLocalizedString("favoritePosts", comment: "")
             
-            let locationController = LocationViewController()
-            let view = UINavigationController(rootViewController: locationController)
+            return Module(moduleType: .favouritePosts, view: UINavigationController(rootViewController: favouritePostsTableController))
             
-            return Module(moduleType: .locationController, view: view)
+        case .login:
+            let loginViewController = LogInViewController()
             
+            if let loginCoordinator = coordinator as? LoginCoordinator {
+                loginViewController.coordinator = loginCoordinator
+            }
+        
+            return Module(moduleType: .login, view: loginViewController)
         }
     }
-    
 }

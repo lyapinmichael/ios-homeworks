@@ -36,9 +36,6 @@
 		EC2DA9B629E94A0A002149CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B529E94A0A002149CF /* User.swift */; };
 		EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFD59A62A45B3AC009E90F9 /* FavouritePostsService.swift */; };
 		EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */; };
-		EC55B4532AAB73C100E4714D /* LocationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55B4522AAB73C100E4714D /* LocationCoordinator.swift */; };
-		EC55B4562AAB75BC00E4714D /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55B4552AAB75BC00E4714D /* LocationViewController.swift */; };
-		EC55B4582AAB779100E4714D /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55B4572AAB779100E4714D /* LocationViewModel.swift */; };
 		EC62CC5E2AB4B64B00BD98C5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EC62CC602AB4B64B00BD98C5 /* Localizable.strings */; };
 		EC62CC632AB78BD100BD98C5 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC62CC622AB78BD100BD98C5 /* String+Localized.swift */; };
 		EC62CC652AB78C2500BD98C5 /* UIColor+Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC62CC642AB78C2500BD98C5 /* UIColor+Themes.swift */; };
@@ -50,19 +47,12 @@
 		EC650C4A29DB55BE00BF938E /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; };
 		EC650C4B29DB55BE00BF938E /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC650C4429DB55BE00BF938E /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EC650C5029DB55C900BF938E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720E12998565E0090FE5A /* Post.swift */; };
-		EC69DEBF2A24A9F00096D9CE /* AudioFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEBE2A24A9F00096D9CE /* AudioFileModel.swift */; };
-		EC69DEC32A25DABE0096D9CE /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEC22A25DABE0096D9CE /* RecorderView.swift */; };
-		EC69DEC52A25DFE10096D9CE /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEC42A25DFE10096D9CE /* RecorderViewModel.swift */; };
 		EC69DECF2A28D7C60096D9CE /* photoalbum.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECA2A28D7C50096D9CE /* photoalbum.mp3 */; };
 		EC69DED02A28D7C60096D9CE /* allthat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECB2A28D7C50096D9CE /* allthat.mp3 */; };
 		EC69DED12A28D7C60096D9CE /* jazzyfrenchy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECC2A28D7C50096D9CE /* jazzyfrenchy.mp3 */; };
 		EC69DED22A28D7C60096D9CE /* creativeminds.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */; };
 		EC69DED32A28D7C60096D9CE /* dreams.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECE2A28D7C60096D9CE /* dreams.mp3 */; };
 		EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */; };
-		EC7F04732A22857100C167F0 /* MediaCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F04722A22857100C167F0 /* MediaCoordinator.swift */; };
-		EC7F04782A2286CE00C167F0 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F04772A2286CE00C167F0 /* MediaViewController.swift */; };
-		EC7F047B2A22A2E300C167F0 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F047A2A22A2E300C167F0 /* MusicPlayer.swift */; };
-		EC7F047D2A233DBF00C167F0 /* MusicPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F047C2A233DBF00C167F0 /* MusicPlayerViewModel.swift */; };
 		EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */; };
 		ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */; };
 		ECA3C9612AC1D2160069E1B4 /* LocalNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */; };
@@ -78,6 +68,8 @@
 		ECEDC90E2ADC67600043CB75 /* Todo.rtf in Resources */ = {isa = PBXBuildFile; fileRef = ECEDC90D2ADC67600043CB75 /* Todo.rtf */; };
 		ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */; };
 		ECEDC9122ADDC7FB0043CB75 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */; };
+		ECF21B122AF93BD90059B713 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF21B112AF93BD90059B713 /* LoginCoordinator.swift */; };
+		ECF21B162AF970190059B713 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF21B152AF970190059B713 /* AppCoordinator.swift */; };
 		ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D0F2A2CE230002BEE93 /* Todo.swift */; };
 		ECF59D122A2D0525002BEE93 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D112A2D0525002BEE93 /* Planet.swift */; };
 		ECF59D162A2D2515002BEE93 /* PlanetResident.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D152A2D2515002BEE93 /* PlanetResident.swift */; };
@@ -152,9 +144,6 @@
 		EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RootVC.swift"; sourceTree = "<group>"; };
 		EC2DA9B529E94A0A002149CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		EC55B4522AAB73C100E4714D /* LocationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCoordinator.swift; sourceTree = "<group>"; };
-		EC55B4552AAB75BC00E4714D /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
-		EC55B4572AAB779100E4714D /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		EC62CC5D2AB4B5B600BD98C5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		EC62CC5F2AB4B64B00BD98C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EC62CC612AB4B64F00BD98C5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -168,19 +157,12 @@
 		EC650C4429DB55BE00BF938E /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC650C4629DB55BE00BF938E /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		EC69DEB12A23E3B60096D9CE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		EC69DEBE2A24A9F00096D9CE /* AudioFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileModel.swift; sourceTree = "<group>"; };
-		EC69DEC22A25DABE0096D9CE /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
-		EC69DEC42A25DFE10096D9CE /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		EC69DECA2A28D7C50096D9CE /* photoalbum.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = photoalbum.mp3; sourceTree = "<group>"; };
 		EC69DECB2A28D7C50096D9CE /* allthat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = allthat.mp3; sourceTree = "<group>"; };
 		EC69DECC2A28D7C50096D9CE /* jazzyfrenchy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jazzyfrenchy.mp3; sourceTree = "<group>"; };
 		EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = creativeminds.mp3; sourceTree = "<group>"; };
 		EC69DECE2A28D7C60096D9CE /* dreams.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreams.mp3; sourceTree = "<group>"; };
 		EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		EC7F04722A22857100C167F0 /* MediaCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCoordinator.swift; sourceTree = "<group>"; };
-		EC7F04772A2286CE00C167F0 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
-		EC7F047A2A22A2E300C167F0 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
-		EC7F047C2A233DBF00C167F0 /* MusicPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewModel.swift; sourceTree = "<group>"; };
 		EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		EC9720D9299855A80090FE5A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		EC9720DB299855C80090FE5A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +183,8 @@
 		ECEDC90D2ADC67600043CB75 /* Todo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Todo.rtf; sourceTree = "<group>"; };
 		ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		ECF21B112AF93BD90059B713 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		ECF21B152AF970190059B713 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		ECF59D0F2A2CE230002BEE93 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		ECF59D112A2D0525002BEE93 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		ECF59D152A2D2515002BEE93 /* PlanetResident.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetResident.swift; sourceTree = "<group>"; };
@@ -268,12 +252,12 @@
 			isa = PBXGroup;
 			children = (
 				EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */,
+				ECF21B152AF970190059B713 /* AppCoordinator.swift */,
+				ECF21B112AF93BD90059B713 /* LoginCoordinator.swift */,
 				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
 				EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */,
 				EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */,
-				EC7F04722A22857100C167F0 /* MediaCoordinator.swift */,
 				ECFD599F2A45AD41009E90F9 /* FavouritePostsCoordinator.swift */,
-				EC55B4522AAB73C100E4714D /* LocationCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -281,10 +265,9 @@
 		EC12423629FCF94D00F74818 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				EC55B4542AAB757500E4714D /* Location */,
+				EC12423F29FCFA5500F74818 /* Login */,
 				EC12423729FCF95500F74818 /* Feed  */,
 				EC12423829FCF9AB00F74818 /* Profile */,
-				EC7F04762A22868600C167F0 /* Media */,
 				ECFD599C2A45ABEF009E90F9 /* FavouritePosts */,
 				EC12424029FCFCC000F74818 /* Module.swift */,
 			);
@@ -304,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				EC12424C29FDAAEE00F74818 /* ProfileView */,
-				EC12423F29FCFA5500F74818 /* LoginView */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -334,14 +316,14 @@
 			path = Photos;
 			sourceTree = "<group>";
 		};
-		EC12423F29FCFA5500F74818 /* LoginView */ = {
+		EC12423F29FCFA5500F74818 /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				EC06901B29A6B0CB004513A4 /* LogInViewController.swift */,
 				ECF59D1D2A3075E8002BEE93 /* SignUpViewController.swift */,
 				ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */,
 			);
-			path = LoginView;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		EC12424229FCFCDE00F74818 /* View */ = {
@@ -441,15 +423,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		EC55B4542AAB757500E4714D /* Location */ = {
-			isa = PBXGroup;
-			children = (
-				EC55B4552AAB75BC00E4714D /* LocationViewController.swift */,
-				EC55B4572AAB779100E4714D /* LocationViewModel.swift */,
-			);
-			path = Location;
-			sourceTree = "<group>";
-		};
 		EC62CC782ABB3C7C00BD98C5 /* NavigationTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -482,15 +455,6 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
-		EC69DEC62A25DFE50096D9CE /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				EC7F047C2A233DBF00C167F0 /* MusicPlayerViewModel.swift */,
-				EC69DEC42A25DFE10096D9CE /* RecorderViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		EC69DEDA2A2B7A8E0096D9CE /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,26 +468,6 @@
 				EC021E262AE4060500CADBD1 /* CacheService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		EC7F04762A22868600C167F0 /* Media */ = {
-			isa = PBXGroup;
-			children = (
-				EC69DEC62A25DFE50096D9CE /* ViewModels */,
-				EC7F04792A22A2A500C167F0 /* Views */,
-				EC7F04772A2286CE00C167F0 /* MediaViewController.swift */,
-				EC69DEBE2A24A9F00096D9CE /* AudioFileModel.swift */,
-			);
-			path = Media;
-			sourceTree = "<group>";
-		};
-		EC7F04792A22A2A500C167F0 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				EC7F047A2A22A2E300C167F0 /* MusicPlayer.swift */,
-				EC69DEC22A25DABE0096D9CE /* RecorderView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		EC9720D6299855340090FE5A /* App */ = {
@@ -787,11 +731,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC2799B829EA9744008E949B /* AuthenticationService.swift in Sources */,
-				EC7F04732A22857100C167F0 /* MediaCoordinator.swift in Sources */,
 				ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */,
 				EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */,
 				ECFD59A02A45AD41009E90F9 /* FavouritePostsCoordinator.swift in Sources */,
-				EC69DEC52A25DFE10096D9CE /* RecorderViewModel.swift in Sources */,
 				ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */,
 				ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */,
 				EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */,
@@ -804,8 +746,8 @@
 				EC12425229FDBCEA00F74818 /* ProfileHeaderView.swift in Sources */,
 				EC22BF4429F69D1C0024E0B4 /* FeedViewModel.swift in Sources */,
 				ECF59D202A3086DC002BEE93 /* UIViewController+PresentAlert.swift in Sources */,
-				EC69DEBF2A24A9F00096D9CE /* AudioFileModel.swift in Sources */,
 				EC62CC652AB78C2500BD98C5 /* UIColor+Themes.swift in Sources */,
+				ECF21B162AF970190059B713 /* AppCoordinator.swift in Sources */,
 				EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */,
 				ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */,
 				ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */,
@@ -814,7 +756,6 @@
 				ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
 				ECA3C9652AC30F8A0069E1B4 /* LocalAuthorizationService.swift in Sources */,
-				EC55B4532AAB73C100E4714D /* LocationCoordinator.swift in Sources */,
 				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
 				ECFD599E2A45ACA0009E90F9 /* FavouritePostsTableController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
@@ -826,27 +767,22 @@
 				EC193DA72A0EA26D0056F46D /* String+printableReplace.swift in Sources */,
 				ECAA5D0029B0C41D00EC2F21 /* PostTableViewCell.swift in Sources */,
 				ECF59D122A2D0525002BEE93 /* Planet.swift in Sources */,
-				EC7F047B2A22A2E300C167F0 /* MusicPlayer.swift in Sources */,
 				EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */,
 				ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */,
 				EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */,
 				EC2DA9B629E94A0A002149CF /* User.swift in Sources */,
 				EC12424729FD049000F74818 /* AppFactory.swift in Sources */,
-				EC55B4582AAB779100E4714D /* LocationViewModel.swift in Sources */,
-				EC69DEC32A25DABE0096D9CE /* RecorderView.swift in Sources */,
 				ECEDC9122ADDC7FB0043CB75 /* AuthenticationViewModel.swift in Sources */,
-				EC55B4562AAB75BC00E4714D /* LocationViewController.swift in Sources */,
 				ECA3C9612AC1D2160069E1B4 /* LocalNotificationService.swift in Sources */,
+				ECF21B122AF93BD90059B713 /* LoginCoordinator.swift in Sources */,
 				EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */,
 				EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */,
 				EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */,
-				EC7F047D2A233DBF00C167F0 /* MusicPlayerViewModel.swift in Sources */,
 				EC021E252AE3009300CADBD1 /* CloudStorageService.swift in Sources */,
 				EC12424129FCFCC000F74818 /* Module.swift in Sources */,
 				ECF59D162A2D2515002BEE93 /* PlanetResident.swift in Sources */,
 				ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */,
 				EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */,
-				EC7F04782A2286CE00C167F0 /* MediaViewController.swift in Sources */,
 				ECFD59A32A45B1F3009E90F9 /* FavouritePost.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

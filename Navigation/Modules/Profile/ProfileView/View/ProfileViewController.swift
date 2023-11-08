@@ -85,6 +85,7 @@ final class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.title = "profile".localized
         let logOutAction = UIAction { [weak self] _ in
             guard let self = self else { return }
             self.viewModel.updateState(withInput: .didTapLogOutButton)

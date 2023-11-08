@@ -10,39 +10,40 @@ import UIKit
 
 final class MainCoorditanor: Coordinator {
     
+    // MARK: - Public properties
+    
+    var parentCoordinator: AppCoordinator?
+    
     //MARK: - Private properties
     
     private(set) var childCoordinators: [Coordinator] = []
     private let factory: AppFactory
+    private let user: User
     
     //MARK: - Init
     
-    init(factory: AppFactory) {
+    init(factory: AppFactory, user: User) {
         self.factory = factory
+        self.user = user
     }
     
     // MARK: - Public methods
     
     func start() -> UIViewController {
         let feedCoordinator = FeedCoordinator(moduleType: .feed, factory: factory)
-        let profileCoordinator = ProfileCoordinator(moduleType: .profile, factory: factory)
-        let mediaCoordinator = MediaCoordinator(moduleType: .media, factory: factory)
+        let profileCoordinator = ProfileCoordinator(moduleType: .profile(user), factory: factory, parentCoordinator: self)
         let favouritePostsCoordinator = FavouritePostsCoordinator(moduleType: .favouritePosts, factory: factory)
-        let locationCoordinator = LocationCoordinator(moduleType: .locationController, factory: factory)
        
         let mainTabBarController = MainTabBarController(viewControllers: [
             feedCoordinator.start(),
             profileCoordinator.start(),
-            mediaCoordinator.start(),
             favouritePostsCoordinator.start(),
-            locationCoordinator.start()
+
         ])
         
         addChildCoordinator(feedCoordinator)
         addChildCoordinator(profileCoordinator)
-        addChildCoordinator(mediaCoordinator)
         addChildCoordinator(favouritePostsCoordinator)
-        addChildCoordinator(locationCoordinator)
         
         return mainTabBarController
     }
@@ -59,5 +60,7 @@ final class MainCoorditanor: Coordinator {
         childCoordinators = childCoordinators.filter { $0 === coordinator }
     }
     
-    
+    func logOut() {
+        parentCoordinator?.proceedToLogin(self)
+    }
 }

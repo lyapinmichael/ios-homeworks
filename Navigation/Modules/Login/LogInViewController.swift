@@ -14,7 +14,7 @@ final class LogInViewController: UIViewController {
     
     // MARK: - Public properties
     
-    weak var coordinator: ProfileCoordinator?
+    weak var coordinator: LoginCoordinator?
     
     let localAuthorizationService = LocalAuthorizatoinService()
     
@@ -270,7 +270,7 @@ final class LogInViewController: UIViewController {
                 return
                 
             case .didLogIn(let user):
-                self?.coordinator?.proceedToProfile(user)
+                self?.coordinator?.proceedToMain(user)
                 return
            
             case .failedToLogIn(let error):
@@ -281,7 +281,7 @@ final class LogInViewController: UIViewController {
                 self?.presentedViewController?.dismiss(animated: true)
                 self?.presentAlert(message: NSLocalizedString("registrationSuccessfull", comment: "")) { 
                     
-                    self?.coordinator?.proceedToProfile(user)
+                    self?.coordinator?.proceedToMain(user)
                     print("Logging in...")
                     return
                 }

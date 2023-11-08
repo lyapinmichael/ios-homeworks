@@ -14,10 +14,9 @@ protocol ViewModelProtocol: AnyObject {}
 struct Module {
     enum ModuleType {
         case feed
-        case profile
-        case media
+        case profile(User)
         case favouritePosts
-        case locationController
+        case login
         
     }
     
@@ -32,12 +31,10 @@ extension Module.ModuleType {
             return UITabBarItem(title: NSLocalizedString("feed", comment: ""), image: UIImage(systemName: "house.circle"), tag: 0)
         case .profile:
             return UITabBarItem(title: NSLocalizedString("profile", comment: ""), image: UIImage(systemName: "person.circle"), tag: 1)
-        case .media:
-            return UITabBarItem(title: NSLocalizedString("media", comment: ""), image: UIImage(systemName: "play.circle"), tag: 2)
         case .favouritePosts:
             return UITabBarItem(title: NSLocalizedString("favoritePosts", comment: ""), image: UIImage(systemName: "star.fill"), tag: 3)
-        case .locationController:
-            return UITabBarItem(title: NSLocalizedString("location", comment: ""), image: UIImage(systemName: "map"), tag: 4)
+        case .login:
+            return nil
         }
     }
 }

@@ -9,53 +9,41 @@ import Foundation
 import UIKit
 
 final class ProfileCoordinator: ModuleCoordinator {
+    
+    var parentCoordinator: Coordinator?
+    
     var module: Module?
     private(set) var moduleType: Module.ModuleType
     private(set) var childCoordinators: [Coordinator] = []
     
     private let factory: AppFactory
     
-    init(moduleType: Module.ModuleType, factory: AppFactory) {
+    init(moduleType: Module.ModuleType, factory: AppFactory, parentCoordinator: Coordinator) {
         self.moduleType = moduleType
         self.factory = factory
-        
+        self.parentCoordinator = parentCoordinator
     }
     
     func start() -> UIViewController {
-        let module = factory.makeModule(moduleType)
+        let module = factory.makeModule(moduleType, coordinator: self)
         let viewController = module.view
         let rootViewController = (viewController as? UINavigationController)?.rootViewController
-        (rootViewController as? LogInViewController)?.coordinator = self
+       
         viewController.tabBarItem = moduleType.tabBarItem
         self.module = module
         return viewController
     }
     
-    func proceedToProfile(_ user: User) {
-//        let user = factory.userService.user
-        let viewModel = ProfileViewModel(withUser: user)
-        viewModel.coordinator = self
-        
-        let navigationController = (module?.view as? UINavigationController)
-        guard var viewControllers = navigationController?.viewControllers else {
-            print("some error with view controllers occured")
-            return
-        }
-        _ = viewControllers.popLast()
-        viewControllers.append(ProfileViewController(with: viewModel))
-        navigationController?.setViewControllers(viewControllers, animated: true)
-    }
-    
     func logOut() {
-        let navigationController = (module?.view as? UINavigationController)
-        guard var viewControllers = navigationController?.viewControllers else { return }
+//        let navigationController = (module?.view as? UINavigationController)
+//        guard var viewControllers = navigationController?.viewControllers else { return }
+//        
+//        _ = viewControllers.popLast()
+//        let loginViewController = LogInViewController()
+////        loginViewController.coordinator = self
+//        viewControllers.append(loginViewController)
+//        navigationController?.setViewControllers(viewControllers, animated: true)
         
-        _ = viewControllers.popLast()
-        let loginViewController = LogInViewController()
-        loginViewController.coordinator = self
-        viewControllers.append(loginViewController)
-        navigationController?.setViewControllers(viewControllers, animated: true)
+        (parentCoordinator as? MainCoorditanor)?.logOut()
     }
-    
-    
 }

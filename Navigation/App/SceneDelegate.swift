@@ -11,7 +11,7 @@ import FirebaseAuth
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var mainCoordinator: MainCoorditanor?
+    var entryCoordinator: Coordinator?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -23,35 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UNUserNotificationCenter.current().delegate = self
         
         let factory = AppFactory()
-        let mainCoordinator = MainCoorditanor(factory: factory)
+        let appCoordinator = AppCoordinator(factory: factory)
         
         window = UIWindow(windowScene: scene)
-        self.mainCoordinator = mainCoordinator
-        
-        let configuration = AppConfigutation.starships
-        NetworkService.request(requestURL: configuration.url("22"), completion: { result in
-            switch result {
-            case .success(let loadedData):
-                switch configuration  {
-                case .planets:
-                    if let planetName = loadedData["name"] {
-                        print("Welcome to planet \(planetName)!")
-                    }
-                case .people:
-                    if let personName = loadedData["name"] {
-                        print("Meet \(personName)!")
-                    }
-                case .starships:
-                    if let starshipName = loadedData["name"], let starshipCost = loadedData["cost_in_credits"] {
-                        print("Look! \(starshipName) just flew by. It costs \(starshipCost) credits btw.")
-                    }
-                }
-            case .failure(let error):
-                print("Something went wrong: \n\n\(error)")
-            }
-        })
-        
-        window?.rootViewController = mainCoordinator.start()
+        self.entryCoordinator = appCoordinator
+
+        window?.rootViewController = appCoordinator.start()
         window?.makeKeyAndVisible()
         
     }

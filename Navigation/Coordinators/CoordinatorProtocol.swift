@@ -23,6 +23,7 @@ extension Coordinator {
 }
 
 protocol ModuleCoordinator: Coordinator {
+    var parentCoordinator: Coordinator? { get }
     var module: Module? { get }
     var moduleType: Module.ModuleType { get }
 }

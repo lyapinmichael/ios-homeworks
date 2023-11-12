@@ -10,7 +10,7 @@ import UIKit
 
 final class ProfileCoordinator: ModuleCoordinator {
     
-    var parentCoordinator: Coordinator?
+    weak var parentCoordinator: Coordinator?
     
     var module: Module?
     private(set) var moduleType: Module.ModuleType

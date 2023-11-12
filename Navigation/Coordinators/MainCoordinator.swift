@@ -12,7 +12,7 @@ final class MainCoorditanor: Coordinator {
     
     // MARK: - Public properties
     
-    var parentCoordinator: AppCoordinator?
+    weak var parentCoordinator: AppCoordinator?
     
     //MARK: - Private properties
     
@@ -31,15 +31,13 @@ final class MainCoorditanor: Coordinator {
     
     func start() -> UIViewController {
         let feedCoordinator = FeedCoordinator(moduleType: .feed, factory: factory)
-        let profileCoordinator = ProfileCoordinator(moduleType: .profile(user), factory: factory, parentCoordinator: self)
+        let profileCoordinator = ProfileCoordinator(moduleType: .profile(self.user), factory: factory, parentCoordinator: self)
         let favouritePostsCoordinator = FavouritePostsCoordinator(moduleType: .favouritePosts, factory: factory)
        
-        let mainTabBarController = MainTabBarController(viewControllers: [
-            feedCoordinator.start(),
-            profileCoordinator.start(),
-            favouritePostsCoordinator.start(),
-
-        ])
+        let tabs = [feedCoordinator.start(),
+                    profileCoordinator.start(),
+                    favouritePostsCoordinator.start()]
+        let mainTabBarController = MainTabBarController(viewControllers: tabs)
         
         addChildCoordinator(feedCoordinator)
         addChildCoordinator(profileCoordinator)

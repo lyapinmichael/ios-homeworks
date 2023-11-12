@@ -10,11 +10,20 @@ import StorageService
 
 final class PostTableViewCell: UITableViewCell {
     
+    static let reuseID = "CustomTableViewCell_ReuseID"
+    
     weak var delegate: ProfileViewController?
     
-    private var post: Post?
+    private var viewModel = PostTableViewCellViewModel()
     
-    private let cloudStorageService = CloudStorageService()
+    private var post: Post? {
+        didSet {
+            if let post,
+               let id = post.id {
+                viewModel.getPostImage(postID: id)
+            }
+        }
+    }
     
     private lazy var authorTitle: UILabel = {
         let title = UILabel()
@@ -38,7 +47,8 @@ final class PostTableViewCell: UITableViewCell {
     private lazy var postImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .black
+        imageView.backgroundColor =  .systemGray5
+        imageView.image = UIImage(named: "ImagePlaceholder")
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -76,6 +86,8 @@ final class PostTableViewCell: UITableViewCell {
         
         addSubviews()
         setConstraints()
+        bindViewModel()
+        
         backgroundColor = Palette.dynamicBars
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addToFavourites))
         doubleTap.numberOfTapsRequired = 2
@@ -91,6 +103,17 @@ final class PostTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
+    }
+    
+    private func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            switch state {
+            case.initial:
+                return
+            case .didLoadPostImage(let imageData):
+                self?.postImage.image =  UIImage(data: imageData)
+            }
+        }
     }
     
     private func addSubviews() {
@@ -131,17 +154,9 @@ final class PostTableViewCell: UITableViewCell {
         ])
     }
     
-    func updateContent(post: Post, imageData: Data?) {
+    func updateContent(post: Post) {
         
         self.post = post
-        
-        if let imageData {
-            let postImage = UIImage(data: imageData)
-            self.postImage.image = postImage
-        } else {
-            self.postImage.image = UIImage(named: "ImagePlaceholder")
-            self.postImage.backgroundColor = .systemGray5
-        }
         
         if let postText = post.description {
             self.postText.text = postText

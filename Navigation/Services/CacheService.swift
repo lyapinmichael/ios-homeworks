@@ -12,7 +12,6 @@ final class CacheService {
     
     static var `default` = CacheService()
     
-    typealias PostID = String
     typealias JPEGData = Data
     
     enum CacheServiceError: Error {
@@ -68,7 +67,7 @@ final class CacheService {
     
     
   
-    func writePostImageCache(from postIDWithImageData: (postID: PostID, jpegData: JPEGData)) throws {
+    func writePostImageCache(from postIDWithImageData: (postID: String, jpegData: JPEGData)) throws {
         ///
         /// This method tries to store data (assuming it to be JPEG) in a file, named by an ID of a post, that has
         /// that JPEG attached.
@@ -86,7 +85,7 @@ final class CacheService {
         }
     }
     
-    func readPostImageCache(from postID: PostID) throws -> Data {
+    func readPostImageCache(from postID: String) throws -> Data {
         
         guard let postImageCacheFolderURL = self.postImageCacheFolderURL else {
             print("postImageCacheFolderURL == nil")

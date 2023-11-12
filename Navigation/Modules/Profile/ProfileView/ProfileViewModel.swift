@@ -12,7 +12,7 @@ import FirebaseAuth
 protocol ProfileViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((ProfileViewModel.State) -> Void)? { get set }
     var user: User { get set }
-    var postData: [(`post`: Post, imageData: Data?)] { get }
+    var postData: [Post] { get }
     
     func updateState(withInput input: ProfileViewModel.ViewInput)
     
@@ -50,27 +50,21 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     
     // MARK: - Public properties
     
-    ///Coordinator
+    //Coordinator
     weak var coordinator: ProfileCoordinator?
     
-    var user: User {
-        didSet {
-            cloudStorageService.userID = user.id
-        }
-    }
-    var postData: [(`post`: Post, imageData: Data?)] = []
+    var user: User
+    
+    var postData: [Post] = []
     
     // MARK: - Private properties
     
-    private let firestoreService: FirestoreService
-    private let cloudStorageService = CloudStorageService()
+    private let firestoreService = FirestoreService()
     
     // MARK: - Init
     init(withUser user: User) {
         
         self.user = user
-        
-        firestoreService = FirestoreService(userID: user.id)
         
         self.fetchUserData()
         self.fetchPostData()
@@ -96,7 +90,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     // MARK: - Private methods
     
     private func fetchUserData() {
-        firestoreService.fetchUserData { [weak self] result in
+        firestoreService.fetchUserData(userID: user.id) { [weak self] result in
             
             guard let self else { return }
             
@@ -107,7 +101,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             
             case .failure(let error):
                 
-                if case .userDocumnentDoesntExist = error {
+                if case .userDocumentDoesntExist = error {
                     self.firestoreService.writeUserDocument(user) {
                         
                         // TODO: make some logic here
@@ -128,7 +122,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                 
                 switch result {
                 case .success(let post):
-                    self.postData.append((post, nil))
+                    self.postData.append(post)
                     self.state = .didReceiveUserData
                     
                 case .failure(let error):
@@ -140,35 +134,6 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         }
     }
     
-    private func getImage(for postID: String) {
-        
-        let dispatchGroup = DispatchGroup()
-        
-        dispatchGroup.enter()
-        cloudStorageService.downloadImage(forPost: postID) { [weak self] imageData, error in
-            guard let self else { return }
-            
-            if let error {
-                return
-            }
-            
-            
-            if let imageData,
-               let index = postData.firstIndex(where: { $0.post.id == postID} ) {
-                self.postData[index].imageData = imageData
-                do {
-                    try CacheService.default.writePostImageCache(from: (postID, imageData))
-                } catch {
-                    print("=====\nError occured while trying to save image to file:\n\(error)\n=====")
-                }
-            }
-        
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            self.state = .didReceiveUserData
-        }
-    }
+   
 }
 

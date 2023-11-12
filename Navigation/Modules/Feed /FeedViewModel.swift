@@ -6,39 +6,40 @@
 //
 
 import Foundation
+import StorageService
 
-enum FeedViewModelNotification {
-    static let checkResult = NSNotification.Name("checkResult")
-}
+// MARK: - FeedViewModel Protocol
 
 protocol FeedViewModelProtocol: AnyObject {
-   
-    var state: FeedViewModelState { get }
     
-    var onStateDidChange: ((FeedViewModelState) -> Void)? { get set }
+    var posts: [Post] { get }
     
-    func updateState(withInput input: FeedViewModelViewInput)
-   
-}
-
-enum FeedViewModelState {
-    case initial
-    case didCheckGuess(Bool)
+    var state: FeedViewModel.State { get }
+    
+    var onStateDidChange: ((FeedViewModel.State) -> Void)? { get set }
+    
+    func updateState(withInput input: FeedViewModel.ViewInput)
     
 }
 
-enum FeedViewModelViewInput {
-    case didTapCheckGuessButton(word: String)
-}
+// MARK: - FeedViewModel
 
 final class FeedViewModel: FeedViewModelProtocol {
     
-    var secretWord = "discombobulate"
+    enum State {
+        case initial
+        case didReceivePosts
+    }
     
-    var feedView: FeedView?
+    enum ViewInput {
+        case didTapCheckGuessButton(word: String)
+    }
     
-    typealias State = FeedViewModelState
-    typealias ViewInput = FeedViewModelViewInput
+    // MARK: Feed view
+    
+    weak var feedView: FeedView?
+    
+    // MARK: State related properties
     
     private(set) var state: State = .initial {
         didSet {
@@ -48,34 +49,44 @@ final class FeedViewModel: FeedViewModelProtocol {
     
     var onStateDidChange: ((State) -> Void)?
     
+    // MARK: Public properties
+    
+    var posts: [Post] = [] {
+        didSet {
+            state = .didReceivePosts
+        }
+    }
+    
+    // MARK: Private properties
+    
+    private let firestoreService = FirestoreService()
+    
+    init() {
+        fetchAllPosts()
+    }
+    
+    // MARK: Public methods
+    
     func updateState(withInput input: ViewInput) {
         switch input {
         case .didTapCheckGuessButton(let word):
-            check(word)
+            return
         }
     }
     
-    /// Для того, чтобы протестировать этот метод, но при этом оставить его приватным,
-    /// пришлось создать отдельный класс, в котором этот метод является публичным.
-    /// Кажется, такое решение соответствует требованию по тестированию в задании, но
-    /// выглядит как чудовищный овер-инжиниринг и оттого не кажется оптимальным.
-    private func check(_ word: String) {
-        
-        WordChecker.check(secretWord: secretWord, givenWord: word) { [weak self] checkResult in
-            
-            self?.state = .didCheckGuess(checkResult)
-            
+    // MARK: Private methods
+    
+    private func fetchAllPosts() {
+        firestoreService.fetchAllPosts { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let posts):
+                self.posts = posts
+            }
         }
-        
     }
 }
 
-final class WordChecker {
-    
-    static func check(secretWord: String, givenWord: String, completion: @escaping ((Bool) -> Void)) {
-        
-        completion(secretWord == givenWord)
-        
-    }
-    
-}
+
+

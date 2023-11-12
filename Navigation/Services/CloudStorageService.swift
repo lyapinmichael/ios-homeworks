@@ -11,31 +11,37 @@ import FirebaseStorage
 import GTMSessionFetcher
 import StorageService
 
+// MARK: - CloudStorageService
+
 final class CloudStorageService {
     
-    enum CloudStorageServiceError: Error {
-        case userIDisNil
-    }
+    // MARK: Singleton instance
     
+    static var shared = CloudStorageService()
+    
+    // MARK: Private properties
+    
+    /// Instance to access Cloud Storage
     private let storage = Storage.storage()
     
-    var userID: String?
+    
+    // MARK: Init
+    
+    private init() {}
+    
+    // MARK: Public methods
     
     // TODO: Needs refactoring! Non functional yet!
     func uploadImage(forPost postID: String) {
         
-//        guard let imageURL = post.imageURL,
-//              let image = UIImage(named: imageURL) else {
-//            print("Bad image URL")
-//            return
-//        }
-//        
+//        guard let image = UIImage(named: "Bimba") else { return }
+//     
 //        guard let imageData = image.jpegData(compressionQuality: 1) else {
 //            print("Failed to convert UIImage into JPEG data")
 //            return
 //        }
-//        
-//        let reference = storage.reference().child("/postImages/\(user.id)/\(postID)")
+//      
+//        let reference = storage.reference().child("/postImages/\(postID)")
 //        
 //        let metadata = StorageMetadata()
 //        metadata.contentType = "image/jpeg"
@@ -50,20 +56,14 @@ final class CloudStorageService {
 //            print("Successfully uploaded post image to storage")
 //            
 //        }
-        
+//        
     }
     
     func downloadImage(forPost postID: String, completionHandler: @escaping (Data?, CloudStorageServiceError?) -> Void)  {
         
-        guard let userID = userID else {
-            print("User id cannot be nil. Pass valid user id")
-            completionHandler(nil, .userIDisNil)
-            return
-        }
-        
         let storageReference = storage.reference()
         
-        let reference = storageReference.child("/postImages/\(userID)/\(postID)")
+        let reference = storageReference.child("/postImages/\(postID)")
         
         reference.getData(maxSize: 5 * 1024 * 1024) { (data, error) in
         
@@ -78,9 +78,14 @@ final class CloudStorageService {
                 print("Post with ID: \(postID) has no image attached")
                 completionHandler(nil, nil)
             }
-            
         }
-        
     }
+    
+    // MARK: Types
+    
+    enum CloudStorageServiceError: Error {
+        case userIDisNil
+    }
+    
     
 }

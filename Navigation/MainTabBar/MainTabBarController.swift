@@ -12,7 +12,6 @@ class MainTabBarController: UITabBarController {
     init(viewControllers: [UIViewController]) {
         super.init(nibName: nil, bundle: nil)
         self.viewControllers = viewControllers
-        
     }
     
     required init?(coder: NSCoder) {
@@ -44,15 +43,15 @@ class MainTabBarController: UITabBarController {
         /// And finally setting appearance of nav bar for each navigation controller
         for i in viewControllers.indices {
             
-            guard let nc = (viewControllers[i] as? UINavigationController) else { return }
+            guard let navigationController = (viewControllers[i] as? UINavigationController) else { return }
             
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
             navBarAppearance.backgroundColor = Palette.dynamicBars
             
-            nc.navigationBar.standardAppearance = navBarAppearance
-            nc.navigationBar.scrollEdgeAppearance = navBarAppearance
+            navigationController.navigationBar.standardAppearance = navBarAppearance
+            navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
+            navigationController.navigationBar.prefersLargeTitles = true
         }
     }
-  
 }

@@ -65,6 +65,7 @@
 		ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */; };
 		ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */; };
 		ECCBCDDD2A165EE100F05304 /* ToastPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */; };
+		ECD0FA4A2B0156E100F835F1 /* PostTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD0FA492B0156E100F835F1 /* PostTableViewCellViewModel.swift */; };
 		ECEDC90E2ADC67600043CB75 /* Todo.rtf in Resources */ = {isa = PBXBuildFile; fileRef = ECEDC90D2ADC67600043CB75 /* Todo.rtf */; };
 		ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */; };
 		ECEDC9122ADDC7FB0043CB75 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */; };
@@ -180,6 +181,7 @@
 		ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastContoller.swift; sourceTree = "<group>"; };
 		ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresentationController.swift; sourceTree = "<group>"; };
+		ECD0FA492B0156E100F835F1 /* PostTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		ECEDC90D2ADC67600043CB75 /* Todo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Todo.rtf; sourceTree = "<group>"; };
 		ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
@@ -299,7 +301,7 @@
 				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
 				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
 				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
-				ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */,
+				ECD0FA482B01569E00F835F1 /* PostTableViewCell */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
 				ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */,
 				ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */,
@@ -496,6 +498,15 @@
 				EC62CC662AB78E3900BD98C5 /* Palette.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		ECD0FA482B01569E00F835F1 /* PostTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				ECAA5CFF29B0C41D00EC2F21 /* PostTableViewCell.swift */,
+				ECD0FA492B0156E100F835F1 /* PostTableViewCellViewModel.swift */,
+			);
+			path = PostTableViewCell;
 			sourceTree = "<group>";
 		};
 		ECFD599C2A45ABEF009E90F9 /* FavouritePosts */ = {
@@ -752,6 +763,7 @@
 				ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */,
 				ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */,
 				ECCBCDDD2A165EE100F05304 /* ToastPresentationController.swift in Sources */,
+				ECD0FA4A2B0156E100F835F1 /* PostTableViewCellViewModel.swift in Sources */,
 				EC12424B29FD0F3900F74818 /* ProfileCoordinator.swift in Sources */,
 				ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,

@@ -11,7 +11,7 @@ import StorageService
 
 final class FeedCoordinator: ModuleCoordinator {
    
-    var parentCoordinator: Coordinator?
+    weak var parentCoordinator: Coordinator?
     
     var module: Module?
     var moduleType: Module.ModuleType

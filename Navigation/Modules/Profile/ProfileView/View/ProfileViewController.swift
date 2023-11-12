@@ -241,11 +241,10 @@ extension ProfileViewController: UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: CellReuseID.post.rawValue,
-                for: indexPath
-            ) as! PostTableViewCell
+                for: indexPath) as! PostTableViewCell
             cell.delegate = self
             let postData = viewModel.postData[indexPath.row]
-            cell.updateContent(post: postData.post, imageData: postData.imageData)
+            cell.updateContent(post: postData)
             return cell
         }
     }

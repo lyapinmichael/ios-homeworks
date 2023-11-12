@@ -14,22 +14,27 @@ import FirebaseFirestoreSwift
 final class FirestoreService {
     
     enum FirestoreServiceError: Error {
+        // User related errors
         case failedToFetchUserDocument
-        case userDocumnentDoesntExist
+        case userDocumentDoesntExist
         case failedToDecodeUserDocument
         case failedToCreateNewUserDocument
         
+        // Single post related errors
         case failedToFetchPostDocument
         case postDocumentDoesntExist
         case failedToDecodePostDocument
         case failedToCreateNewPostDocument
+        
+        // All posts related errors
+        case filedToFetchPosts
+        case badQuerySnapshot
     }
     
     // This property is crucial for further work with firestore.
     // It is received whenever user logs in, so the app knows user identity,
     // and knowing user's identity the app then makes queries into Cloud Firestore
     // to read and write user-specific data, such as posts.
-    let userID: String
     
     private let dataBase = Firestore.firestore()
     
@@ -39,11 +44,7 @@ final class FirestoreService {
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     
-    init(userID: String) {
-        self.userID = userID
-    }
-    
-    func fetchUserData(completionHandler: @escaping (Result<User, FirestoreServiceError>) -> Void) {
+    func fetchUserData(userID: String, completionHandler: @escaping (Result<User, FirestoreServiceError>) -> Void) {
         
         rootCollectionReference = dataBase.collection("users")
         documentReference = rootCollectionReference.document(userID)
@@ -56,7 +57,7 @@ final class FirestoreService {
             }
             
             guard let userDocument = querySnapshot, userDocument.exists  else {
-                completionHandler(.failure(.userDocumnentDoesntExist))
+                completionHandler(.failure(.userDocumentDoesntExist))
                 return
             }
             
@@ -68,7 +69,9 @@ final class FirestoreService {
             }
         }
     }
-    
+    // TODO: Refactoring needed
+    // see db.collection("some").whereField("some", isEqualTo: some).getDocuments
+    // in doc
     func fetchPostData(_ documentReference: DocumentReference, completionHandler: @escaping (Result<Post, FirestoreServiceError>) -> Void) {
         
         documentReference.getDocument { querySnapshot, error in
@@ -100,6 +103,37 @@ final class FirestoreService {
             completionHandler()
         } catch {
             print(error)
+        }
+        
+    }
+    
+    func fetchAllPosts(completionHandler: @escaping (Result<[Post], FirestoreServiceError>) -> Void) {
+        
+        rootCollectionReference = dataBase.collection("posts")
+        
+        rootCollectionReference.getDocuments { querySnapshot, error in
+            
+            if let error {
+                print(error)
+                completionHandler(.failure(.filedToFetchPosts))
+            }
+            
+            guard let querySnapshot else {
+                completionHandler(.failure(.badQuerySnapshot))
+                return
+            }
+            
+            var posts: [Post] = []
+            for document in querySnapshot.documents {
+                do {
+                    let post = try document.data(as: Post.self)
+                    posts.append(post)
+                } catch {
+                    print("Failed to decode document with id \(document.documentID) as Post object.")
+                    continue
+                }
+            }
+            completionHandler(.success(posts))
         }
         
     }

@@ -132,7 +132,7 @@ class FavouritePostsTableController: UITableViewController {
         
         
         let imageData = try? CacheService.default.readPostImageCache(from: postID)
-        (cell as? PostTableViewCell)?.updateContent(post: post, imageData: imageData)
+        (cell as? PostTableViewCell)?.updateContent(post: post)
         
 
         return cell

@@ -42,24 +42,6 @@ final class FeedCoordinator: ModuleCoordinator {
         return viewController
     }
     
-    func present(_ presentation: Presentation) {
-        
-        switch presentation {
-        case .post:
-            let post = Post.make()[0]
-            let postViewController = PostViewController()
-            postViewController.coordinator = self
-            postViewController.title = post.title
-            (module?.view as? UINavigationController)?.pushViewController(postViewController, animated: true)
-        case .info:
-            let infoViewController = InfoViewController()
-            infoViewController.modalPresentationStyle = .pageSheet
-            module?.view.present(infoViewController, animated: true)
-        }
-        
-        
-    }
-    
     private func configureNavBarAppearance(for navigationController: UINavigationController?) {
         
         guard let nc = navigationController else { return }

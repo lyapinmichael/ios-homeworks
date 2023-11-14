@@ -126,9 +126,8 @@ class FavouritePostsTableController: UITableViewController {
         let post = Post(title: favPost.title ?? "nil",
                         author: favPost.author?.name ?? NSLocalizedString("unknownAuthor", comment: ""),
                         description: favPost.text,
-                        image: favPost.imageName,
                         likes: Int(favPost.likes),
-                        views: Int(favPost.views))
+                        dateCreated: favPost.dateCreated ?? Date())
         
         
         let imageData = try? CacheService.default.readPostImageCache(from: postID)

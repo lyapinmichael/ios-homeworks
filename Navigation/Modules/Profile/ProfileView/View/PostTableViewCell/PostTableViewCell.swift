@@ -165,7 +165,6 @@ final class PostTableViewCell: UITableViewCell {
         authorTitle.text = post.author
         postTitle.text = post.title
         likesLabel.text = NSLocalizedString("likes", comment: "") + "\(String(post.likes))"
-        viewsLabel.text = NSLocalizedString("views", comment: "") + "\(String(post.views))"
         
     }
     

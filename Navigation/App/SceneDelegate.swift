@@ -20,8 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
         
-        UNUserNotificationCenter.current().delegate = self
-        
         let factory = AppFactory()
         let appCoordinator = AppCoordinator(factory: factory)
         
@@ -62,20 +60,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
-extension SceneDelegate: UNUserNotificationCenterDelegate {
- 
-            
-            func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-                
-                switch response.actionIdentifier {
-                case "checkForUpdates":
-                    print("checking for updates...")
-                    window?.rootViewController?.present(InfoViewController(), animated: true)
-                default:
-                    break
-                }
-                
-                completionHandler()
-            }
-        }

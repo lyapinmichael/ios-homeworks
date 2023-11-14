@@ -10,30 +10,38 @@ import StorageService
 
 protocol FeedView: AnyObject {}
 
+
+// MARK: - FeedViewController
+
 final class FeedViewController: UIViewController, FeedView {
     
-    // MARK: - Public properties
+    // MARK: Public properties
     
     weak var coordinator: FeedCoordinator?
     
-    // MARK: - Private properties
+    // MARK: Private properties
     
     private let viewModel = FeedViewModel()
     
-    // MARK: - Subviews
+    // MARK: Subviews
     
     private lazy var feedTable: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
         
         tableView.register(PostTableViewCell.self,
                            forCellReuseIdentifier: PostTableViewCell.reuseID)
-        tableView.dataSource = self
         
+        tableView.dataSource = self
+        tableView.delegate = self
+    
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
-    // MARK: - Lifecycle
+        
+    // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +56,7 @@ final class FeedViewController: UIViewController, FeedView {
         
     }
     
-    // MARK: - Private methods
+    // MARK: Private methods
     
     private func bindViewModel() {
         viewModel.feedView = self
@@ -77,18 +85,47 @@ final class FeedViewController: UIViewController, FeedView {
     }
 }
 
+
+// MARK: - UITableViewDataSource
+
 extension FeedViewController: UITableViewDataSource {
  
+    func numberOfSections(in tableView: UITableView) -> Int {
+        viewModel.postsByDate.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.posts.count
+        let date = viewModel.postsByDate.keys.sorted()[section]
+        
+        return viewModel.postsByDate[date]?.count ?? 0
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID) as? PostTableViewCell else { return UITableViewCell() }
         
-        let post = viewModel.posts[indexPath.row]
+        let date = viewModel.postsByDate.keys.sorted()[indexPath.section]
+        
+        guard let post = viewModel.postsByDate[date]?[indexPath.row] else { return UITableViewCell() }
+      
         cell.updateContent(post: post)
         
         return cell
     }
+}
+
+// MARK: - UITableViewDelegate
+
+extension FeedViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let date = viewModel.postsByDate.keys.sorted()[section]
+        
+        return FeedTableSectionHeaderView(date: date)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 }

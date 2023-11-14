@@ -12,7 +12,7 @@ import StorageService
 
 protocol FeedViewModelProtocol: AnyObject {
     
-    var posts: [Post] { get }
+    var postsByDate: [Date: [Post]] { get }
     
     var state: FeedViewModel.State { get }
     
@@ -51,15 +51,35 @@ final class FeedViewModel: FeedViewModelProtocol {
     
     // MARK: Public properties
     
-    var posts: [Post] = [] {
+    var postsByDate: [Date: [Post]] = [:] {
         didSet {
             state = .didReceivePosts
+        }
+    }
+    
+    private var posts: [Post] = [] {
+        didSet {
+            
+            postsByDate = Dictionary(grouping: posts) { [weak self] post in
+                guard let self else { return Date.distantPast }
+                let keyComponents = self.calendar.dateComponents([.day, .month, .year], from: post.dateCreated.dateValue())
+                var components = DateComponents()
+                components.day = keyComponents.day
+                components.month = keyComponents.month
+                components.year = keyComponents.year
+                let date = self.calendar.date(from: components)
+                return date ?? Date.distantPast
+            }
         }
     }
     
     // MARK: Private properties
     
     private let firestoreService = FirestoreService()
+    
+    private let calendar = Calendar.current
+    
+    // MARK: Init
     
     init() {
         fetchAllPosts()
@@ -68,10 +88,7 @@ final class FeedViewModel: FeedViewModelProtocol {
     // MARK: Public methods
     
     func updateState(withInput input: ViewInput) {
-        switch input {
-        case .didTapCheckGuessButton(let word):
-            return
-        }
+       
     }
     
     // MARK: Private methods
@@ -82,7 +99,7 @@ final class FeedViewModel: FeedViewModelProtocol {
             case .failure(let error):
                 print(error)
             case .success(let posts):
-                self.posts = posts
+                self.posts = posts.sorted(by: { $0.dateCreated.dateValue() < $1.dateCreated.dateValue() })
             }
         }
     }

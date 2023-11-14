@@ -13,8 +13,6 @@
 		EC021E272AE4060500CADBD1 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC021E262AE4060500CADBD1 /* CacheService.swift */; };
 		EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DB299855C80090FE5A /* ProfileViewController.swift */; };
 		EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720D9299855A80090FE5A /* FeedViewController.swift */; };
-		EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DD299855F20090FE5A /* PostViewController.swift */; };
-		EC06901A29A61AC5004513A4 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DF299856190090FE5A /* InfoViewController.swift */; };
 		EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06901B29A6B0CB004513A4 /* LogInViewController.swift */; };
 		EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423229FCF78600F74818 /* MainCoordinator.swift */; };
 		EC12423529FCF7B500F74818 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */; };
@@ -66,6 +64,7 @@
 		ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */; };
 		ECCBCDDD2A165EE100F05304 /* ToastPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */; };
 		ECD0FA4A2B0156E100F835F1 /* PostTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD0FA492B0156E100F835F1 /* PostTableViewCellViewModel.swift */; };
+		ECD0FA4C2B024CC200F835F1 /* FeedTableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD0FA4B2B024CC100F835F1 /* FeedTableSectionHeaderView.swift */; };
 		ECEDC90E2ADC67600043CB75 /* Todo.rtf in Resources */ = {isa = PBXBuildFile; fileRef = ECEDC90D2ADC67600043CB75 /* Todo.rtf */; };
 		ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */; };
 		ECEDC9122ADDC7FB0043CB75 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */; };
@@ -167,8 +166,6 @@
 		EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		EC9720D9299855A80090FE5A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		EC9720DB299855C80090FE5A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		EC9720DD299855F20090FE5A /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
-		EC9720DF299856190090FE5A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		EC9720E12998565E0090FE5A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+TextPicker.swift"; sourceTree = "<group>"; };
 		ECA3C9602AC1D2160069E1B4 /* LocalNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationService.swift; sourceTree = "<group>"; };
@@ -182,6 +179,7 @@
 		ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastContoller.swift; sourceTree = "<group>"; };
 		ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresentationController.swift; sourceTree = "<group>"; };
 		ECD0FA492B0156E100F835F1 /* PostTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellViewModel.swift; sourceTree = "<group>"; };
+		ECD0FA4B2B024CC100F835F1 /* FeedTableSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableSectionHeaderView.swift; sourceTree = "<group>"; };
 		ECEDC90D2ADC67600043CB75 /* Todo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Todo.rtf; sourceTree = "<group>"; };
 		ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
@@ -331,9 +329,8 @@
 		EC12424229FCFCDE00F74818 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EC9720DF299856190090FE5A /* InfoViewController.swift */,
-				EC9720DD299855F20090FE5A /* PostViewController.swift */,
 				EC9720D9299855A80090FE5A /* FeedViewController.swift */,
+				ECD0FA4B2B024CC100F835F1 /* FeedTableSectionHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -752,12 +749,12 @@
 				EC62CC672AB78E3900BD98C5 /* Palette.swift in Sources */,
 				ECF59D1E2A3075E8002BEE93 /* SignUpViewController.swift in Sources */,
 				EC021E272AE4060500CADBD1 /* CacheService.swift in Sources */,
-				EC06901A29A61AC5004513A4 /* InfoViewController.swift in Sources */,
 				EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */,
 				EC12425229FDBCEA00F74818 /* ProfileHeaderView.swift in Sources */,
 				EC22BF4429F69D1C0024E0B4 /* FeedViewModel.swift in Sources */,
 				ECF59D202A3086DC002BEE93 /* UIViewController+PresentAlert.swift in Sources */,
 				EC62CC652AB78C2500BD98C5 /* UIColor+Themes.swift in Sources */,
+				ECD0FA4C2B024CC200F835F1 /* FeedTableSectionHeaderView.swift in Sources */,
 				ECF21B162AF970190059B713 /* AppCoordinator.swift in Sources */,
 				EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */,
 				ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */,
@@ -768,7 +765,6 @@
 				ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
 				ECA3C9652AC30F8A0069E1B4 /* LocalAuthorizationService.swift in Sources */,
-				EC06901929A61AB6004513A4 /* PostViewController.swift in Sources */,
 				ECFD599E2A45ACA0009E90F9 /* FavouritePostsTableController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
 				EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */,

@@ -27,6 +27,8 @@ final class LocalAuthorizatoinService {
         }
     }
     
+    private(set) var isBiometryAuthorizationAvailable = false
+    
     var biometryType: BiometryType {
         get {
             switch context.biometryType {
@@ -53,7 +55,9 @@ final class LocalAuthorizatoinService {
         canEvaluatePolicy = context.canEvaluatePolicy(policy, error: &error)
         
         if error != nil {
-            print("Authentication failed",error!)
+            print(">>>>> Authentication failed:\n",error!)
+        } else {
+            isBiometryAuthorizationAvailable = true
         }
     }
     

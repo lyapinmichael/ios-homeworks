@@ -40,18 +40,18 @@
 "alreadyInFavorites" = "Пост уже в избранном";
 "photos" = "Фото: ";
 "thankUser" = "Спасибо за пользование приложением!";
-"password" = "Пароль";
 "login" = "Логин";
 "signIn" = "Войти";
-"signUp" = "Зарегитрирваться";
+"signUp" = "Зарегиcтрироваться";
 "fillFullName" = "Введите ваше имя";
-"fillEmail" = "Введие ваш email";
+"fillEmail" = "Введите ваш e-mail";
 "fillPassword" = "Введите пароль";
 "confirm" = "Подтвердить";
-"pleaseFillEmail" = "Пожалуйста, введите валидный email";
+"continue" = "Продолжить";
+"pleaseFillEmail" = "Пожалуйста, введите e-mail";
 "pleaseFillPassword" = "Пожалуйста, введите пароль";
 "pleaseFillName" =  "Пожалуйста, введите ваше имя";
-"registrationSuccessfull" = "Регистрация успешно завершена";
+"registrationSuccessfull" = "Поздравляем: вы успешно зарегистрировались!";
 "nowPlaying" = "Сейчас играет: ";
 "media" = "Медиа";
 "filterByAuthor" = "Фильтровать по автору";
@@ -62,3 +62,23 @@
 "checkUpdatesNotification" = "Проверьте последние обновления";
 "checkForUpdatesUNAction" = "Проверить обновления";
 "LAPolicy" = "Рарзешите приложению использовать биометрию для безопасного входа";
+"alreadyHaveAnAccount" = "Уже есть аккаунт";
+"yourEmailWillBeUsed" = "Ваш e-mail будет использоваться для входа в ваш аккаунт";
+"emailFormatInvalid" = "Некорректный формат. E-mail должен соответствовать формату: \"example@mail.com\" ";
+"proceed" = "Далее";
+"createPassword" = "Придумайте надежный пароль";
+
+"create" = "создайте";
+"secure" = "надежный";
+"password" = "пароль";
+"repeatPassword" = "повторите пароль";
+"passwordShouldNotHaveWhitespaces" = "Пароль не может содержать пробелы";
+"passwordsComparisonFail" = "Пароли не совадают. Попробуйте снова.";
+"passwordLengthRestriction" = "Пароль должен быть содержать не менее 6 символов.";
+"almostThere" = "Почти готово";
+"yourDisplayNameWillBeSeen" = "Другие пользователи увидят ваше имя.";
+
+"emailAlreadyExists" = "Похоже, вы уже зарегистрированы. Хотите войти?";
+"failedToSignIn" = "Не удалось войти.";
+
+"begin" = "Начнем!";

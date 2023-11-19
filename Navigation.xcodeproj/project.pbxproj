@@ -13,7 +13,7 @@
 		EC021E272AE4060500CADBD1 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC021E262AE4060500CADBD1 /* CacheService.swift */; };
 		EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720DB299855C80090FE5A /* ProfileViewController.swift */; };
 		EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9720D9299855A80090FE5A /* FeedViewController.swift */; };
-		EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06901B29A6B0CB004513A4 /* LogInViewController.swift */; };
+		EC06901C29A6B0CB004513A4 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06901B29A6B0CB004513A4 /* AuthenticationViewController.swift */; };
 		EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423229FCF78600F74818 /* MainCoordinator.swift */; };
 		EC12423529FCF7B500F74818 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */; };
 		EC12424129FCFCC000F74818 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424029FCFCC000F74818 /* Module.swift */; };
@@ -60,11 +60,15 @@
 		ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */; };
 		ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA5D0729B3B9E800EC2F21 /* Photo.swift */; };
 		ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB02D7B29B64A00002DD75B /* PhotosCollectionViewCell.swift */; };
+		ECB5670A2B055A97005E0549 /* EnterDisplayNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB567092B055A97005E0549 /* EnterDisplayNameViewController.swift */; };
+		ECB5670D2B0634B4005E0549 /* EnterPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5670C2B0634B4005E0549 /* EnterPasswordViewModel.swift */; };
 		ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */; };
 		ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */; };
 		ECCBCDDD2A165EE100F05304 /* ToastPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */; };
 		ECD0FA4A2B0156E100F835F1 /* PostTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD0FA492B0156E100F835F1 /* PostTableViewCellViewModel.swift */; };
 		ECD0FA4C2B024CC200F835F1 /* FeedTableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD0FA4B2B024CC100F835F1 /* FeedTableSectionHeaderView.swift */; };
+		ECD0FA4E2B03944B00F835F1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD0FA4D2B03944B00F835F1 /* LoginViewController.swift */; };
+		ECD0FA512B03D88900F835F1 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD0FA502B03D88900F835F1 /* EnterPasswordViewController.swift */; };
 		ECEDC90E2ADC67600043CB75 /* Todo.rtf in Resources */ = {isa = PBXBuildFile; fileRef = ECEDC90D2ADC67600043CB75 /* Todo.rtf */; };
 		ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */; };
 		ECEDC9122ADDC7FB0043CB75 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */; };
@@ -122,7 +126,7 @@
 		C0229E4EF4030BB98EEAD2D5 /* Pods-StorageService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.release.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.release.xcconfig"; sourceTree = "<group>"; };
 		EC021E242AE3009300CADBD1 /* CloudStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorageService.swift; sourceTree = "<group>"; };
 		EC021E262AE4060500CADBD1 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
-		EC06901B29A6B0CB004513A4 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		EC06901B29A6B0CB004513A4 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		EC12423229FCF78600F74818 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -175,11 +179,15 @@
 		ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		ECAA5D0729B3B9E800EC2F21 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		ECB02D7B29B64A00002DD75B /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
+		ECB567092B055A97005E0549 /* EnterDisplayNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterDisplayNameViewController.swift; sourceTree = "<group>"; };
+		ECB5670C2B0634B4005E0549 /* EnterPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewModel.swift; sourceTree = "<group>"; };
 		ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastContoller.swift; sourceTree = "<group>"; };
 		ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresentationController.swift; sourceTree = "<group>"; };
 		ECD0FA492B0156E100F835F1 /* PostTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		ECD0FA4B2B024CC100F835F1 /* FeedTableSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableSectionHeaderView.swift; sourceTree = "<group>"; };
+		ECD0FA4D2B03944B00F835F1 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		ECD0FA502B03D88900F835F1 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
 		ECEDC90D2ADC67600043CB75 /* Todo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Todo.rtf; sourceTree = "<group>"; };
 		ECEDC90F2ADD27870043CB75 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
@@ -297,8 +305,6 @@
 				EC12423D29FCF9F800F74818 /* Photos */,
 				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
 				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
-				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
-				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
 				ECD0FA482B01569E00F835F1 /* PostTableViewCell */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
 				ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */,
@@ -319,9 +325,11 @@
 		EC12423F29FCFA5500F74818 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				EC06901B29A6B0CB004513A4 /* LogInViewController.swift */,
-				ECF59D1D2A3075E8002BEE93 /* SignUpViewController.swift */,
+				ECD0FA4F2B03D50100F835F1 /* SignUpFlow */,
+				ECB567092B055A97005E0549 /* EnterDisplayNameViewController.swift */,
+				EC06901B29A6B0CB004513A4 /* AuthenticationViewController.swift */,
 				ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */,
+				ECD0FA4D2B03944B00F835F1 /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -341,10 +349,10 @@
 				ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */,
 				ECAA5CFD29B0AEA600EC2F21 /* UITableViewExtension.swift */,
 				EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */,
-				EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */,
 				ECF59D1F2A3086DC002BEE93 /* UIViewController+PresentAlert.swift */,
 				ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */,
 				EC62CC622AB78BD100BD98C5 /* String+Localized.swift */,
+				EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */,
 				EC62CC642AB78C2500BD98C5 /* UIColor+Themes.swift */,
 			);
 			path = Extensions;
@@ -394,6 +402,7 @@
 		EC1FF4DB29984F30007A589E /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				ECD0FA522B04104200F835F1 /* UICustomElements */,
 				ECFD59A12A45B1F3009E90F9 /* FavouritePost.xcdatamodeld */,
 				EC9720D6299855340090FE5A /* App */,
 				EC69DEDA2A2B7A8E0096D9CE /* Services */,
@@ -497,6 +506,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		ECB5670B2B063499005E0549 /* EnterPassword */ = {
+			isa = PBXGroup;
+			children = (
+				ECD0FA502B03D88900F835F1 /* EnterPasswordViewController.swift */,
+				ECB5670C2B0634B4005E0549 /* EnterPasswordViewModel.swift */,
+			);
+			path = EnterPassword;
+			sourceTree = "<group>";
+		};
 		ECD0FA482B01569E00F835F1 /* PostTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,6 +522,24 @@
 				ECD0FA492B0156E100F835F1 /* PostTableViewCellViewModel.swift */,
 			);
 			path = PostTableViewCell;
+			sourceTree = "<group>";
+		};
+		ECD0FA4F2B03D50100F835F1 /* SignUpFlow */ = {
+			isa = PBXGroup;
+			children = (
+				ECF59D1D2A3075E8002BEE93 /* SignUpViewController.swift */,
+				ECB5670B2B063499005E0549 /* EnterPassword */,
+			);
+			path = SignUpFlow;
+			sourceTree = "<group>";
+		};
+		ECD0FA522B04104200F835F1 /* UICustomElements */ = {
+			isa = PBXGroup;
+			children = (
+				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
+				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
+			);
+			path = UICustomElements;
 			sourceTree = "<group>";
 		};
 		ECFD599C2A45ABEF009E90F9 /* FavouritePosts */ = {
@@ -768,6 +804,7 @@
 				ECFD599E2A45ACA0009E90F9 /* FavouritePostsTableController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
 				EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */,
+				ECB5670D2B0634B4005E0549 /* EnterPasswordViewModel.swift in Sources */,
 				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
 				EC62CC632AB78BD100BD98C5 /* String+Localized.swift in Sources */,
 				EC12423529FCF7B500F74818 /* CoordinatorProtocol.swift in Sources */,
@@ -777,13 +814,16 @@
 				ECF59D122A2D0525002BEE93 /* Planet.swift in Sources */,
 				EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */,
 				ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */,
-				EC06901C29A6B0CB004513A4 /* LogInViewController.swift in Sources */,
+				ECB5670A2B055A97005E0549 /* EnterDisplayNameViewController.swift in Sources */,
+				EC06901C29A6B0CB004513A4 /* AuthenticationViewController.swift in Sources */,
 				EC2DA9B629E94A0A002149CF /* User.swift in Sources */,
 				EC12424729FD049000F74818 /* AppFactory.swift in Sources */,
 				ECEDC9122ADDC7FB0043CB75 /* AuthenticationViewModel.swift in Sources */,
+				ECD0FA4E2B03944B00F835F1 /* LoginViewController.swift in Sources */,
 				ECA3C9612AC1D2160069E1B4 /* LocalNotificationService.swift in Sources */,
 				ECF21B122AF93BD90059B713 /* LoginCoordinator.swift in Sources */,
 				EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */,
+				ECD0FA512B03D88900F835F1 /* EnterPasswordViewController.swift in Sources */,
 				EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */,
 				EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */,
 				EC021E252AE3009300CADBD1 /* CloudStorageService.swift in Sources */,

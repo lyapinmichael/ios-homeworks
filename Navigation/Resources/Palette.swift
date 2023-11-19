@@ -28,4 +28,26 @@ struct Palette {
                                                                         blue: 0.235,
                                                                         alpha: 1.0))
     
+    static var dynamicMonochromeButton = UIColor.createColor(lightMode: UIColor(red: 0.218,
+                                                                                green: 0.206,
+                                                                                blue: 0.200,
+                                                                                alpha: 1.0),
+                                                             darkMode: UIColor.white)
+    
+    static var dynamicTextInverted = UIColor.createColor(lightMode: UIColor.white,
+                                                 darkMode: UIColor.black)
+    
+    static var dynamicText = UIColor.createColor(lightMode: UIColor.black,
+                                                 darkMode: UIColor.white)
+    
+    static var accentOrange = UIColor.createColor(lightMode: UIColor(red: 256/255,
+                                                                     green: 151/255,
+                                                                     blue: 7/255,
+                                                                     alpha: 1),
+                                                  darkMode:UIColor(red: 256/255,
+                                                                   green: 151/255,
+                                                                   blue: 7/255,
+                                                                   alpha: 1))
+    
+    private init() {} 
 }

@@ -11,7 +11,7 @@ final class LoginCoordinator: ModuleCoordinator {
     
     var module: Module?
     
-    var moduleType: Module.ModuleType = .login
+    var moduleType: Module.ModuleType = .authentication
     
     var childCoordinators: [Coordinator] = []
     

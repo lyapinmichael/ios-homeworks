@@ -10,20 +10,6 @@ import FirebaseAuth
 
 final class AuthenticationViewModel {
     
-    // MARK: - Enums for state and view input
-    
-    enum State {
-        case initial
-        case didLogIn(User)
-        case failedToLogIn(Error)
-        case didSignUp(User)
-        case failedToSignUp(Error)
-    }
-    
-    enum ViewInput {
-        case tryLogIn(login: String, password: String)
-        case trySignUp(login: String, password: String, fullName: String)
-    }
     
     // MARK: - State related properties
     
@@ -41,12 +27,19 @@ final class AuthenticationViewModel {
     
     // MARK: - State related method
     
-    func updateState(with viewInput: ViewInput) {
+    func updateState(with viewInput: ViewInput,  completion: @escaping ()-> Void = {}) {
         switch viewInput {
         case .tryLogIn(let login, let password):
             self.logIn(login: login, password: password)
+            
         case .trySignUp(let login, let password, let fullName):
             self.signUp(login: login, password: password, fullName: fullName)
+            
+        case .checkNotExists(let email):
+            self.checkEmailNotExists(email: email) { 
+                completion()
+            }
+            
         }
     }
     
@@ -79,7 +72,41 @@ final class AuthenticationViewModel {
             case .failure(let error):
                 self?.state = .failedToSignUp(error)
             }
-            
         }
     }
+    
+    private func checkEmailNotExists(email: String, completion: @escaping () -> Void) {
+        
+        authenticationService.checkIfUserNotExists(email: email) { [weak self] result in
+        
+            switch result {
+            case .success:
+                completion()
+                
+            case .failure(let error):
+                if case .emailAlreadyExists = error {
+                    self?.state = .emailAlreadyExists(email)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Types
+    
+    enum State {
+        case initial
+        case didLogIn(User)
+        case failedToLogIn(Error)
+        case emailAlreadyExists(String)
+        case didSignUp(User)
+        case failedToSignUp(Error)
+    }
+    
+    enum ViewInput {
+        case tryLogIn(login: String, password: String)
+        case trySignUp(login: String, password: String, fullName: String)
+        case checkNotExists(email: String)
+    }
+    
+    
 }

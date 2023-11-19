@@ -16,7 +16,7 @@ struct Module {
         case feed
         case profile(User)
         case favouritePosts
-        case login
+        case authentication
         
     }
     
@@ -33,7 +33,7 @@ extension Module.ModuleType {
             return UITabBarItem(title: NSLocalizedString("profile", comment: ""), image: UIImage(systemName: "person.circle"), tag: 1)
         case .favouritePosts:
             return UITabBarItem(title: NSLocalizedString("favoritePosts", comment: ""), image: UIImage(systemName: "star.fill"), tag: 3)
-        case .login:
+        case .authentication:
             return nil
         }
     }

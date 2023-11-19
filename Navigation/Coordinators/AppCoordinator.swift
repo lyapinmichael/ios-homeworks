@@ -72,6 +72,8 @@ final class AppCoordinator: Coordinator {
     private func configureNavBarAppearance() {
         
         navigationController.navigationBar.isHidden = true
+        navigationController.navigationBar.backIndicatorImage = UIImage()
+        navigationController.navigationBar.backIndicatorTransitionMaskImage = UIImage()
         
     }
 }

@@ -46,14 +46,14 @@ final class AppFactory {
             
             return Module(moduleType: .favouritePosts, view: UINavigationController(rootViewController: favouritePostsTableController))
             
-        case .login:
-            let loginViewController = LogInViewController()
+        case .authentication:
+            let loginViewController = AuthenticationViewController()
             
             if let loginCoordinator = coordinator as? LoginCoordinator {
                 loginViewController.coordinator = loginCoordinator
             }
         
-            return Module(moduleType: .login, view: loginViewController)
+            return Module(moduleType: .authentication, view: loginViewController)
         }
     }
 }

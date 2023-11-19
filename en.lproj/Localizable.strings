@@ -39,18 +39,18 @@
 "alreadyInFavorites" = "Post is already in favorites";
 "photos" = "Photos: ";
 "thankUser" = "Thank you for using our app!";
-"password" = "Password";
 "login" = "login";
 "signIn" = "Sign in";
 "signUp" = "Sign up";
 "fillFullName" = "Fill in your full name";
-"fillEmail" = "Fill in your email";
+"fillEmail" = "Fill in your e-mail";
 "fillPassword" = "Fill in password";
 "confirm" = "Confirm";
-"pleaseFillEmail" = "Please, fill valid email";
+"continue" = "Continue";
+"pleaseFillEmail" = "Please, fill in e-mail";
 "pleaseFillPassword" = "Please, fill in password";
 "pleaseFillName" =  "Please fill in your full name";
-"registrationSuccessfull" = "Registration was successfully finished";
+"registrationSuccessfull" = "Congratulations: you're successfully registered!";
 "nowPlaying" = "Now playing: ";
 "media" = "Media";
 "filterByAuthor" = "Filter by Author";
@@ -61,3 +61,23 @@
 "checkUpdatesNotification" = "Check last updates";
 "checkForUpdatesUNAction" = "Check for updates";
 "LAPolicy" = "Allow app to use bimometry for safe entrance";
+"alreadyHaveAnAccount" = "Already have an account";
+"yourEmailWillBeUsed" = "Your e-mail will be used to log in to your account";
+"emailFormatInvalid" = "Invalid forma. E-mail should conform the following format: \"example@mail.com\" ";
+"proceed" = "Proceed";
+"createPassword" = "Create secure password";
+
+"create" = "create";
+"secure" = "secure";
+"password" = "password";
+"repeatPassword" = "repeat password";
+"passwordShouldNotHaveWhitespaces" = "Password should not contain whitespaces";
+"passwordsComparisonFail" = "The passwords do not match. Please try again.";
+"passwordLengthRestriction" = "Passwords should contain at least 6 characters.";
+"almostThere" = "Almost there";
+"yourDisplayNameWillBeSeen" = "Your display name will be seen by other users.";
+
+"emailAlreadyExists" = "Seems like you have already registered. Would you like to sign in?";
+"failedToSignIn" = "Failed to sign in.";
+
+"begin" = "Let's begin!";

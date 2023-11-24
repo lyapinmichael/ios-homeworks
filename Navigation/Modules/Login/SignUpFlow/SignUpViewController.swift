@@ -160,7 +160,7 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        guard isEmailFormat(login) else {
+        guard isEmailFormatValid(login) else {
             self.presentAlert(message: "emailFormatInvalid".localized, feedBackType: .error)
             return
         }
@@ -169,7 +169,7 @@ class SignUpViewController: UIViewController {
         
     }
     
-    private func isEmailFormat(_ string: String) -> Bool {
+    private func isEmailFormatValid(_ string: String) -> Bool {
         /// Method checks if a button is conforming example@mail.com format
     
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"

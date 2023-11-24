@@ -13,7 +13,7 @@ import FirebaseAuth
 
 protocol AuthenticationDelegate: AnyObject {
     
-    func logIn(email: String, password: String, completion: @escaping ((Result<User, AuthenticationService.AuthenticationError>) -> Void))
+    func signIn(email: String, password: String, completion: @escaping ((Result<User, AuthenticationService.AuthenticationError>) -> Void))
     func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<User, AuthenticationService.AuthenticationError>) -> Void))
     func checkIfUserNotExists(email: String, completion: @escaping (Result<String, AuthenticationService.AuthenticationError>) -> Void)
     func signOut()
@@ -27,7 +27,7 @@ class AuthenticationService: AuthenticationDelegate {
     
     // MARK: Public methods
     
-    func logIn(email: String, password: String, completion: @escaping ((Result<User, AuthenticationError>) -> Void)) {
+    func signIn(email: String, password: String, completion: @escaping ((Result<User, AuthenticationError>) -> Void)) {
         
         Auth.auth().signIn(withEmail: email, password: password) {  authResult, error in
             

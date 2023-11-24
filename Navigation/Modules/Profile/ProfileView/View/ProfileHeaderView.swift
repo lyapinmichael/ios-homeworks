@@ -299,7 +299,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         let setStatusString = NSLocalizedString("setStatus", comment: "")
         statusButton.setTitle(setStatusString, for: .normal)
         
-        statusButton.buttonAction = {[weak self] in
+        statusButton.customAction = {[weak self] in
             guard let self = self else { return }
             
             guard let status = textField.text, !status.isEmpty else { return }
@@ -312,7 +312,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             let printStatusString = NSLocalizedString("printStatus", comment: "")
             self.statusButton.setTitle(printStatusString, for: .normal)
             
-            self.statusButton.buttonAction = {[weak self] in
+            self.statusButton.customAction = {[weak self] in
                 guard let status = self?.profileStatusLabel.text else {
                     
                     print(NSLocalizedString("nothingToSee", comment: ""))

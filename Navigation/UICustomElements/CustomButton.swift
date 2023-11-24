@@ -13,7 +13,7 @@ final class CustomButton: UIButton {
     
     //  MARK: Public properties
     
-    var buttonAction: (() -> Void)?
+    var customAction: (() -> Void)?
     
     // MARK: Private properties
     
@@ -21,7 +21,6 @@ final class CustomButton: UIButton {
     private var mainColor: UIColor?
     private var shadowColor: UIColor?
     private var titleColor: UIColor?
-    
     
     private var isFeedbackEnabled = false
     private var selectionFeedbackGenerator:  UISelectionFeedbackGenerator? = nil
@@ -72,11 +71,11 @@ final class CustomButton: UIButton {
         
         super.init(frame: .zero)
         
-        setup(title: title, backgourndColor: backgroundColor, titleColor: titleColor)
+        setup(title: title, backgroundColor: backgroundColor, titleColor: titleColor)
         
         self.isFeedbackEnabled = isFeedbackEnabled
         
-        self.buttonAction = action
+        self.customAction = action
         
         self.addTarget(self, action: #selector(onButtonDidTap), for: .touchUpInside)
         
@@ -133,13 +132,27 @@ final class CustomButton: UIButton {
         selectionFeedbackGenerator = nil
     }
     
+    // MARK: Public methods
+    
+    func setBackgroundColor(_ backgroundColor: UIColor) {
+        self.mainColor = backgroundColor
+        self.shadowColor = backgroundColor.withAlphaComponent(0.7)
+        
+        setAppiarance()
+    }
+    
+    func setTitleColor(_ titleColor: UIColor) {
+        self.titleColor = titleColor
+        setAppiarance()
+    }
+    
     // MARK: Private methods
     
-    private func setup(title: String, backgourndColor: UIColor?, titleColor: UIColor?) {
+    private func setup(title: String, backgroundColor: UIColor?, titleColor: UIColor?) {
         /// Setting parameters received while initializing
         self.setTitle(title, for: .normal)
         
-        if let color = backgourndColor {
+        if let color = backgroundColor {
             self.mainColor = color
             self.shadowColor = color.withAlphaComponent(0.7)
         } else {
@@ -170,7 +183,7 @@ final class CustomButton: UIButton {
     // MARK: Objc methods
     
     @objc /*private*/ func onButtonDidTap() {
-        buttonAction?()
+        customAction?()
     }
     
 }

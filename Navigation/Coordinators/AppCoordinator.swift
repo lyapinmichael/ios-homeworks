@@ -35,7 +35,16 @@ final class AppCoordinator: Coordinator {
         addChildCoordinator(mainCoordinator)
         
         let mainViewController = mainCoordinator.start()
-        navigationController.setViewControllers([mainViewController], animated: true)
+        
+        let transition = CATransition()
+        transition.type = .reveal
+        transition.subtype = .fromBottom
+        
+        navigationController.view.layer.add(transition, forKey: kCATransition)
+        
+        navigationController.setViewControllers([mainViewController], animated: false)
+        
+        configureNavBarAppearance()
         
         guard let loginCoordinator = childCoordinators.first(where: {$0 is LoginCoordinator}) else { return }
         removeChildCoordinator(loginCoordinator)
@@ -51,6 +60,15 @@ final class AppCoordinator: Coordinator {
         loginCoordinator.parentCoordinator = self
         addChildCoordinator(loginCoordinator)
         let loginViewContoller = loginCoordinator.start()
+        
+        let transition = CATransition()
+        transition.type = .reveal
+        transition.subtype = .fromTop
+        
+        navigationController.view.layer.add(transition, forKey: kCATransition)
+        
+        configureNavBarAppearance()
+        
         navigationController.setViewControllers([loginViewContoller], animated: true)
         
     }

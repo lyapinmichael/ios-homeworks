@@ -29,8 +29,8 @@ final class AuthenticationViewModel {
     
     func updateState(with viewInput: ViewInput,  completion: @escaping ()-> Void = {}) {
         switch viewInput {
-        case .tryLogIn(let login, let password):
-            self.logIn(login: login, password: password)
+        case .trySignIn(let login, let password):
+            self.signIn(login: login, password: password)
             
         case .trySignUp(let login, let password, let fullName):
             self.signUp(login: login, password: password, fullName: fullName)
@@ -45,9 +45,9 @@ final class AuthenticationViewModel {
     
     // MARK: - Private methods
     
-    private func logIn(login: String, password: String) {
+    private func signIn(login: String, password: String) {
        
-        authenticationService.logIn(email: login, password: password) { [weak self] result in
+        authenticationService.signIn(email: login, password: password) { [weak self] result in
             
             switch result {
             case .success(let user):
@@ -103,7 +103,7 @@ final class AuthenticationViewModel {
     }
     
     enum ViewInput {
-        case tryLogIn(login: String, password: String)
+        case trySignIn(login: String, password: String)
         case trySignUp(login: String, password: String, fullName: String)
         case checkNotExists(email: String)
     }

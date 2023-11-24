@@ -72,7 +72,7 @@
 "secure" = "надежный";
 "password" = "пароль";
 "repeatPassword" = "повторите пароль";
-"passwordShouldNotHaveWhitespaces" = "Пароль не может содержать пробелы";
+"passwordShouldNotHaveWhitespaces" = "Пароль не может содержать пробелы.";
 "passwordsComparisonFail" = "Пароли не совадают. Попробуйте снова.";
 "passwordLengthRestriction" = "Пароль должен быть содержать не менее 6 символов.";
 "almostThere" = "Почти готово";
@@ -82,3 +82,8 @@
 "failedToSignIn" = "Не удалось войти.";
 
 "begin" = "Начнем!";
+
+"welcomeBack" = "С возвращением!";
+"fillEmailAndPassword" = "Введите Ваш e-mail и пароль для входа.";
+
+"back" = "Назад";

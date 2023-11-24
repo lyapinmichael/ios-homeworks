@@ -32,11 +32,11 @@ final class AuthenticationViewController: UIViewController {
         return logo
     }()
     
-    private lazy var loginButton: UIButton = {
+    private lazy var signInButton: UIButton = {
         
         let buttonAction = UIAction { [weak self] _ in
             guard let self = self else { return }
-            let loginViewController = LoginViewController()
+            let loginViewController = SignInViewController(delegate: self)
             self.navigationController?.pushViewController(loginViewController, animated: true)
         }
         
@@ -93,39 +93,41 @@ final class AuthenticationViewController: UIViewController {
     
     private func bindViewModel() {
         viewModel.onStateDidChange = { [weak self] state in
+            guard let self else { return }
+            
             switch state {
             case .initial:
                 return
                 
             case .didLogIn(let user):
-                self?.coordinator?.proceedToMain(user)
+                self.coordinator?.proceedToMain(user)
                 return
                 
             case .failedToLogIn(let error):
-                self?.presentAlert(message: "failedToSignIn".localized)
+                self.presentAlert(message: "failedToSignIn".localized)
                 print(error)
                 
             case .emailAlreadyExists(let email):
-                self?.presentAlert(message: "emailAlreadyExists".localized,
+                self.presentAlert(message: "emailAlreadyExists".localized,
                                    actionTitle: "signIn".localized,
                                    feedBackType: .error,
                                    addCancelAction: true) {
                     
-                    let loginViewController = LoginViewController(email: email)
-                    self?.navigationController?.pushViewController(loginViewController, animated: true)
+                    let loginViewController = SignInViewController(email: email, delegate: self)
+                    self.navigationController?.pushViewController(loginViewController, animated: true)
                 }
                 
             case .didSignUp(let user):
-                self?.presentedViewController?.dismiss(animated: true)
-                self?.presentAlert(message: NSLocalizedString("registrationSuccessfull", comment: ""), actionTitle: "begin".localized) {
+                self.presentedViewController?.dismiss(animated: true)
+                self.presentAlert(message: NSLocalizedString("registrationSuccessfull", comment: ""), actionTitle: "begin".localized) {
                     
-                    self?.coordinator?.proceedToMain(user)
+                    self.coordinator?.proceedToMain(user)
                     print("Logging in...")
                     return
                 }
                 
             case .failedToSignUp(let error):
-                self?.presentAlert(message: error.localizedDescription)
+                self.presentAlert(message: error.localizedDescription)
                 print(error)
                 
             }
@@ -135,7 +137,7 @@ final class AuthenticationViewController: UIViewController {
     private func setupSubviews() {
         
         view.addSubview(signUpButton)
-        view.addSubview(loginButton)
+        view.addSubview(signInButton)
         view.addSubview(logoImage)
         
         let safeArea = view.safeAreaLayoutGuide
@@ -150,9 +152,9 @@ final class AuthenticationViewController: UIViewController {
             signUpButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             signUpButton.widthAnchor.constraint(equalToConstant: 260),
             
-            loginButton.heightAnchor.constraint(equalToConstant: 40),
-            loginButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 22),
-            loginButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
+            signInButton.heightAnchor.constraint(equalToConstant: 40),
+            signInButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 22),
+            signInButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
         ])
     }
     
@@ -176,6 +178,15 @@ extension AuthenticationViewController: SignUpDelegate {
         viewModel.updateState(with: .checkNotExists(email: email)) {
             signUpViewController.continue(email: email)
         }
+    }
+    
+    
+}
+
+extension AuthenticationViewController: SignInDelegate {
+   
+    func signInViewController(_ signInViewController: SignInViewController, trySignIn email: String, password: String) {
+        viewModel.updateState(with: .trySignIn(login: email, password: password))
     }
     
     

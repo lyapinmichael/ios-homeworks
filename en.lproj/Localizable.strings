@@ -71,7 +71,7 @@
 "secure" = "secure";
 "password" = "password";
 "repeatPassword" = "repeat password";
-"passwordShouldNotHaveWhitespaces" = "Password should not contain whitespaces";
+"passwordShouldNotHaveWhitespaces" = "Password should not contain whitespaces.";
 "passwordsComparisonFail" = "The passwords do not match. Please try again.";
 "passwordLengthRestriction" = "Passwords should contain at least 6 characters.";
 "almostThere" = "Almost there";
@@ -81,3 +81,8 @@
 "failedToSignIn" = "Failed to sign in.";
 
 "begin" = "Let's begin!";
+
+"welcomeBack" = "Welcome back!";
+"fillEmailAndPassword" = "Fill in you email and password to sign in.";
+
+"back" = "Back";

@@ -64,6 +64,52 @@ final class CustomTextField: UITextField {
            return rect.inset(by: padding)
     }
     
+    // MARK: Public methods
+    
+    func addShowHideTextButton(tintColor: UIColor? = nil) {
+        /// This method is used to create muiltiple identical UIButtons without
+        ///  redeclaring them in a corresponding property.
+        ///  It is returning a view as it is expected for button to be padded
+        ///  from the edge of text field, if it is added to a text field as a
+        ///  right view
+        
+        self.isSecureTextEntry = true
+        
+        let button = UIButton(type: .system)
+        
+        let setButtonImage = {
+            let image = self.isSecureTextEntry ? UIImage(systemName: "eye") : UIImage(systemName: "eye.slash")
+            button.setImage(image, for: .normal)
+        }
+        
+        let action = UIAction { _ in
+            
+            self.isSecureTextEntry.toggle()
+            setButtonImage()
+        }
+        
+        setButtonImage()
+        button.addAction(action, for: .touchUpInside)
+        button.tintColor = tintColor
+        
+        let buttonSize = button.intrinsicContentSize
+        
+        let containerView = UIView(frame: CGRect(x: .zero,
+                                                 y: .zero,
+                                                 width: buttonSize.width + 16,
+                                                 height: buttonSize.height))
+        
+        button.frame = CGRect(x: .zero,
+                              y: .zero,
+                              width: buttonSize.width,
+                              height: buttonSize.height)
+        
+        containerView.addSubview(button)
+        
+        self.rightViewMode = .always
+        self.rightView = containerView
+    }
+    
     // MARK: Private methods
     
     private func setup() {

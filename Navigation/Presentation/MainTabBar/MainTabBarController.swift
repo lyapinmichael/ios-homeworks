@@ -34,7 +34,7 @@ class MainTabBarController: UITabBarController {
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
         
-        /// Then checking is passed viewcontrollers are wrapped into navigation controllers
+        /// Then checking if passed viewcontrollers are wrapped into navigation controllers
         guard let viewControllers = self.viewControllers else {
             print ("Something went wrong when setting viewcontrollers")
             return

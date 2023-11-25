@@ -261,32 +261,14 @@
 		EC12423129FCF77100F74818 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */,
-				ECF21B152AF970190059B713 /* AppCoordinator.swift */,
-				ECF21B112AF93BD90059B713 /* LoginCoordinator.swift */,
-				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
-				EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */,
-				EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */,
-				ECFD599F2A45AD41009E90F9 /* FavouritePostsCoordinator.swift */,
 			);
 			path = Coordinators;
-			sourceTree = "<group>";
-		};
-		EC12423629FCF94D00F74818 /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				EC12423F29FCFA5500F74818 /* Login */,
-				EC12423729FCF95500F74818 /* Feed  */,
-				EC12423829FCF9AB00F74818 /* Profile */,
-				ECFD599C2A45ABEF009E90F9 /* FavouritePosts */,
-				EC12424029FCFCC000F74818 /* Module.swift */,
-			);
-			path = Modules;
 			sourceTree = "<group>";
 		};
 		EC12423729FCF95500F74818 /* Feed  */ = {
 			isa = PBXGroup;
 			children = (
+				EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */,
 				EC12424229FCFCDE00F74818 /* View */,
 				EC22BF4329F69D1C0024E0B4 /* FeedViewModel.swift */,
 			);
@@ -296,23 +278,11 @@
 		EC12423829FCF9AB00F74818 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */,
+				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
 				EC12424C29FDAAEE00F74818 /* ProfileView */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		EC12423929FCF9C500F74818 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				EC12423D29FCF9F800F74818 /* Photos */,
-				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
-				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
-				ECD0FA482B01569E00F835F1 /* PostTableViewCell */,
-				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
-				ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */,
-				ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		EC12423D29FCF9F800F74818 /* Photos */ = {
@@ -327,6 +297,7 @@
 		EC12423F29FCFA5500F74818 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				ECF21B112AF93BD90059B713 /* LoginCoordinator.swift */,
 				EC95BAAC2B0AB11A002621C4 /* AuthenticationBase */,
 				EC95BAAD2B0BCFE5002621C4 /* SignInFlow */,
 				ECD0FA4F2B03D50100F835F1 /* SignUpFlow */,
@@ -358,19 +329,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		EC12424529FD048300F74818 /* Factory */ = {
-			isa = PBXGroup;
-			children = (
-				EC12424629FD049000F74818 /* AppFactory.swift */,
-			);
-			path = Factory;
-			sourceTree = "<group>";
-		};
 		EC12424C29FDAAEE00F74818 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
-				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
-				EC12423929FCF9C500F74818 /* View */,
+				EC12423D29FCF9F800F74818 /* Photos */,
+				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
+				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
+				ECD0FA482B01569E00F835F1 /* PostTableViewCell */,
+				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
+				ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */,
+				ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -402,15 +370,10 @@
 		EC1FF4DB29984F30007A589E /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				ECD0FA522B04104200F835F1 /* UICustomElements */,
 				ECFD59A12A45B1F3009E90F9 /* FavouritePost.xcdatamodeld */,
 				EC9720D6299855340090FE5A /* App */,
+				ECF396102B1254DB0022CCCD /* Presentation */,
 				EC69DEDA2A2B7A8E0096D9CE /* Services */,
-				EC12424429FCFD8A00F74818 /* Extensions */,
-				EC9720D7299855430090FE5A /* MainTabBar */,
-				EC12423129FCF77100F74818 /* Coordinators */,
-				EC12424529FD048300F74818 /* Factory */,
-				EC12423629FCF94D00F74818 /* Modules */,
 				EC2DA9B429E949FC002149CF /* Models */,
 				EC9720D8299855730090FE5A /* Resources */,
 				EC1FF4EA29984F31007A589E /* Info.plist */,
@@ -501,6 +464,10 @@
 			children = (
 				EC1FF4DC29984F30007A589E /* AppDelegate.swift */,
 				EC1FF4DE29984F30007A589E /* SceneDelegate.swift */,
+				EC12423429FCF7B500F74818 /* CoordinatorProtocol.swift */,
+				ECF21B152AF970190059B713 /* AppCoordinator.swift */,
+				EC12424629FD049000F74818 /* AppFactory.swift */,
+				EC12424029FCFCC000F74818 /* Module.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -561,9 +528,26 @@
 			path = UICustomElements;
 			sourceTree = "<group>";
 		};
+		ECF396102B1254DB0022CCCD /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
+				ECFD599C2A45ABEF009E90F9 /* FavouritePosts */,
+				EC12423829FCF9AB00F74818 /* Profile */,
+				EC12423729FCF95500F74818 /* Feed  */,
+				EC12423F29FCFA5500F74818 /* Login */,
+				EC9720D7299855430090FE5A /* MainTabBar */,
+				EC12423129FCF77100F74818 /* Coordinators */,
+				ECD0FA522B04104200F835F1 /* UICustomElements */,
+				EC12424429FCFD8A00F74818 /* Extensions */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		ECFD599C2A45ABEF009E90F9 /* FavouritePosts */ = {
 			isa = PBXGroup;
 			children = (
+				ECFD599F2A45AD41009E90F9 /* FavouritePostsCoordinator.swift */,
 				ECFD599D2A45ACA0009E90F9 /* FavouritePostsTableController.swift */,
 			);
 			path = FavouritePosts;

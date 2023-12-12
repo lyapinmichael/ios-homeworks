@@ -87,3 +87,15 @@
 "fillEmailAndPassword" = "Введите Ваш e-mail и пароль для входа.";
 
 "back" = "Назад";
+
+"editProfile" = "Редактировать профиль";
+
+"posts" = "Публикаций";
+"post" = "Пост";
+"photo" = "Фото";
+
+"generalInformation" = "Основная информация";
+
+"name" = "Имя";
+
+"failedToCommitChanges" = "Не удалось сохранить изменения";

@@ -13,6 +13,7 @@ protocol ProfileHeaderViewDelegate: AnyObject {
     func isScrollAndSelectionEnabled(_ flag: Bool)
     func printStatus(_ status: String)
     func setStatus(_ status: String)
+    func presentEditProfileViewController()
     
 }
 
@@ -20,11 +21,15 @@ protocol ProfileHeaderViewDelegate: AnyObject {
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
     
-    // MARK: - Delegate
+    // MARK: Delegate
     
     weak var delegate: ProfileHeaderViewDelegate?
     
-    // MARK: - Private properties
+    // MARK: Private Properties
+    
+    private var profilePictureOrigin = CGPoint()
+    
+    // MARK: Subviews
     
     private  lazy var profilePictureView: UIImageView = {
         let profilePictureView = UIImageView(frame: CGRect(x: .zero, y: .zero, width: 104, height: 104))
@@ -39,13 +44,11 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         profilePictureView.translatesAutoresizingMaskIntoConstraints = false
         
         profilePictureView.isUserInteractionEnabled = true
-      
-
+        
+        
         
         return profilePictureView
     }()
-    
-    private var profilePictureOrigin = CGPoint()
     
     private lazy var pictureBackground = UIView(frame: CGRect(x: 0,
                                                               y: 0,
@@ -53,17 +56,19 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
                                                               height: UIScreen.main.bounds.height))
     
     private lazy var crossButton: UIButton = {
-        let cross = UIButton()
+        let crossButton = UIButton()
         
-        cross.frame = CGRect(x: UIScreen.main.bounds.width - 48, y: 24, width: 28, height: 28)
-        cross.setImage(UIImage(systemName: "xmark"), for: .normal)
-        cross.imageView?.clipsToBounds = true
-        cross.tintColor = .white
-        cross.alpha = 0
+        crossButton.frame = CGRect(x: UIScreen.main.bounds.width - 48, y: 24, width: 28, height: 28)
+        crossButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        crossButton.imageView?.clipsToBounds = true
+        crossButton.tintColor = .white
+        crossButton.alpha = 0
         
-        cross.isUserInteractionEnabled = false
-        cross.isHidden = true
-        return cross
+        crossButton.addTarget(self, action: #selector(didTapOnCrossButton(_:)), for: .touchDown)
+        
+        crossButton.isUserInteractionEnabled = false
+        crossButton.isHidden = true
+        return crossButton
     }()
     
     private lazy var profileNameLabel: UILabel = {
@@ -72,7 +77,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         profileNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         profileNameLabel.text = "defaultUser"
         profileNameLabel.translatesAutoresizingMaskIntoConstraints = false
-    
+        
         return profileNameLabel
     }()
     
@@ -87,50 +92,105 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return profileStatusLabel
     }()
     
-    private lazy var statusButton: CustomButton = {
-        
+    private lazy var editProfileButton: CustomButton = {
+       
         let buttonAction = { [weak self] in
-            guard let status = self?.profileStatusLabel.text else {
-                print("Nothing to see here")
-                return
-            }
-            self?.delegate?.printStatus(status)
+            guard let self else { return }
+            self.delegate?.presentEditProfileViewController()
             
         }
         
-        let printStatusString = NSLocalizedString("printStatus", comment: "")
-        let statusButton = CustomButton(title: printStatusString, action: buttonAction)
-    
-        statusButton.translatesAutoresizingMaskIntoConstraints = false
+        let statusButton = CustomButton(title: "editProfile".localized,
+                                        backgroundColor: Palette.accentOrange,
+                                        titleColor: UIColor.white,
+                                        action: buttonAction)
         
+        statusButton.translatesAutoresizingMaskIntoConstraints = false
         return statusButton
     }()
     
-
-    private lazy var statusField: CustomTextField = {
-        let statusField = CustomTextField()
-
-        statusField.backgroundColor = Palette.dynamicTextfield
+    private lazy var totalPostsLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.text = "0\n"+"posts".localized.lowercased()
         
-        statusField.layer.borderWidth = 1
-        statusField.layer.borderColor = UIColor.black.cgColor
-        statusField.layer.cornerRadius = 12
-
-        statusField.placeholder = NSLocalizedString("whatsNew", comment: "")
-
-        statusField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        statusField.enablesReturnKeyAutomatically = true
-        statusField.returnKeyType = .done
-        statusField.delegate = self
-        statusField.translatesAutoresizingMaskIntoConstraints = false
-
-        return statusField
+        return label
     }()
     
-    // MARK: - Private methods
-
-    private func tapOnProfilePicture() {
+    private lazy var statsStack: UIStackView = {
+       let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        
+        stackView.addArrangedSubview(totalPostsLabel)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
+    private lazy var separatorLine: UIView = {
+       let view = UIView()
+       
+        view.layer.borderColor = UIColor.systemGray3.cgColor
+        view.layer.borderWidth = 2
+        
+        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var newPostButton: UIButton = {
+       let button = UIButton(frame: CGRect(x: 0, y: 0, width: 68, height: 68))
+        
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "square.and.pencil")
+        configuration.title = "post".localized.lowercased()
+        configuration.imagePlacement = .top
+        configuration.titlePadding = 8
+        configuration.imagePadding = 8
+        
+        button.configuration = configuration
+        button.tintColor = Palette.dynamicMonochromeButton
+        
+        return button
+    }()
+    
+    private lazy var newPhotoButton: UIButton = {
+       let button = UIButton(frame: CGRect(x: 0, y: 0, width: 68, height: 68))
+        
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "camera.on.rectangle")
+        configuration.title = "photo".localized.lowercased()
+        configuration.imagePlacement = .top
+        configuration.titlePadding = 8
+        configuration.imagePadding = 8
+        
+        button.configuration = configuration
+        button.tintColor = Palette.dynamicMonochromeButton
+        
+        return button
+    }()
+    
+    private lazy var publicationButtonsStack: UIStackView = {
+       let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        
+        stackView.addArrangedSubview(newPostButton)
+        stackView.addArrangedSubview(newPhotoButton)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    // MARK: Private methods
+    
+    private func tapOnProfilePicture() {
+        
         delegate?.isScrollAndSelectionEnabled(false)
         
         profilePictureOrigin = profilePictureView.center
@@ -161,7 +221,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
                                                          y: UIScreen.main.bounds.midY - self.profilePictureOrigin.y)
                 self.profilePictureView.transform = CGAffineTransform(scaleX: scaleX, y: scaleX)
                 self.delegate?.setTabBarColor(.black)
-
+                
             },
             completion: {_ in
                 UIView.animate(withDuration: 0.3, animations: {
@@ -200,29 +260,24 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     private func setup() {
-        
-        addSubview(profileNameLabel)
-        addSubview(profileStatusLabel)
-        
-        addSubview(statusButton)
-        
-        statusField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
-        addSubview(statusField)
-        
-        addSubview(pictureBackground)
+    
         pictureBackground.isHidden = true
-            
-        addSubview(profilePictureView)
-
-        crossButton.addTarget(self, action: #selector(didTapOnCrossButton(_:)), for: .touchDown)
-        addSubview(crossButton)
-        
+      
     }
     
     // MARK: Constraints
     
-    private func setConstraints() {
-
+    private func setupSubviews() {
+        addSubview(profileNameLabel)
+        addSubview(profileStatusLabel)
+        addSubview(editProfileButton)
+        addSubview(profilePictureView)
+        addSubview(pictureBackground)
+        addSubview(crossButton)
+        addSubview(statsStack)
+        addSubview(separatorLine)
+        addSubview(publicationButtonsStack)
+        
         NSLayoutConstraint.activate([
             profilePictureView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             profilePictureView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -232,32 +287,42 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             profileNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             profileNameLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
             profileNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-
-//            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 16),
-            statusButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 34),
-            statusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            statusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            statusButton.heightAnchor.constraint(equalToConstant: 50),
-
+            
             profileStatusLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
             profileStatusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-//            profileStatusLabel.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -34),
             profileStatusLabel.centerYAnchor.constraint(equalTo: profilePictureView.centerYAnchor),
-
-            statusField.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
-            statusField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            statusField.heightAnchor.constraint(equalToConstant: 40),
-            statusField.centerYAnchor.constraint(equalTo: profilePictureView.bottomAnchor),
             
-            bottomAnchor.constraint(equalTo: statusButton.bottomAnchor, constant: 16)
+            editProfileButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 34),
+            editProfileButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            editProfileButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            editProfileButton.heightAnchor.constraint(equalToConstant: 50),
+           
+            statsStack.topAnchor.constraint(equalTo: editProfileButton.bottomAnchor, constant: 16),
+            statsStack.leadingAnchor.constraint(lessThanOrEqualTo: leadingAnchor, constant: 16),
+            statsStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16),
+            statsStack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            statsStack.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
+            
+            separatorLine.topAnchor.constraint(equalTo: statsStack.bottomAnchor, constant: 16),
+            separatorLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            
+            publicationButtonsStack.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 16),
+            publicationButtonsStack.leadingAnchor.constraint(lessThanOrEqualTo: leadingAnchor, constant: 16),
+            publicationButtonsStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16),
+            publicationButtonsStack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            publicationButtonsStack.heightAnchor.constraint(greaterThanOrEqualToConstant: 68),
+            
+            bottomAnchor.constraint(equalTo: publicationButtonsStack.bottomAnchor, constant: 16)
             
         ])
     }
     
-    // MARK: - Public methods
+    // MARK: Public methods
     
     func update(with user: User) {
         profileNameLabel.text = user.fullName
+        totalPostsLabel.text = "\(user.posts.count)\n"+"posts".localized.lowercased()
         
         if let status = user.status {
             profileStatusLabel.text = status
@@ -273,22 +338,24 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         } else {
             profilePictureView.image = UIImage(named: "ImagePlaceholder")
         }
+        
+         
     }
     
-    // MARK: - Override init
+    // MARK: Override init
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
         setup()
-        setConstraints()
+        setupSubviews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - ObjC actions
+    // MARK:  ObjC actions
     
     @objc fileprivate func dismissKeyboard() {
         endEditing(true)
@@ -297,9 +364,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     @objc fileprivate func statusTextChanged(_ textField: UITextField) {
         
         let setStatusString = NSLocalizedString("setStatus", comment: "")
-        statusButton.setTitle(setStatusString, for: .normal)
+        editProfileButton.setTitle(setStatusString, for: .normal)
         
-        statusButton.customAction = {[weak self] in
+        editProfileButton.customAction = {[weak self] in
             guard let self = self else { return }
             
             guard let status = textField.text, !status.isEmpty else { return }
@@ -310,9 +377,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             self.delegate?.setStatus(status)
             
             let printStatusString = NSLocalizedString("printStatus", comment: "")
-            self.statusButton.setTitle(printStatusString, for: .normal)
+            self.editProfileButton.setTitle(printStatusString, for: .normal)
             
-            self.statusButton.customAction = {[weak self] in
+            self.editProfileButton.customAction = {[weak self] in
                 guard let status = self?.profileStatusLabel.text else {
                     
                     print(NSLocalizedString("nothingToSee", comment: ""))
@@ -324,7 +391,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     @objc private func didTapOnProfilePicture() {
-
+        
         tapOnProfilePicture()
         
     }
@@ -334,7 +401,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         closeProfilePicture()
         
     }
-
+    
 }
 
 // MARK: - TextField delegate extension
@@ -342,7 +409,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
 extension ProfileHeaderView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        statusField.resignFirstResponder()
+//        statusField.resignFirstResponder()
         return true
     }
 }

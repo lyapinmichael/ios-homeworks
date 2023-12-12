@@ -33,6 +33,7 @@ class MainTabBarController: UITabBarController {
         
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
+        tabBar.tintColor = Palette.accentOrange
         
         /// Then checking if passed viewcontrollers are wrapped into navigation controllers
         guard let viewControllers = self.viewControllers else {
@@ -43,7 +44,7 @@ class MainTabBarController: UITabBarController {
         /// And finally setting appearance of nav bar for each navigation controller
         for i in viewControllers.indices {
             
-            guard let navigationController = (viewControllers[i] as? UINavigationController) else { return }
+            guard let navigationController = (viewControllers[i] as? UINavigationController) else { continue }
             
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()

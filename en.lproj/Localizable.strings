@@ -86,3 +86,15 @@
 "fillEmailAndPassword" = "Fill in you email and password to sign in.";
 
 "back" = "Back";
+
+"editProfile" = "Edit profile";
+
+"posts" = "Posts";
+"post" = "Post";
+"photo" = "Photo";
+
+"generalInformation" = "General information";
+
+"name" = "Name";
+
+"failedToCommitChanges" = "Failed to commit changes";

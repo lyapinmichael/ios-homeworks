@@ -43,7 +43,7 @@ class ToastContoller: UIViewController {
     
     
     private func setup() {
-        view.backgroundColor = UIColor(named: "ColorSet")
+        view.backgroundColor = Palette.accentOrange
         view.addSubview(label)
         
         NSLayoutConstraint.activate([

@@ -31,8 +31,14 @@ final class AppFactory {
             }
             
             let profileView = ProfileViewController(with: viewModel)
+            let profileNavigationController = UINavigationController(rootViewController: profileView)
+        
+            let slideOverMenu = SlideOverMenuViewController(user: user)
+            slideOverMenu.delegate = profileView
+            
+            let  profileRootViewController = ProfileRootViewController(profileViewController: profileView, slideOverMenuViewContoller: slideOverMenu)
     
-            return Module(moduleType: type, view: UINavigationController(rootViewController: profileView))
+            return Module(moduleType: type, view: profileRootViewController)
             
         case .favouritePosts:
             

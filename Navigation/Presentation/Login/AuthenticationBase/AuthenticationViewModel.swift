@@ -45,7 +45,7 @@ final class AuthenticationViewModel {
     
     // MARK: - Private methods
     
-    private func signIn(login: String, password: String) {
+    private func signIn(login: String, password: String, failureHandler: @escaping () -> Void = {}) {
        
         authenticationService.signIn(email: login, password: password) { [weak self] result in
             
@@ -55,6 +55,7 @@ final class AuthenticationViewModel {
                 
             case .failure(let error):
                 self?.state = .failedToLogIn(error)
+                failureHandler()
             }
         }
     }

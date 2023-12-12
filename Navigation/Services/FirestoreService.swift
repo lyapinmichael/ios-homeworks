@@ -107,6 +107,21 @@ final class FirestoreService {
         
     }
     
+    func updateUserDisplayName(_ updatedUser: User, updatedName: String, completionHandler: @escaping (Error?) -> Void) {
+        
+        let documentReference = dataBase.collection("users").document(updatedUser.id)
+        
+        documentReference.updateData([
+            "fullName": updatedName
+        ]) { error  in
+            if let error {
+                completionHandler(error)
+            } else {
+                completionHandler(nil)
+            }
+        }
+    }
+    
     func fetchAllPosts(completionHandler: @escaping (Result<[Post], FirestoreServiceError>) -> Void) {
         
         rootCollectionReference = dataBase.collection("posts")

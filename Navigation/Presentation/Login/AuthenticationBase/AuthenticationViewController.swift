@@ -184,9 +184,11 @@ extension AuthenticationViewController: SignUpDelegate {
 }
 
 extension AuthenticationViewController: SignInDelegate {
-   
-    func signInViewController(_ signInViewController: SignInViewController, trySignIn email: String, password: String) {
-        viewModel.updateState(with: .trySignIn(login: email, password: password))
+    
+    func signInViewController(_ signInViewController: SignInViewController, failureHandler: SignInFailureHandler, trySignIn email: String, password: String) {
+        viewModel.updateState(with: .trySignIn(login: email, password: password)) {
+            failureHandler.signInDidFail()
+        }
     }
     
     

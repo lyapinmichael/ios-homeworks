@@ -14,6 +14,10 @@ final class SignInViewModel {
     private(set) var state: State = .waitingForEmail {
         didSet {
             onStateDidChange?(state)
+            
+            if case .trySignIn = state {
+                state = .waitigForPassword
+            }
         }
     }
     
@@ -50,6 +54,13 @@ final class SignInViewModel {
             
         case .didChangePasswordEditing(let password):
             self.password = password
+            
+        case .didReceivePresetEmail(let email):
+            self.email = email
+            state = .waitingForEmail
+            
+        case .didFailToLogIn:
+            state = .waitigForPassword
         }
         
     }
@@ -84,6 +95,8 @@ final class SignInViewModel {
         case didTapCloseAlert
         case didChangeEmailEditing(String)
         case didChangePasswordEditing(String)
+        case didReceivePresetEmail(String)
+        case didFailToLogIn
     }
     
     

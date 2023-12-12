@@ -27,7 +27,6 @@ final class ProfileCoordinator: ModuleCoordinator {
     func start() -> UIViewController {
         let module = factory.makeModule(moduleType, coordinator: self)
         let viewController = module.view
-        let rootViewController = (viewController as? UINavigationController)?.rootViewController
        
         viewController.tabBarItem = moduleType.tabBarItem
         self.module = module
@@ -35,15 +34,6 @@ final class ProfileCoordinator: ModuleCoordinator {
     }
     
     func logOut() {
-//        let navigationController = (module?.view as? UINavigationController)
-//        guard var viewControllers = navigationController?.viewControllers else { return }
-//        
-//        _ = viewControllers.popLast()
-//        let loginViewController = LogInViewController()
-////        loginViewController.coordinator = self
-//        viewControllers.append(loginViewController)
-//        navigationController?.setViewControllers(viewControllers, animated: true)
-        
         (parentCoordinator as? MainCoorditanor)?.logOut()
     }
 }

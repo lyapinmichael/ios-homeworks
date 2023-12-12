@@ -10,28 +10,18 @@ import StorageService
 
 final class ProfileViewController: UIViewController {
    
-    //MARK: - Private enums for cells and header reuse is
+    weak var rootViewController: ProfileRootViewController?
     
-    private enum CellReuseID: String {
-            case base = "BaseTableViewCell_ReuseID"
-            case post = "CustomTableViewCell_ReuseID"
-            case photos = "PhotosTablewViewCell_ReuseID"
-        }
-        
-    private enum HeaderFooterReuseID: String {
-        case profileHeader = "ProfileSectionHeader_ReuseID"
-        case profileFooter = "ProfileSectionFooter_ReuseID"
-    }
-
-    
-    // MARK: - Private Properties. Subviews
+    // MARK: Private Properties
     
     private var timer: Timer?
     
     private var viewModel: ProfileViewModelProtocol
     
+    // MARK: Subviews
+    
     private lazy var mainTableView: UITableView = {
-        let view = UITableView(frame: .zero, style: .plain)
+        let view = UITableView(frame: .zero, style: .grouped)
         
         #if DEBUG
         view.backgroundColor = Palette.dynamicBackground
@@ -84,23 +74,30 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.title = "profile".localized
-        let logOutAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            self.viewModel.updateState(withInput: .didTapLogOutButton)
-        }
         
-        let logOutString = NSLocalizedString("logOut", comment: "")
-        let logOutButton = UIBarButtonItem(title: logOutString, primaryAction: logOutAction)
-        navigationItem.rightBarButtonItem = logOutButton
-
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        let width = view.frame.width - 60.0
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: 44))
+        titleLabel.text = viewModel.user.login
+        titleLabel.textColor = Palette.dynamicText
+        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        titleLabel.textAlignment = .left
+        titleLabel.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        titleLabel.backgroundColor = Palette.dynamicBars
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         self.navigationController?.navigationBar.isHidden = false
-        self.presentedViewController?.dismiss(animated: true)
+       
+        if let toastController = self.presentedViewController as? ToastContoller {
+            toastController.dismiss(animated: true)
+        }
+        
     }
 
     override func viewWillLayoutSubviews() {
@@ -109,17 +106,57 @@ final class ProfileViewController: UIViewController {
         mainTableView.frame = view.frame        
     }
     
-    // MARK: - Private methods
+    // MARK: Public methods
     
-    private func setupView() {
-        title = "profile".localized
-        addSubviews()
-        setupProfileView()
-        setConstraints()
+    func presentToast(message: String? = nil) {
+        
+        var toast: ToastContoller
+        
+        if let message = message {
+            toast = ToastContoller(message: message)
+        } else {
+            toast = ToastContoller()
+        }
+        
+
+        present(toast, animated: true)
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 3,
+                                     repeats: false,
+                                     block: { _ in
+            toast.dismiss(animated: true)
+        })
+        timer?.tolerance = 0.3
+        
+        
     }
     
-    private func addSubviews() {
-        view.addSubview(mainTableView)
+    // MARK: Private methods
+    
+    private func setupView() {
+        setupProfileView()
+        setupSubviews()
+        
+        let revealMenu = UIAction { [weak self] _ in
+            guard let self else { return }
+            print("Should Present overlapping view")
+            
+            self.rootViewController?.showSlideOverMenu()
+        }
+                
+        let menuButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), primaryAction: revealMenu)
+        menuButton.tintColor = Palette.accentOrange
+        
+        navigationItem.rightBarButtonItem = menuButton
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = Palette.dynamicBars
+        
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
     }
     
     private func setupProfileView() {
@@ -145,7 +182,7 @@ final class ProfileViewController: UIViewController {
         
         mainTableView.register(
             ProfileHeaderView.self,
-            forHeaderFooterViewReuseIdentifier:                HeaderFooterReuseID.profileHeader.rawValue
+            forHeaderFooterViewReuseIdentifier: HeaderFooterReuseID.profileHeader.rawValue
         )
         
         mainTableView.delegate = self
@@ -153,38 +190,16 @@ final class ProfileViewController: UIViewController {
         
     }
     
-    private func setConstraints() {
-        let safeArea = view.safeAreaLayoutGuide
+    private func setupSubviews() {
+        view.addSubview(mainTableView)
         
+        let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             mainTableView.topAnchor.constraint(equalTo: view.topAnchor),
             mainTableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             mainTableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             mainTableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
-    }
-
-    func presentToast(message: String? = nil) {
-        
-        var toast: ToastContoller
-        
-        if let message = message {
-            toast = ToastContoller(message: message)
-        } else {
-            toast = ToastContoller()
-        }
-        
-
-        present(toast, animated: true)
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 3,
-                                     repeats: false,
-                                     block: { _ in
-            toast.dismiss(animated: true)
-        })
-        timer?.tolerance = 0.3
-        
-        
     }
     
     private func bindViewModel() {
@@ -207,11 +222,26 @@ final class ProfileViewController: UIViewController {
         }
     }
   
-    // MARK: - Objc methods
+    // MARK: Objc methods
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    //MARK: Private Types
+    
+    private enum CellReuseID: String {
+            case base = "BaseTableViewCell_ReuseID"
+            case post = "CustomTableViewCell_ReuseID"
+            case photos = "PhotosTablewViewCell_ReuseID"
+        }
+        
+    private enum HeaderFooterReuseID: String {
+        case profileHeader = "ProfileSectionHeader_ReuseID"
+        case profileFooter = "ProfileSectionFooter_ReuseID"
+    }
+    
+    
 }
 
 
@@ -295,6 +325,14 @@ extension ProfileViewController: UITableViewDelegate {
 
 extension ProfileViewController: ProfileHeaderViewDelegate {
     
+    func presentEditProfileViewController() {
+        let editProfileViewModel = EditProfileViewModel(self.viewModel.user)
+        let editProfileViewContoller = EditProfileViewController(viewModel: editProfileViewModel)
+        editProfileViewContoller.modalPresentationStyle = .fullScreen
+        
+        self.present(editProfileViewContoller, animated: true)
+    }
+    
     func setTabBarColor(_ color: UIColor) {
         tabBarController?.tabBar.standardAppearance.backgroundColor = color
     }
@@ -317,5 +355,17 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
     func setStatus(_ status: String) {
         viewModel.updateState(withInput: .didTapSetStatusButton(status))
     }
+    
+    
+}
+
+extension ProfileViewController: SlideOverMenuDelegate {
+    
+    func slideOverMenu(_ slideOverMenu: SlideOverMenuViewController, didTap logOutButton: UIButton) {
+        viewModel.updateState(withInput: .didTapLogOutButton)
+        slideOverMenu.hide()
+    }
+    
+    
 }
 

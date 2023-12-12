@@ -13,7 +13,13 @@ import UIKit
 
 protocol SignInDelegate: AnyObject {
     
-    func signInViewController(_ signInViewController: SignInViewController, trySignIn email: String, password: String)
+    func signInViewController(_ signInViewController: SignInViewController, failureHandler: SignInFailureHandler, trySignIn email: String, password: String)
+    
+}
+
+protocol SignInFailureHandler: AnyObject {
+    
+    func signInDidFail()
     
 }
 
@@ -35,11 +41,7 @@ final class SignInViewController: UIViewController {
     private let localAuthorizationService = LocalAuthorizatoinService()
     private var viewModel = SignInViewModel()
     
-    private var email: String = "" {
-        didSet {
-            loginTextField.text = email
-        }
-    }
+    private var email: String = ""
     
     // MARK: Subviews
     
@@ -145,6 +147,8 @@ final class SignInViewController: UIViewController {
         self.email = email
         self.delegate = delegate
         
+        viewModel.updateState(with: .didReceivePresetEmail(email))
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -166,6 +170,10 @@ final class SignInViewController: UIViewController {
         view.backgroundColor = Palette.dynamicBackground
         setupSubviews()
         bindViewModel()
+        
+        if !email.isEmpty {
+            loginTextField.text = email
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -236,7 +244,7 @@ final class SignInViewController: UIViewController {
                 self.continueButton.setTitleColor(UIColor.white)
                 
             case .trySignIn(let email, let password):
-                delegate?.signInViewController(self, trySignIn: email, password: password)
+                delegate?.signInViewController(self, failureHandler: self, trySignIn: email, password: password)
                 
             case .wrongPassword:
                 return
@@ -329,6 +337,17 @@ extension SignInViewController: CustomTextFieldDelegate {
                 continueButton.isEnabled = false
             }
         }
+    }
+    
+    
+}
+
+// MARK: - SignInFailureHandler
+
+extension SignInViewController: SignInFailureHandler {
+   
+    func signInDidFail() {
+        viewModel.updateState(with: .didFailToLogIn)
     }
     
     

@@ -21,6 +21,8 @@
 		EC12424B29FD0F3900F74818 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */; };
 		EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */; };
 		EC12425229FDBCEA00F74818 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */; };
+		EC132FA42B1FACB600B5BD71 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC132FA32B1FACB600B5BD71 /* EditProfileViewController.swift */; };
+		EC132FA72B1FACD700B5BD71 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC132FA62B1FACD700B5BD71 /* EditProfileViewModel.swift */; };
 		EC193DA72A0EA26D0056F46D /* String+printableReplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */; };
 		EC1FF4DD29984F30007A589E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4DC29984F30007A589E /* AppDelegate.swift */; };
 		EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FF4DE29984F30007A589E /* SceneDelegate.swift */; };
@@ -31,6 +33,7 @@
 		EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */; };
 		EC2799B829EA9744008E949B /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2799B729EA9744008E949B /* AuthenticationService.swift */; };
 		EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC29695229FE4D1B00A18986 /* UINavigationController+RootVC.swift */; };
+		EC2D9C952B20A67900385D6A /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EC2D9C942B20A67900385D6A /* IQKeyboardManagerSwift */; };
 		EC2DA9B629E94A0A002149CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2DA9B529E94A0A002149CF /* User.swift */; };
 		EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFD59A62A45B3AC009E90F9 /* FavouritePostsService.swift */; };
 		EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */; };
@@ -75,6 +78,8 @@
 		ECEDC9122ADDC7FB0043CB75 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */; };
 		ECF21B122AF93BD90059B713 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF21B112AF93BD90059B713 /* LoginCoordinator.swift */; };
 		ECF21B162AF970190059B713 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF21B152AF970190059B713 /* AppCoordinator.swift */; };
+		ECF396132B134D160022CCCD /* SlideOverMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF396122B134D160022CCCD /* SlideOverMenuViewController.swift */; };
+		ECF396152B135C760022CCCD /* ProfileRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF396142B135C760022CCCD /* ProfileRootViewController.swift */; };
 		ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D0F2A2CE230002BEE93 /* Todo.swift */; };
 		ECF59D122A2D0525002BEE93 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D112A2D0525002BEE93 /* Planet.swift */; };
 		ECF59D162A2D2515002BEE93 /* PlanetResident.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D152A2D2515002BEE93 /* PlanetResident.swift */; };
@@ -135,6 +140,8 @@
 		EC12424629FD049000F74818 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
 		EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		EC12424D29FDB06F00F74818 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
+		EC132FA32B1FACB600B5BD71 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		EC132FA62B1FACD700B5BD71 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+printableReplace.swift"; sourceTree = "<group>"; };
 		EC1FF4D929984F30007A589E /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC1FF4DC29984F30007A589E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +202,8 @@
 		ECEDC9112ADDC7FB0043CB75 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		ECF21B112AF93BD90059B713 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		ECF21B152AF970190059B713 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		ECF396122B134D160022CCCD /* SlideOverMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverMenuViewController.swift; sourceTree = "<group>"; };
+		ECF396142B135C760022CCCD /* ProfileRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRootViewController.swift; sourceTree = "<group>"; };
 		ECF59D0F2A2CE230002BEE93 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		ECF59D112A2D0525002BEE93 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		ECF59D152A2D2515002BEE93 /* PlanetResident.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetResident.swift; sourceTree = "<group>"; };
@@ -215,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC650C4A29DB55BE00BF938E /* StorageService.framework in Frameworks */,
+				EC2D9C952B20A67900385D6A /* IQKeyboardManagerSwift in Frameworks */,
 				ECFCC60D29F04DA2003C4D4A /* iOSIntPackage in Frameworks */,
 				DEE730287124CF2E61A02A26 /* Pods_Navigation.framework in Frameworks */,
 			);
@@ -258,13 +268,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EC12423129FCF77100F74818 /* Coordinators */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Coordinators;
-			sourceTree = "<group>";
-		};
 		EC12423729FCF95500F74818 /* Feed  */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,8 +281,10 @@
 		EC12423829FCF9AB00F74818 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				ECF396142B135C760022CCCD /* ProfileRootViewController.swift */,
 				EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */,
-				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
+				ECF396112B134D010022CCCD /* SlideOverMenu */,
+				EC132FA52B1FACBB00B5BD71 /* EditProfile */,
 				EC12424C29FDAAEE00F74818 /* ProfileView */,
 			);
 			path = Profile;
@@ -332,15 +337,25 @@
 		EC12424C29FDAAEE00F74818 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
-				EC12423D29FCF9F800F74818 /* Photos */,
+				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
 				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
 				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
+				EC12423D29FCF9F800F74818 /* Photos */,
 				ECD0FA482B01569E00F835F1 /* PostTableViewCell */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
 				ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */,
 				ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */,
 			);
 			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		EC132FA52B1FACBB00B5BD71 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				EC132FA32B1FACB600B5BD71 /* EditProfileViewController.swift */,
+				EC132FA62B1FACD700B5BD71 /* EditProfileViewModel.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 		EC1FF4D029984F30007A589E = {
@@ -537,11 +552,18 @@
 				EC12423729FCF95500F74818 /* Feed  */,
 				EC12423F29FCFA5500F74818 /* Login */,
 				EC9720D7299855430090FE5A /* MainTabBar */,
-				EC12423129FCF77100F74818 /* Coordinators */,
 				ECD0FA522B04104200F835F1 /* UICustomElements */,
 				EC12424429FCFD8A00F74818 /* Extensions */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		ECF396112B134D010022CCCD /* SlideOverMenu */ = {
+			isa = PBXGroup;
+			children = (
+				ECF396122B134D160022CCCD /* SlideOverMenuViewController.swift */,
+			);
+			path = SlideOverMenu;
 			sourceTree = "<group>";
 		};
 		ECFD599C2A45ABEF009E90F9 /* FavouritePosts */ = {
@@ -586,6 +608,7 @@
 			name = Navigation;
 			packageProductDependencies = (
 				ECFCC60C29F04DA2003C4D4A /* iOSIntPackage */,
+				EC2D9C942B20A67900385D6A /* IQKeyboardManagerSwift */,
 			);
 			productName = Navigation;
 			productReference = EC1FF4D929984F30007A589E /* Navigation.app */;
@@ -662,6 +685,7 @@
 			mainGroup = EC1FF4D029984F30007A589E;
 			packageReferences = (
 				ECFCC60B29F04DA2003C4D4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
+				EC2D9C932B20A67900385D6A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = EC1FF4DA29984F30007A589E /* Products */;
 			projectDirPath = "";
@@ -781,10 +805,12 @@
 				EC95BAAF2B0BCFFC002621C4 /* SignInViewModel.swift in Sources */,
 				ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */,
 				EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */,
+				EC132FA42B1FACB600B5BD71 /* EditProfileViewController.swift in Sources */,
 				ECFD59A02A45AD41009E90F9 /* FavouritePostsCoordinator.swift in Sources */,
 				ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */,
 				ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */,
 				EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */,
+				ECF396152B135C760022CCCD /* ProfileRootViewController.swift in Sources */,
 				ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */,
 				EC62CC672AB78E3900BD98C5 /* Palette.swift in Sources */,
 				ECF59D1E2A3075E8002BEE93 /* SignUpViewController.swift in Sources */,
@@ -809,6 +835,7 @@
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
 				EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */,
 				ECB5670D2B0634B4005E0549 /* EnterPasswordViewModel.swift in Sources */,
+				ECF396132B134D160022CCCD /* SlideOverMenuViewController.swift in Sources */,
 				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
 				EC62CC632AB78BD100BD98C5 /* String+Localized.swift in Sources */,
 				EC12423529FCF7B500F74818 /* CoordinatorProtocol.swift in Sources */,
@@ -834,6 +861,7 @@
 				EC12424129FCFCC000F74818 /* Module.swift in Sources */,
 				ECF59D162A2D2515002BEE93 /* PlanetResident.swift in Sources */,
 				ECB02D7C29B64A00002DD75B /* PhotosCollectionViewCell.swift in Sources */,
+				EC132FA72B1FACD700B5BD71 /* EditProfileViewModel.swift in Sources */,
 				EC1FF4DF29984F30007A589E /* SceneDelegate.swift in Sources */,
 				ECFD59A32A45B1F3009E90F9 /* FavouritePost.xcdatamodeld in Sources */,
 			);
@@ -1216,6 +1244,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		EC2D9C932B20A67900385D6A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.16;
+			};
+		};
 		ECFCC60B29F04DA2003C4D4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TrueMax/iOSIntPackage.git";
@@ -1227,6 +1263,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EC2D9C942B20A67900385D6A /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC2D9C932B20A67900385D6A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
 		ECFCC60C29F04DA2003C4D4A /* iOSIntPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = ECFCC60B29F04DA2003C4D4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */;

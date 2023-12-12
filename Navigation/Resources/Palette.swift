@@ -16,6 +16,15 @@ struct Palette {
                                                                           blue: 0.178,
                                                                           alpha: 1.0))
     
+    static var dynamicSecondaryBackground = UIColor.createColor(lightMode: UIColor(red: 245/255,
+                                                                                   green: 243/255,
+                                                                                   blue: 238/255,
+                                                                                   alpha: 1.0),
+                                                                darkMode: UIColor(red: 0.165,
+                                                                                  green: 0.169,
+                                                                                  blue: 0.208,
+                                                                                  alpha: 1.0))
+    
     static var dynamicBars = UIColor.createColor(lightMode: UIColor.white,
                                                  darkMode: UIColor(red: 0.165,
                                                                    green: 0.169,

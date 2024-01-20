@@ -18,6 +18,7 @@ final class CacheService {
         case fileDoesntExists
         case fileIsEmpty
         case badDirectoryURL
+        case failedWhileWritingToFile
     }
     
     private var rootFolderURL: URL?
@@ -65,7 +66,7 @@ final class CacheService {
         self.avatarCacheFolderURL = avatarCacheFolderURL
     }
     
-    
+    // MARK: Post related methods
   
     func writePostImageCache(from postIDWithImageData: (postID: String, jpegData: JPEGData)) throws {
         ///
@@ -102,6 +103,43 @@ final class CacheService {
             throw CacheServiceError.fileIsEmpty
         }
         
+        return data
+    }
+    
+    // MARK: Avatar related methods
+    
+    func writeUserAvatarCache(userID: String, jpegData: JPEGData) throws {
+        guard let avatarCacheFolderURL = self.avatarCacheFolderURL else {
+            print("postImageCacheFolderURL == nil")
+            throw CacheServiceError.badDirectoryURL
+        }
+        let cachedImages = try fileManager.contentsOfDirectory(atPath: avatarCacheFolderURL.path())
+        let pathToFile = avatarCacheFolderURL.appendingPathComponent(userID, conformingTo: .fileURL)
+        if !cachedImages.contains(where: { $0 == userID }) {
+            fileManager.createFile(atPath: pathToFile.path(), contents: jpegData)
+        } else {
+            do {
+                try jpegData.write(to: pathToFile)
+                print("New Avatar successfully written to file at: \(pathToFile)")
+            } catch {
+                print("Failed to write new avatar to file.")
+                throw CacheServiceError.failedWhileWritingToFile
+            }
+        }
+    }
+    
+    func readUserAvatarCache(from userID: String) throws -> Data {
+        guard let avatarCacheFolderURL = self.avatarCacheFolderURL else {
+            print("avatarCacheFolderURL == nil")
+            throw CacheServiceError.badDirectoryURL
+        }
+        let cachedAvatarURL = avatarCacheFolderURL.appendingPathComponent(userID, conformingTo: .fileURL)
+        guard fileManager.fileExists(atPath: cachedAvatarURL.path()) else {
+            throw CacheServiceError.fileDoesntExists
+        }
+        guard let data = fileManager.contents(atPath: cachedAvatarURL.path()) else {
+            throw CacheServiceError.fileIsEmpty
+        }
         return data
     }
 }

@@ -44,6 +44,9 @@ final class FirestoreService {
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     
+    
+    // MARK: user data related methods
+    
     func fetchUserData(userID: String, completionHandler: @escaping (Result<User, FirestoreServiceError>) -> Void) {
         
         rootCollectionReference = dataBase.collection("users")
@@ -69,9 +72,58 @@ final class FirestoreService {
             }
         }
     }
+    
+    func writeUserDocument(_ user: User, completionHandler: @escaping () -> Void) {
+        do {
+            try dataBase.collection("users").document(user.id).setData(from: user)
+            completionHandler()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateUserDisplayName(_ updatedUser: User, updatedName: String, completionHandler: @escaping (Error?) -> Void) {
+        
+        let documentReference = dataBase.collection("users").document(updatedUser.id)
+        
+        documentReference.updateData([
+            "fullName": updatedName
+        ]) { error  in
+            if let error {
+                completionHandler(error)
+            } else {
+                completionHandler(nil)
+            }
+        }
+    }
+    
+    // MARK: Post related methods
+        
+    func fetchPostData(by userID: String) async throws -> [Post] {
+        rootCollectionReference = dataBase.collection("posts")
+        do {
+            let querySnapshot = try await rootCollectionReference.whereField("authorID", isEqualTo: userID).getDocuments()
+            var posts: [Post] = []
+            for postDocument in querySnapshot.documents {
+                do {
+                    let post = try postDocument.data(as: Post.self)
+                    posts.append(post)
+                } catch {
+                    print(">>>>> Failed to parse data from post document:\n\(error)")
+                    continue
+                }
+            }
+            return posts
+        } catch {
+            print(">>>>> Failed to load post document:\n\(error)")
+            throw(error)
+        }
+    }
+    
     // TODO: Refactoring needed
     // see db.collection("some").whereField("some", isEqualTo: some).getDocuments
     // in doc
+    @available(*, deprecated, message: "Use fetchPostData(by userID: String instead")
     func fetchPostData(_ documentReference: DocumentReference, completionHandler: @escaping (Result<Post, FirestoreServiceError>) -> Void) {
         
         documentReference.getDocument { querySnapshot, error in
@@ -92,32 +144,6 @@ final class FirestoreService {
             } catch {
                 print(error)
                 completionHandler(.failure(.failedToDecodePostDocument))
-            }
-        }
-    }
-    
-    func writeUserDocument(_ user: User, completionHandler: @escaping () -> Void) {
-        
-        do {
-            try dataBase.collection("users").document(user.id).setData(from: user)
-            completionHandler()
-        } catch {
-            print(error)
-        }
-        
-    }
-    
-    func updateUserDisplayName(_ updatedUser: User, updatedName: String, completionHandler: @escaping (Error?) -> Void) {
-        
-        let documentReference = dataBase.collection("users").document(updatedUser.id)
-        
-        documentReference.updateData([
-            "fullName": updatedName
-        ]) { error  in
-            if let error {
-                completionHandler(error)
-            } else {
-                completionHandler(nil)
             }
         }
     }

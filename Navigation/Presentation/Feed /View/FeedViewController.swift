@@ -46,8 +46,8 @@ final class FeedViewController: UIViewController, FeedView {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupNavigationItem()
         setupSubviews()
-        
         bindViewModel()
         
         title = NSLocalizedString("feed", comment: "")
@@ -57,6 +57,13 @@ final class FeedViewController: UIViewController, FeedView {
     }
     
     // MARK: Private methods
+    
+    private func setupNavigationItem() {
+        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "BackIndicatorImage")
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "BackIndicatorImage")
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "feed".localized)
+        navigationItem.backBarButtonItem?.setTitleTextAttributes([.foregroundColor: Palette.dynamicText], for: .normal)
+    }
     
     private func bindViewModel() {
         viewModel.feedView = self
@@ -104,7 +111,7 @@ extension FeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID) as? PostTableViewCell else { return UITableViewCell() }
         
-        let date = viewModel.postsByDate.keys.sorted()[indexPath.section]
+        let date = viewModel.postsByDate.keys.sorted(by: >)[indexPath.section]
         
         guard let post = viewModel.postsByDate[date]?[indexPath.row] else { return UITableViewCell() }
       
@@ -119,13 +126,18 @@ extension FeedViewController: UITableViewDataSource {
 extension FeedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let date = viewModel.postsByDate.keys.sorted()[section]
+        let date = viewModel.postsByDate.keys.sorted(by: >)[section]
         
         return FeedTableSectionHeaderView(date: date)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let date = viewModel.postsByDate.keys.sorted(by: >)[indexPath.section]
+        guard let postsInDateSection = viewModel.postsByDate[date] else { return }
+        let currentPost = postsInDateSection[indexPath.row]
+        let postDetailedViewController = PostDetailedViewController(post: currentPost)
+        navigationController?.pushViewController(postDetailedViewController, animated: true)
     }
     
 }

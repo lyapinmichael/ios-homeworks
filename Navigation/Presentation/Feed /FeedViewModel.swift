@@ -57,9 +57,8 @@ final class FeedViewModel: FeedViewModelProtocol {
         }
     }
     
-    private var posts: [Post] = [] {
+    var posts: [Post] = [] {
         didSet {
-            
             postsByDate = Dictionary(grouping: posts) { [weak self] post in
                 guard let self else { return Date.distantPast }
                 let keyComponents = self.calendar.dateComponents([.day, .month, .year], from: post.dateCreated.dateValue())

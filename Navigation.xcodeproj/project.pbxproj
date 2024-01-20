@@ -86,6 +86,9 @@
 		ECF59D1A2A2E4BA4002BEE93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECF59D192A2E4BA4002BEE93 /* GoogleService-Info.plist */; };
 		ECF59D1E2A3075E8002BEE93 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D1D2A3075E8002BEE93 /* SignUpViewController.swift */; };
 		ECF59D202A3086DC002BEE93 /* UIViewController+PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF59D1F2A3086DC002BEE93 /* UIViewController+PresentAlert.swift */; };
+		ECFA86972B4AE91400121917 /* PostAuthorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFA86962B4AE91400121917 /* PostAuthorHeaderView.swift */; };
+		ECFA869B2B4AF42A00121917 /* PostAuthorHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFA869A2B4AF42A00121917 /* PostAuthorHeaderViewModel.swift */; };
+		ECFA869D2B4C3D7D00121917 /* PostDetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFA869C2B4C3D7D00121917 /* PostDetailedViewController.swift */; };
 		ECFCC60D29F04DA2003C4D4A /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = ECFCC60C29F04DA2003C4D4A /* iOSIntPackage */; };
 		ECFCC60F29F06D67003C4D4A /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */; };
 		ECFD599E2A45ACA0009E90F9 /* FavouritePostsTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFD599D2A45ACA0009E90F9 /* FavouritePostsTableController.swift */; };
@@ -210,6 +213,9 @@
 		ECF59D192A2E4BA4002BEE93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ECF59D1D2A3075E8002BEE93 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		ECF59D1F2A3086DC002BEE93 /* UIViewController+PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentAlert.swift"; sourceTree = "<group>"; };
+		ECFA86962B4AE91400121917 /* PostAuthorHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAuthorHeaderView.swift; sourceTree = "<group>"; };
+		ECFA869A2B4AF42A00121917 /* PostAuthorHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAuthorHeaderViewModel.swift; sourceTree = "<group>"; };
+		ECFA869C2B4C3D7D00121917 /* PostDetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailedViewController.swift; sourceTree = "<group>"; };
 		ECFCC60E29F06D67003C4D4A /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		ECFD599D2A45ACA0009E90F9 /* FavouritePostsTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePostsTableController.swift; sourceTree = "<group>"; };
 		ECFD599F2A45AD41009E90F9 /* FavouritePostsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePostsCoordinator.swift; sourceTree = "<group>"; };
@@ -337,11 +343,10 @@
 		EC12424C29FDAAEE00F74818 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
-				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
 				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
+				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
 				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
 				EC12423D29FCF9F800F74818 /* Photos */,
-				ECD0FA482B01569E00F835F1 /* PostTableViewCell */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
 				ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */,
 				ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */,
@@ -546,7 +551,9 @@
 		ECF396102B1254DB0022CCCD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				ECFA869E2B4C3D8100121917 /* PostDetailedViewController */,
 				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
+				ECFA86982B4AF3F800121917 /* Post */,
 				ECFD599C2A45ABEF009E90F9 /* FavouritePosts */,
 				EC12423829FCF9AB00F74818 /* Profile */,
 				EC12423729FCF95500F74818 /* Feed  */,
@@ -564,6 +571,32 @@
 				ECF396122B134D160022CCCD /* SlideOverMenuViewController.swift */,
 			);
 			path = SlideOverMenu;
+			sourceTree = "<group>";
+		};
+		ECFA86982B4AF3F800121917 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				ECFA86992B4AF41200121917 /* PostAuthorHeaderView */,
+				ECD0FA482B01569E00F835F1 /* PostTableViewCell */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		ECFA86992B4AF41200121917 /* PostAuthorHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				ECFA86962B4AE91400121917 /* PostAuthorHeaderView.swift */,
+				ECFA869A2B4AF42A00121917 /* PostAuthorHeaderViewModel.swift */,
+			);
+			path = PostAuthorHeaderView;
+			sourceTree = "<group>";
+		};
+		ECFA869E2B4C3D8100121917 /* PostDetailedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ECFA869C2B4C3D7D00121917 /* PostDetailedViewController.swift */,
+			);
+			path = PostDetailedViewController;
 			sourceTree = "<group>";
 		};
 		ECFD599C2A45ABEF009E90F9 /* FavouritePosts */ = {
@@ -811,6 +844,7 @@
 				ECEDC9102ADD27870043CB75 /* FirestoreService.swift in Sources */,
 				EC1FF4E129984F30007A589E /* MainTabBarController.swift in Sources */,
 				ECF396152B135C760022CCCD /* ProfileRootViewController.swift in Sources */,
+				ECFA869B2B4AF42A00121917 /* PostAuthorHeaderViewModel.swift in Sources */,
 				ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */,
 				EC62CC672AB78E3900BD98C5 /* Palette.swift in Sources */,
 				ECF59D1E2A3075E8002BEE93 /* SignUpViewController.swift in Sources */,
@@ -820,6 +854,8 @@
 				EC22BF4429F69D1C0024E0B4 /* FeedViewModel.swift in Sources */,
 				ECF59D202A3086DC002BEE93 /* UIViewController+PresentAlert.swift in Sources */,
 				EC62CC652AB78C2500BD98C5 /* UIColor+Themes.swift in Sources */,
+				ECFA869D2B4C3D7D00121917 /* PostDetailedViewController.swift in Sources */,
+				ECFA86972B4AE91400121917 /* PostAuthorHeaderView.swift in Sources */,
 				ECD0FA4C2B024CC200F835F1 /* FeedTableSectionHeaderView.swift in Sources */,
 				ECF21B162AF970190059B713 /* AppCoordinator.swift in Sources */,
 				EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */,

@@ -61,6 +61,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigationItem()
         setupView()
         viewWillLayoutSubviews()
         bindViewModel()
@@ -132,6 +133,11 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: Private methods
+    
+    private func setupNavigationItem() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "feed".localized)
+        navigationItem.backBarButtonItem?.setTitleTextAttributes([.foregroundColor: Palette.dynamicText], for: .normal)
+    }
     
     private func setupView() {
         setupProfileView()
@@ -315,8 +321,13 @@ extension ProfileViewController: UITableViewDelegate {
             photosCollection.title = NSLocalizedString("photoGallery", comment: "")
             navigationController?.isNavigationBarHidden = false
             navigationController?.pushViewController(photosCollection, animated: true)
+        } else {
+            let currentPost = viewModel.postData[indexPath.row]
+            let postDetailedViewController = PostDetailedViewController(post: currentPost)
+            navigationController?.pushViewController(postDetailedViewController, animated: true)
         }
     }
+    
     
 }
 

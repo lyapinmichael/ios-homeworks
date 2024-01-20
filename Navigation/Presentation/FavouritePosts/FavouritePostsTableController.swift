@@ -123,10 +123,10 @@ class FavouritePostsTableController: UITableViewController {
         
         guard let postID = favPost.uuid else { return UITableViewCell() }
         
-        let post = Post(title: favPost.title ?? "nil",
-                        author: favPost.author?.name ?? NSLocalizedString("unknownAuthor", comment: ""),
+        let post = Post(author: favPost.author?.name ?? NSLocalizedString("unknownAuthor", comment: ""),
                         description: favPost.text,
                         likes: Int(favPost.likes),
+                        hasImageAttached: favPost.hasImageAttached,
                         dateCreated: favPost.dateCreated ?? Date())
         
         

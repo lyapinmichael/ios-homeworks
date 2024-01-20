@@ -171,6 +171,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         button.configuration = configuration
         button.tintColor = Palette.dynamicMonochromeButton
         
+        // TODO: to be implemented in future versions
+        button.isEnabled = false
+        
         return button
     }()
     

@@ -58,5 +58,10 @@ struct Palette {
                                                                    blue: 7/255,
                                                                    alpha: 1))
     
+    static var accentBlue = UIColor(red: 8/255,
+                                      green: 99/255,
+                                      blue: 235/255,
+                                      alpha: 1)
+    
     private init() {} 
 }

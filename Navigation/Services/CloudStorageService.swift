@@ -81,6 +81,24 @@ final class CloudStorageService {
         }
     }
     
+    func downloadAvatar(forUser userID: String, completionHandler: @escaping (Data?, CloudStorageServiceError?) -> Void) {
+        let storageReference = storage.reference()
+        let reference = storageReference.child("/userAvatars/\(userID)")
+        reference.getData(maxSize: 5 * 1024 * 1024) { (data, error) in
+            if let error = error {
+                print("\n=====\nError occured while trying to download an image: \n" + "\(error)\n=====\n")
+                completionHandler(nil, .userIDisNil)
+            }
+            
+            if let data = data {
+                completionHandler(data, nil)
+            } else {
+                print("User with ID: \(userID) has not uploaded an avatar")
+                completionHandler(nil, nil)
+            }
+        }
+    }
+    
     // MARK: Types
     
     enum CloudStorageServiceError: Error {

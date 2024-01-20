@@ -55,7 +55,11 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     
     var user: User
     
-    var postData: [Post] = []
+    var postData: [Post] = [] {
+        didSet {
+            postData.sort(by: { $0.dateCreated.dateValue() > $1.dateCreated.dateValue() })
+        }
+    }
     
     // MARK: - Private properties
     
@@ -100,7 +104,6 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                 self.fetchPostData()
             
             case .failure(let error):
-                
                 if case .userDocumentDoesntExist = error {
                     self.firestoreService.writeUserDocument(user) {
                         
@@ -116,20 +119,11 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
     
     private func fetchPostData() {
-        for postReference in user.posts {
-            firestoreService.fetchPostData(postReference) { [weak self] result in
-                guard let self else { return }
-                
-                switch result {
-                case .success(let post):
-                    self.postData.append(post)
-                    self.state = .didReceiveUserData
-                    
-                case .failure(let error):
-                    // TODO: make some logic here
-                    print(error)
-                }
-                
+        Task {
+            let posts = try await firestoreService.fetchPostData(by: user.id)
+            DispatchQueue.main.async {
+                self.postData = posts
+                self.state = .didReceiveUserData
             }
         }
     }

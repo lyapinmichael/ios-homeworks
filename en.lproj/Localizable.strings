@@ -90,6 +90,7 @@
 "editProfile" = "Edit profile";
 
 "posts" = "Posts";
+"postsInf"="Posts";
 "post" = "Post";
 "photo" = "Photo";
 
@@ -98,3 +99,5 @@
 "name" = "Name";
 
 "failedToCommitChanges" = "Failed to commit changes";
+
+"revealFull" = "Reveal full";

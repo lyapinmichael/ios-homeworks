@@ -31,7 +31,6 @@ final class AppFactory {
             }
             
             let profileView = ProfileViewController(with: viewModel)
-            let profileNavigationController = UINavigationController(rootViewController: profileView)
         
             let slideOverMenu = SlideOverMenuViewController(user: user)
             slideOverMenu.delegate = profileView

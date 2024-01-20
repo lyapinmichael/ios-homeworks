@@ -19,10 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
         
-        let localNotificationService = LocalNotificationService(
-        )
-        
+        let localNotificationService = LocalNotificationService()
         localNotificationService.requestAuthorization()
+    
         return true
     }
 

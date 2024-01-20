@@ -46,7 +46,7 @@ final class FavouritePostsService {
             
             let newFavoutitePost = FavouritePost.init(context: backgroundContext)
             
-            newFavoutitePost.title = post.title
+            newFavoutitePost.hasImageAttached = post.hasImageAttached
             newFavoutitePost.author = author
             newFavoutitePost.likes = Int32(post.likes)
             newFavoutitePost.dateCreated = post.dateCreated.dateValue()

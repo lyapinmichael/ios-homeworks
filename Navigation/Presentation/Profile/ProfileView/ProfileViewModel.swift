@@ -9,10 +9,11 @@ import Foundation
 import StorageService
 import FirebaseAuth
 
-protocol ProfileViewModelProtocol: ViewModelProtocol {
+protocol ProfileViewModelProtocol: ViewModelProtocol, EditProfileViewModelDelegate {
     var onStateDidChange: ((ProfileViewModel.State) -> Void)? { get set }
-    var user: User { get set }
     var postData: [Post] { get }
+    var user: User { get }
+    var repository: ProfileRepository { get }
     
     func updateState(withInput input: ProfileViewModel.ViewInput)
     
@@ -20,23 +21,6 @@ protocol ProfileViewModelProtocol: ViewModelProtocol {
 
 
 final class ProfileViewModel: ProfileViewModelProtocol {
-    
-    //MARK: Enums
-    
-    /// Possible states
-    enum State {
-        case initial
-        case printStatus(String)
-        case setStatus(String)
-        case didReceiveUserData
-    }
-    
-    /// Possible input actions performed by user
-    enum ViewInput {
-        case didTapPrintStatusButton(String)
-        case didTapSetStatusButton(String)
-        case didTapLogOutButton
-    }
     
     // MARK: - State related properties
     
@@ -53,7 +37,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     //Coordinator
     weak var coordinator: ProfileCoordinator?
     
-    var user: User
+    var user: User {
+        return repository.profileData.value
+    }
     
     var postData: [Post] = [] {
         didSet {
@@ -61,27 +47,29 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         }
     }
     
+    let repository: ProfileRepository
+    
     // MARK: - Private properties
     
     private let firestoreService = FirestoreService()
     
     // MARK: - Init
-    init(withUser user: User) {
-        
-        self.user = user
-        
-        self.fetchUserData()
+    
+    init(repository: ProfileRepository) {
+        self.repository = repository
         self.fetchPostData()
+    
     }
     
     // MARK: - Public methods
     
     func updateState(withInput input: ViewInput) {
         switch input {
-        case let .didTapPrintStatusButton(status):
+        case .didFinishUpdatingUI:
+            state = .initial
+        case .didTapPrintStatusButton(let status):
             state = .printStatus(status)
-        case let .didTapSetStatusButton(status):
-            user.status = status
+        case .didTapSetStatusButton(let status):
             firestoreService.writeUserDocument(user) {
                 print("User document updated successfully")
             }
@@ -93,29 +81,17 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     
     // MARK: - Private methods
     
-    private func fetchUserData() {
-        firestoreService.fetchUserData(userID: user.id) { [weak self] result in
-            
-            guard let self else { return }
-            
-            switch result {
-            case .success(let user):
-                self.user = user
-                self.fetchPostData()
-            
-            case .failure(let error):
-                if case .userDocumentDoesntExist = error {
-                    self.firestoreService.writeUserDocument(user) {
-                        
-                        // TODO: make some logic here
-                        print("New user document successfully created in database")
-                    }
-                } else {
-                    print(error)
-                }
+    private func bindObservables() {
+        repository.profileData.bind { _ in
+            DispatchQueue.main.async {
+                self.state = .didReceiveUserData
             }
         }
-        
+        repository.postsCount.bind { _ in
+            DispatchQueue.main.async {
+                self.state = .didReceiveUserData
+            }
+        }
     }
     
     private func fetchPostData() {
@@ -123,11 +99,38 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             let posts = try await firestoreService.fetchPostData(by: user.id)
             DispatchQueue.main.async {
                 self.postData = posts
+                self.repository.postsCount.value = posts.count
                 self.state = .didReceiveUserData
             }
         }
     }
     
+    //MARK: Enums
+    
+    /// Possible states
+    enum State {
+        case initial
+        case printStatus(String)
+        case setStatus(String)
+        case didReceiveUserData
+    }
+    
+    /// Possible input actions performed by user
+    enum ViewInput {
+        case didTapPrintStatusButton(String)
+        case didTapSetStatusButton(String)
+        case didTapLogOutButton
+        case didFinishUpdatingUI
+    }
    
+}
+
+extension ProfileViewModel: EditProfileViewModelDelegate {
+    func editProfileViewModel(_ editProfileViewModel: EditProfileViewModel, didUpdateDispalyName newName: String) {
+        self.repository.profileData.value.fullName = newName
+        self.state = .didReceiveUserData
+    }
+    
+    
 }
 

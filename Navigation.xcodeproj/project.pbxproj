@@ -54,6 +54,9 @@
 		EC69DED22A28D7C60096D9CE /* creativeminds.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */; };
 		EC69DED32A28D7C60096D9CE /* dreams.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EC69DECE2A28D7C60096D9CE /* dreams.mp3 */; };
 		EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */; };
+		EC8398262B5D491700E40C2A /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398252B5D491700E40C2A /* ProfileRepository.swift */; };
+		EC8398292B5D493500E40C2A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398282B5D493500E40C2A /* Observable.swift */; };
+		EC83982C2B5D9CB100E40C2A /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC83982B2B5D9CB100E40C2A /* ViewModelProtocol.swift */; };
 		EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */; };
 		EC95BAAF2B0BCFFC002621C4 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95BAAE2B0BCFFC002621C4 /* SignInViewModel.swift */; };
 		ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */; };
@@ -178,6 +181,9 @@
 		EC69DECD2A28D7C50096D9CE /* creativeminds.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = creativeminds.mp3; sourceTree = "<group>"; };
 		EC69DECE2A28D7C60096D9CE /* dreams.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreams.mp3; sourceTree = "<group>"; };
 		EC69DEDB2A2B7AA90096D9CE /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		EC8398252B5D491700E40C2A /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
+		EC8398282B5D493500E40C2A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		EC83982B2B5D9CB100E40C2A /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		EC95BAAE2B0BCFFC002621C4 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		EC9720D9299855A80090FE5A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -287,6 +293,7 @@
 		EC12423829FCF9AB00F74818 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				EC12423D29FCF9F800F74818 /* Photos */,
 				ECF396142B135C760022CCCD /* ProfileRootViewController.swift */,
 				EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */,
 				ECF396112B134D010022CCCD /* SlideOverMenu */,
@@ -346,7 +353,6 @@
 				EC9720DB299855C80090FE5A /* ProfileViewController.swift */,
 				EC22BF4729F808AF0024E0B4 /* ProfileViewModel.swift */,
 				EC12423A29FCF9E400F74818 /* ProfileHeaderView.swift */,
-				EC12423D29FCF9F800F74818 /* Photos */,
 				ECAA5D0529B3B0E200EC2F21 /* PhotosTableViewCell.swift */,
 				ECCBCDDA2A16550B00F05304 /* ToastContoller.swift */,
 				ECCBCDDC2A165EE100F05304 /* ToastPresentationController.swift */,
@@ -390,11 +396,11 @@
 		EC1FF4DB29984F30007A589E /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				EC8398232B5D48F100E40C2A /* Data */,
+				EC8398222B5D48EA00E40C2A /* Domain */,
 				ECFD59A12A45B1F3009E90F9 /* FavouritePost.xcdatamodeld */,
 				EC9720D6299855340090FE5A /* App */,
 				ECF396102B1254DB0022CCCD /* Presentation */,
-				EC69DEDA2A2B7A8E0096D9CE /* Services */,
-				EC2DA9B429E949FC002149CF /* Models */,
 				EC9720D8299855730090FE5A /* Resources */,
 				EC1FF4EA29984F31007A589E /* Info.plist */,
 				ECF59D192A2E4BA4002BEE93 /* GoogleService-Info.plist */,
@@ -459,6 +465,48 @@
 				EC021E262AE4060500CADBD1 /* CacheService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		EC8398222B5D48EA00E40C2A /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				EC2DA9B429E949FC002149CF /* Models */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		EC8398232B5D48F100E40C2A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				EC8398272B5D492600E40C2A /* Interfaces  */,
+				EC8398242B5D48FF00E40C2A /* Repositories */,
+				EC69DEDA2A2B7A8E0096D9CE /* Services */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		EC8398242B5D48FF00E40C2A /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				EC8398252B5D491700E40C2A /* ProfileRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		EC8398272B5D492600E40C2A /* Interfaces  */ = {
+			isa = PBXGroup;
+			children = (
+				EC8398282B5D493500E40C2A /* Observable.swift */,
+			);
+			path = "Interfaces ";
+			sourceTree = "<group>";
+		};
+		EC83982A2B5D9C9D00E40C2A /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				EC83982B2B5D9CB100E40C2A /* ViewModelProtocol.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		EC95BAAC2B0AB11A002621C4 /* AuthenticationBase */ = {
@@ -551,8 +599,9 @@
 		ECF396102B1254DB0022CCCD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				ECFA869E2B4C3D8100121917 /* PostDetailedViewController */,
+				EC83982A2B5D9C9D00E40C2A /* Interfaces */,
 				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
+				ECFA869E2B4C3D8100121917 /* PostDetailedViewController */,
 				ECFA86982B4AF3F800121917 /* Post */,
 				ECFD599C2A45ABEF009E90F9 /* FavouritePosts */,
 				EC12423829FCF9AB00F74818 /* Profile */,
@@ -846,6 +895,7 @@
 				ECF396152B135C760022CCCD /* ProfileRootViewController.swift in Sources */,
 				ECFA869B2B4AF42A00121917 /* PostAuthorHeaderViewModel.swift in Sources */,
 				ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */,
+				EC8398292B5D493500E40C2A /* Observable.swift in Sources */,
 				EC62CC672AB78E3900BD98C5 /* Palette.swift in Sources */,
 				ECF59D1E2A3075E8002BEE93 /* SignUpViewController.swift in Sources */,
 				EC021E272AE4060500CADBD1 /* CacheService.swift in Sources */,
@@ -860,6 +910,7 @@
 				ECF21B162AF970190059B713 /* AppCoordinator.swift in Sources */,
 				EC12424E29FDB06F00F74818 /* FeedCoordinator.swift in Sources */,
 				ECCBCDDB2A16550B00F05304 /* ToastContoller.swift in Sources */,
+				EC8398262B5D491700E40C2A /* ProfileRepository.swift in Sources */,
 				ECAA5D0829B3B9E800EC2F21 /* Photo.swift in Sources */,
 				ECCBCDDD2A165EE100F05304 /* ToastPresentationController.swift in Sources */,
 				ECD0FA4A2B0156E100F835F1 /* PostTableViewCellViewModel.swift in Sources */,
@@ -882,6 +933,7 @@
 				EC06901629A61A76004513A4 /* ProfileViewController.swift in Sources */,
 				ECB80F2C29A6053A00CF1AF1 /* CustomTextField.swift in Sources */,
 				ECB5670A2B055A97005E0549 /* EnterDisplayNameViewController.swift in Sources */,
+				EC83982C2B5D9CB100E40C2A /* ViewModelProtocol.swift in Sources */,
 				EC06901C29A6B0CB004513A4 /* AuthenticationViewController.swift in Sources */,
 				EC2DA9B629E94A0A002149CF /* User.swift in Sources */,
 				EC12424729FD049000F74818 /* AppFactory.swift in Sources */,

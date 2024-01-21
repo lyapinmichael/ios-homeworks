@@ -218,12 +218,12 @@ final class ProfileViewController: UIViewController {
             case let .printStatus(status):
                 print (status)
             case let .setStatus(status):
-                self.viewModel.user.status = status
                 print ("Status set to \"\(status)\"")
             case .didReceiveUserData:
                 let currentOffset = mainTableView.contentOffset
                 mainTableView.reloadData()
                 mainTableView.setContentOffset(currentOffset, animated: false)
+                viewModel.updateState(withInput: .didFinishUpdatingUI)
             }
         }
     }
@@ -280,7 +280,7 @@ extension ProfileViewController: UITableViewDataSource {
                 for: indexPath) as! PostTableViewCell
             cell.delegate = self
             let postData = viewModel.postData[indexPath.row]
-            cell.updateContent(post: postData)
+            cell.updateContent(post: postData, authorDisplayName: viewModel.user.fullName)
             return cell
         }
     }
@@ -295,6 +295,7 @@ extension ProfileViewController: UITableViewDelegate {
             let profileHeader = ProfileHeaderView()
             profileHeader.delegate = self
             profileHeader.update(with: viewModel.user)
+            profileHeader.update(postsAmount: viewModel.postData.count)
             return profileHeader
         } else {
             return UIView()
@@ -336,8 +337,9 @@ extension ProfileViewController: UITableViewDelegate {
 
 extension ProfileViewController: ProfileHeaderViewDelegate {
     
-    func presentEditProfileViewController() {
-        let editProfileViewModel = EditProfileViewModel(self.viewModel.user)
+    func profileHeaderViewDidTapEditProfileButton(_ profileHeaderView: ProfileHeaderView) {
+        let editProfileViewModel = EditProfileViewModel(repository: viewModel.repository)
+        editProfileViewModel.delegate = viewModel
         let editProfileViewContoller = EditProfileViewController(viewModel: editProfileViewModel)
         editProfileViewContoller.modalPresentationStyle = .fullScreen
         

@@ -9,6 +9,7 @@ import Foundation
 import StorageService
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 
 final class FirestoreService {
@@ -19,6 +20,8 @@ final class FirestoreService {
         case userDocumentDoesntExist
         case failedToDecodeUserDocument
         case failedToCreateNewUserDocument
+        case failedToUpdateUserDisplayName
+        case updatedUserIsNotCurrentUser
         
         // Single post related errors
         case failedToFetchPostDocument
@@ -83,6 +86,22 @@ final class FirestoreService {
     }
     
     func updateUserDisplayName(_ updatedUser: User, updatedName: String, completionHandler: @escaping (Error?) -> Void) {
+        
+        guard let authUser = Auth.auth().currentUser,
+              authUser.uid == updatedUser.id else {
+            completionHandler(FirestoreServiceError.updatedUserIsNotCurrentUser)
+            return
+        }
+        let changeRequest = authUser.createProfileChangeRequest()
+        changeRequest.displayName = updatedName
+        
+        
+        changeRequest.commitChanges() { error in
+            if  let error {
+                completionHandler(FirestoreServiceError.failedToUpdateUserDisplayName)
+                return
+            }
+        }
         
         let documentReference = dataBase.collection("users").document(updatedUser.id)
         

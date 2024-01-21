@@ -23,8 +23,9 @@ final class AppFactory {
             return Module(moduleType: type, view: UINavigationController(rootViewController: feedView))
         
         case .profile(let user):
-            
-            let viewModel = ProfileViewModel(withUser: user)
+            let repository = ProfileRepository(profileData: user)
+
+            let viewModel = ProfileViewModel(repository: repository)
             
             if let profileCoordinator = coordinator as? ProfileCoordinator {
                 viewModel.coordinator = profileCoordinator

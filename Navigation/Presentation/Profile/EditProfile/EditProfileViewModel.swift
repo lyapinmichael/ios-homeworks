@@ -7,11 +7,19 @@
 
 import Foundation
 
+protocol EditProfileViewModelDelegate: AnyObject {
+    func editProfileViewModel(_ editProfileViewModel: EditProfileViewModel, didUpdateDispalyName newName: String)
+}
+
 final class EditProfileViewModel {
     
     // MARK: Public properties
     
-    var user: User
+    weak var delegate: EditProfileViewModelDelegate?
+    
+    var user: User {
+        return repository.profileData.value
+    }
     
     private(set) var state: State = .initial {
         didSet {
@@ -24,11 +32,12 @@ final class EditProfileViewModel {
     // MARK: Private properties
     
     private let firestoreService = FirestoreService()
+    private let repository: ProfileRepository
     
     // MARK: Init
     
-    init(_ user: User) {
-        self.user = user
+    init(repository: ProfileRepository) {
+        self.repository = repository
     }
     
     // MARK: Public methods
@@ -41,6 +50,8 @@ final class EditProfileViewModel {
         }
     }
     
+    // MARK: Private methods
+    
     private func commitEdit(newName: String?) {
         
         guard let newName,
@@ -51,11 +62,13 @@ final class EditProfileViewModel {
         }
         
         firestoreService.updateUserDisplayName(user, updatedName: newName) { [weak self] error in
+           guard let self else { return }
             if let error {
-                self?.state = .failedToCommitEdit
+                self.state = .failedToCommitEdit
                 print(error)
             } else {
-                self?.state = .editCommited
+                self.state = .editCommited
+                delegate?.editProfileViewModel(self, didUpdateDispalyName: newName)
             }
         }
         

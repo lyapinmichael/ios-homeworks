@@ -13,7 +13,7 @@ protocol ProfileHeaderViewDelegate: AnyObject {
     func isScrollAndSelectionEnabled(_ flag: Bool)
     func printStatus(_ status: String)
     func setStatus(_ status: String)
-    func presentEditProfileViewController()
+    func profileHeaderViewDidTapEditProfileButton(_ profileHeaderView: ProfileHeaderView)
     
 }
 
@@ -28,6 +28,11 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     // MARK: Private Properties
     
     private var profilePictureOrigin = CGPoint()
+    private var postsAmount: Int = 0 {
+        didSet {
+            totalPostsLabel.text = String(postsAmount) + "\n" + "posts".localizedLowercase
+        }
+    }
     
     // MARK: Subviews
     
@@ -96,7 +101,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
        
         let buttonAction = { [weak self] in
             guard let self else { return }
-            self.delegate?.presentEditProfileViewController()
+            self.delegate?.profileHeaderViewDidTapEditProfileButton(self)
             
         }
         
@@ -113,7 +118,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 2
-        label.text = "0\n"+"posts".localized.lowercased()
+        label.text = "\(postsAmount)\n"+"posts".localized.lowercased()
         
         return label
     }()
@@ -325,24 +330,15 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     func update(with user: User) {
         profileNameLabel.text = user.fullName
-        totalPostsLabel.text = "\(user.posts.count)\n"+"posts".localized.lowercased()
-        
-        if let status = user.status {
-            profileStatusLabel.text = status
-        }
-        
-        if let avatar = user.avatarURL {
-            profilePictureView.image = UIImage(named: avatar)
-            let tapOnProfilePicture = UITapGestureRecognizer(
-                target: self,
-                action: #selector(didTapOnProfilePicture)
-            )
-            profilePictureView.addGestureRecognizer(tapOnProfilePicture)
-        } else {
-            profilePictureView.image = UIImage(named: "ImagePlaceholder")
-        }
-        
-         
+        totalPostsLabel.text = "\(postsAmount)\n"+"posts".localized.lowercased()
+    }
+    
+    func update(postsAmount: Int) {
+        self.postsAmount = postsAmount
+    }
+    
+    func update(userAvatar: UIImage) {
+        self.profilePictureView.image = userAvatar
     }
     
     // MARK: Override init

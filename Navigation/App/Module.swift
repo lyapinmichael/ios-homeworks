@@ -9,8 +9,6 @@ import Foundation
 import UIKit.UIViewController
 import UIKit.UITabBarItem
 
-protocol ViewModelProtocol: AnyObject {}
-
 struct Module {
     enum ModuleType {
         case feed

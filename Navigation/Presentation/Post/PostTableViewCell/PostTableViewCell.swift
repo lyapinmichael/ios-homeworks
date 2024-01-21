@@ -140,13 +140,13 @@ final class PostTableViewCell: UITableViewCell {
     
     // MARK: Public methods
     
-    func updateContent(post: Post) {
+    func updateContent(post: Post, authorDisplayName: String? = nil) {
         self.post = post
         if let postText = post.description {
             self.postText.text = (postText.count > 140) ? (String(postText.prefix(140)) + "...") : postText
             self.revealFull.isHidden = !(postText.count > 140)
         }
-        authorView.update(authorDisplayName: post.author, authorID: post.authorID)
+        authorView.update(authorDisplayName: authorDisplayName ?? post.author, authorID: post.authorID)
         likesLabel.text = String(post.likes)
     }
     

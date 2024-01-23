@@ -31,32 +31,23 @@ final class CloudStorageService {
     
     // MARK: Public methods
     
-    // TODO: Needs refactoring! Non functional yet!
-    func uploadImage(forPost postID: String) {
-        
-//        guard let image = UIImage(named: "Bimba") else { return }
-//     
-//        guard let imageData = image.jpegData(compressionQuality: 1) else {
-//            print("Failed to convert UIImage into JPEG data")
-//            return
-//        }
-//      
-//        let reference = storage.reference().child("/postImages/\(postID)")
-//        
-//        let metadata = StorageMetadata()
-//        metadata.contentType = "image/jpeg"
-//        
-//        _ = reference.putData(imageData, metadata: metadata) { (metadata, error) in
-//            
-//            if let error {
-//                print("Error occured while trying to upload post image: \n\n" + "\(error)")
-//                return
-//            }
-//            
-//            print("Successfully uploaded post image to storage")
-//            
-//        }
-//        
+    func uploadImage(_ image: UIImage, forPost postID: String, completionHandler: @escaping (CloudStorageServiceError?) -> Void = { _ in }) {
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            completionHandler(.failedToEncodeJPEGData)
+            return
+        }
+        let reference = storage.reference().child("/postImages/\(postID)")
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        _ = reference.putData(imageData, metadata: metadata) { (metadata, error) in
+            if let error {
+                completionHandler(.failedToUploadImage)
+                return
+            } else {
+                completionHandler(nil)
+                return
+            }
+        }
     }
     
     func downloadImage(forPost postID: String, completionHandler: @escaping (Data?, CloudStorageServiceError?) -> Void)  {
@@ -66,7 +57,7 @@ final class CloudStorageService {
         let reference = storageReference.child("/postImages/\(postID)")
         
         reference.getData(maxSize: 5 * 1024 * 1024) { (data, error) in
-        
+            
             if let error = error {
                 print("\n=====\nError occured while trying to download an image:\n" + "\(error)\n=====\n")
                 completionHandler(nil, .userIDisNil)
@@ -103,6 +94,8 @@ final class CloudStorageService {
     
     enum CloudStorageServiceError: Error {
         case userIDisNil
+        case failedToEncodeJPEGData
+        case failedToUploadImage
     }
     
     

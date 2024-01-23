@@ -14,6 +14,7 @@ protocol ProfileHeaderViewDelegate: AnyObject {
     func printStatus(_ status: String)
     func setStatus(_ status: String)
     func profileHeaderViewDidTapEditProfileButton(_ profileHeaderView: ProfileHeaderView)
+    func profileHeaderViewDidTapNewPostButton(_ profileHeaderView: ProfileHeaderView)
     
 }
 
@@ -159,6 +160,12 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         
         button.configuration = configuration
         button.tintColor = Palette.dynamicMonochromeButton
+        
+        let buttonAction = UIAction { [weak self] _ in
+            guard let self else { return }
+            self.delegate?.profileHeaderViewDidTapNewPostButton(self)
+        }
+        button.addAction(buttonAction, for: .touchUpInside)
         
         return button
     }()

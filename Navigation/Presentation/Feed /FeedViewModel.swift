@@ -12,7 +12,7 @@ import StorageService
 
 protocol FeedViewModelProtocol: AnyObject {
     
-    var postsByDate: [Date: [Post]] { get }
+    var postsByDate:  [(date: Date, posts: [Post])] { get }
     
     var state: FeedViewModel.State { get }
     
@@ -25,16 +25,7 @@ protocol FeedViewModelProtocol: AnyObject {
 // MARK: - FeedViewModel
 
 final class FeedViewModel: FeedViewModelProtocol {
-    
-    enum State {
-        case initial
-        case didReceivePosts
-    }
-    
-    enum ViewInput {
-        case didTapCheckGuessButton(word: String)
-    }
-    
+ 
     // MARK: Feed view
     
     weak var feedView: FeedView?
@@ -51,7 +42,7 @@ final class FeedViewModel: FeedViewModelProtocol {
     
     // MARK: Public properties
     
-    var postsByDate: [Date: [Post]] = [:] {
+    var postsByDate: [(date: Date, posts: [Post])] = [] {
         didSet {
             state = .didReceivePosts
         }
@@ -59,16 +50,7 @@ final class FeedViewModel: FeedViewModelProtocol {
     
     var posts: [Post] = [] {
         didSet {
-            postsByDate = Dictionary(grouping: posts) { [weak self] post in
-                guard let self else { return Date.distantPast }
-                let keyComponents = self.calendar.dateComponents([.day, .month, .year], from: post.dateCreated.dateValue())
-                var components = DateComponents()
-                components.day = keyComponents.day
-                components.month = keyComponents.month
-                components.year = keyComponents.year
-                let date = self.calendar.date(from: components)
-                return date ?? Date.distantPast
-            }
+            postsByDate = groupByDate(posts)
         }
     }
     
@@ -102,7 +84,36 @@ final class FeedViewModel: FeedViewModelProtocol {
             }
         }
     }
+    
+    private func groupByDate(_ posts: [Post]) -> [(date: Date, posts: [Post])] {
+        var groupedPosts: [(date: Date, posts: [Post])] = []
+        for post in posts {
+            let dateCreated = post.dateCreated.dateValue()
+            let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: dateCreated)
+            guard let targetDate = Calendar.current.date(from: dateComponents) else { continue }
+            if let groupIndex = groupedPosts.firstIndex(where: { $0.date == targetDate }) {
+                groupedPosts[groupIndex].posts.append(post)
+            } else {
+                groupedPosts.append((targetDate, [post]))
+            }
+        }
+        groupedPosts.sort(by: { $0.date > $1.date } )
+        for (index, group) in groupedPosts.enumerated() {
+            groupedPosts[index].posts.sort(by: { $0.dateCreated.dateValue() > $1.dateCreated.dateValue() })
+        }
+        return groupedPosts
+    }
+    
+    // MARK: Types
+
+    enum State {
+        case initial
+        case didReceivePosts
+    }
+    
+    enum ViewInput {
+        case didTapCheckGuessButton(word: String)
+    }
+    
+    
 }
-
-
-

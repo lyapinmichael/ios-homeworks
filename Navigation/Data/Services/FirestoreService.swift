@@ -28,9 +28,10 @@ final class FirestoreService {
         case postDocumentDoesntExist
         case failedToDecodePostDocument
         case failedToCreateNewPostDocument
+        case failedToEncodePostData
         
         // All posts related errors
-        case filedToFetchPosts
+        case failedToFetchPosts
         case badQuerySnapshot
     }
     
@@ -175,7 +176,7 @@ final class FirestoreService {
             
             if let error {
                 print(error)
-                completionHandler(.failure(.filedToFetchPosts))
+                completionHandler(.failure(.failedToFetchPosts))
             }
             
             guard let querySnapshot else {
@@ -197,4 +198,17 @@ final class FirestoreService {
         }
         
     }
+    
+    func writeNewPost(_  post: inout Post, completionHandler: @escaping (Result<Post, FirestoreServiceError>) -> Void) {
+        rootCollectionReference = dataBase.collection("posts")
+        do {
+            let postDocumentReference = try rootCollectionReference.addDocument(from: post)
+            post.id = postDocumentReference.documentID
+            completionHandler(.success(post))
+        } catch {
+            completionHandler(.failure(.failedToEncodePostData))
+        }
+    }
+    
+    
 }

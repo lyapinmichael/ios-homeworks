@@ -102,21 +102,13 @@ extension FeedViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let date = viewModel.postsByDate.keys.sorted()[section]
-        
-        return viewModel.postsByDate[date]?.count ?? 0
-        
+        viewModel.postsByDate[section].posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID) as? PostTableViewCell else { return UITableViewCell() }
-        
-        let date = viewModel.postsByDate.keys.sorted(by: >)[indexPath.section]
-        
-        guard let post = viewModel.postsByDate[date]?[indexPath.row] else { return UITableViewCell() }
-      
+        let post = viewModel.postsByDate[indexPath.section].posts[indexPath.row]
         cell.updateContent(post: post)
-        
         return cell
     }
 }
@@ -126,16 +118,13 @@ extension FeedViewController: UITableViewDataSource {
 extension FeedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let date = viewModel.postsByDate.keys.sorted(by: >)[section]
-        
+        let date = viewModel.postsByDate[section].date
         return FeedTableSectionHeaderView(date: date)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let date = viewModel.postsByDate.keys.sorted(by: >)[indexPath.section]
-        guard let postsInDateSection = viewModel.postsByDate[date] else { return }
-        let currentPost = postsInDateSection[indexPath.row]
+        let currentPost = viewModel.postsByDate[indexPath.section].posts[indexPath.row]
         let postDetailedViewController = PostDetailedViewController(post: currentPost)
         navigationController?.pushViewController(postDetailedViewController, animated: true)
     }

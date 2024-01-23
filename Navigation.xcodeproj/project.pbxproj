@@ -57,6 +57,10 @@
 		EC8398262B5D491700E40C2A /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398252B5D491700E40C2A /* ProfileRepository.swift */; };
 		EC8398292B5D493500E40C2A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398282B5D493500E40C2A /* Observable.swift */; };
 		EC83982C2B5D9CB100E40C2A /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC83982B2B5D9CB100E40C2A /* ViewModelProtocol.swift */; };
+		EC83982F2B5EEF5C00E40C2A /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC83982E2B5EEF5C00E40C2A /* NewPostViewController.swift */; };
+		EC8398312B5EEF7D00E40C2A /* NewPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398302B5EEF7D00E40C2A /* NewPostViewModel.swift */; };
+		EC8398332B5FA51100E40C2A /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398322B5FA51100E40C2A /* PlaceholderTextView.swift */; };
+		EC8398352B5FD39200E40C2A /* LoadingDimmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398342B5FD39200E40C2A /* LoadingDimmingViewController.swift */; };
 		EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */; };
 		EC95BAAF2B0BCFFC002621C4 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95BAAE2B0BCFFC002621C4 /* SignInViewModel.swift */; };
 		ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */; };
@@ -184,6 +188,10 @@
 		EC8398252B5D491700E40C2A /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		EC8398282B5D493500E40C2A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		EC83982B2B5D9CB100E40C2A /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
+		EC83982E2B5EEF5C00E40C2A /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		EC8398302B5EEF7D00E40C2A /* NewPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewModel.swift; sourceTree = "<group>"; };
+		EC8398322B5FA51100E40C2A /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
+		EC8398342B5FD39200E40C2A /* LoadingDimmingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDimmingViewController.swift; sourceTree = "<group>"; };
 		EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		EC95BAAE2B0BCFFC002621C4 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		EC9720D9299855A80090FE5A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -312,7 +320,7 @@
 			path = Photos;
 			sourceTree = "<group>";
 		};
-		EC12423F29FCFA5500F74818 /* Login */ = {
+		EC12423F29FCFA5500F74818 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
 				ECF21B112AF93BD90059B713 /* LoginCoordinator.swift */,
@@ -320,7 +328,7 @@
 				EC95BAAD2B0BCFE5002621C4 /* SignInFlow */,
 				ECD0FA4F2B03D50100F835F1 /* SignUpFlow */,
 			);
-			path = Login;
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		EC12424229FCFCDE00F74818 /* View */ = {
@@ -509,6 +517,15 @@
 			path = Interfaces;
 			sourceTree = "<group>";
 		};
+		EC83982D2B5EEF4800E40C2A /* NewPost */ = {
+			isa = PBXGroup;
+			children = (
+				EC83982E2B5EEF5C00E40C2A /* NewPostViewController.swift */,
+				EC8398302B5EEF7D00E40C2A /* NewPostViewModel.swift */,
+			);
+			path = NewPost;
+			sourceTree = "<group>";
+		};
 		EC95BAAC2B0AB11A002621C4 /* AuthenticationBase */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +609,8 @@
 			children = (
 				ECB80F2B29A6053A00CF1AF1 /* CustomTextField.swift */,
 				EC4F7C68299FAC48006EFAE1 /* CustomButton.swift */,
+				EC8398322B5FA51100E40C2A /* PlaceholderTextView.swift */,
+				EC8398342B5FD39200E40C2A /* LoadingDimmingViewController.swift */,
 			);
 			path = UICustomElements;
 			sourceTree = "<group>";
@@ -599,14 +618,15 @@
 		ECF396102B1254DB0022CCCD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				EC83982A2B5D9C9D00E40C2A /* Interfaces */,
 				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
+				EC83982D2B5EEF4800E40C2A /* NewPost */,
+				EC83982A2B5D9C9D00E40C2A /* Interfaces */,
 				ECFA869E2B4C3D8100121917 /* PostDetailedViewController */,
 				ECFA86982B4AF3F800121917 /* Post */,
 				ECFD599C2A45ABEF009E90F9 /* FavouritePosts */,
 				EC12423829FCF9AB00F74818 /* Profile */,
 				EC12423729FCF95500F74818 /* Feed  */,
-				EC12423F29FCFA5500F74818 /* Login */,
+				EC12423F29FCFA5500F74818 /* Authentication */,
 				EC9720D7299855430090FE5A /* MainTabBar */,
 				ECD0FA522B04104200F835F1 /* UICustomElements */,
 				EC12424429FCFD8A00F74818 /* Extensions */,
@@ -904,6 +924,7 @@
 				EC22BF4429F69D1C0024E0B4 /* FeedViewModel.swift in Sources */,
 				ECF59D202A3086DC002BEE93 /* UIViewController+PresentAlert.swift in Sources */,
 				EC62CC652AB78C2500BD98C5 /* UIColor+Themes.swift in Sources */,
+				EC8398312B5EEF7D00E40C2A /* NewPostViewModel.swift in Sources */,
 				ECFA869D2B4C3D7D00121917 /* PostDetailedViewController.swift in Sources */,
 				ECFA86972B4AE91400121917 /* PostAuthorHeaderView.swift in Sources */,
 				ECD0FA4C2B024CC200F835F1 /* FeedTableSectionHeaderView.swift in Sources */,
@@ -915,12 +936,14 @@
 				ECCBCDDD2A165EE100F05304 /* ToastPresentationController.swift in Sources */,
 				ECD0FA4A2B0156E100F835F1 /* PostTableViewCellViewModel.swift in Sources */,
 				EC12424B29FD0F3900F74818 /* ProfileCoordinator.swift in Sources */,
+				EC8398352B5FD39200E40C2A /* LoadingDimmingViewController.swift in Sources */,
 				ECF59D102A2CE230002BEE93 /* Todo.swift in Sources */,
 				EC4F7C69299FAC48006EFAE1 /* CustomButton.swift in Sources */,
 				ECA3C9652AC30F8A0069E1B4 /* LocalAuthorizationService.swift in Sources */,
 				ECFD599E2A45ACA0009E90F9 /* FavouritePostsTableController.swift in Sources */,
 				EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */,
 				EC69DEDC2A2B7AA90096D9CE /* NetworkService.swift in Sources */,
+				EC8398332B5FA51100E40C2A /* PlaceholderTextView.swift in Sources */,
 				ECB5670D2B0634B4005E0549 /* EnterPasswordViewModel.swift in Sources */,
 				ECF396132B134D160022CCCD /* SlideOverMenuViewController.swift in Sources */,
 				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
@@ -942,6 +965,7 @@
 				ECA3C9612AC1D2160069E1B4 /* LocalNotificationService.swift in Sources */,
 				ECF21B122AF93BD90059B713 /* LoginCoordinator.swift in Sources */,
 				EC06901729A61A87004513A4 /* FeedViewController.swift in Sources */,
+				EC83982F2B5EEF5C00E40C2A /* NewPostViewController.swift in Sources */,
 				ECD0FA512B03D88900F835F1 /* EnterPasswordViewController.swift in Sources */,
 				EC12423329FCF78600F74818 /* MainCoordinator.swift in Sources */,
 				EC3889FF2A46360B00ED3AFC /* FavouritePostsService.swift in Sources */,

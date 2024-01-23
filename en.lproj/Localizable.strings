@@ -101,3 +101,9 @@
 "failedToCommitChanges" = "Failed to commit changes";
 
 "revealFull" = "Reveal full";
+
+"upload" = "Upload";
+"whatsNew" = "What's new";
+
+"failedToUpload" = "Uploading new post failed. Please, try again later";
+

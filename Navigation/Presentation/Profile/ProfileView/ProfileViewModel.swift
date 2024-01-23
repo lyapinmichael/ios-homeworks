@@ -41,9 +41,12 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         return repository.profileData.value
     }
     
-    var postData: [Post] = [] {
-        didSet {
-            postData.sort(by: { $0.dateCreated.dateValue() > $1.dateCreated.dateValue() })
+    var postData: [Post] {
+        get {
+            return repository.postData.value.sorted(by: { $0.dateCreated.dateValue() > $1.dateCreated.dateValue() })
+        }
+        set {
+            repository.postData.value = newValue
         }
     }
     
@@ -57,8 +60,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     
     init(repository: ProfileRepository) {
         self.repository = repository
-        self.fetchPostData()
-    
+        fetchPostData()
+        bindObservables()
     }
     
     // MARK: - Public methods
@@ -91,6 +94,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             DispatchQueue.main.async {
                 self.state = .didReceiveUserData
             }
+        }
+        repository.postData.bind { _ in
+            self.state = .didReceiveUserData
         }
     }
     

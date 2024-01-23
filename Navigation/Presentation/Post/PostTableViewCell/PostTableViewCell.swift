@@ -133,9 +133,11 @@ final class PostTableViewCell: UITableViewCell {
     
     // MARK: Override
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        postImage.image = UIImage(named: "ImagePlaceholder")
+        postImage.isHidden = true
+        postImageHeighAnchorConstraint.constant = 1
     }
     
     // MARK: Public methods

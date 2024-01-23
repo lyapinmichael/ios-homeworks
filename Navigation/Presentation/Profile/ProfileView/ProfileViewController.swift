@@ -39,7 +39,6 @@ final class ProfileViewController: UIViewController {
     // MARK: - Init
     
     init(with viewModel: ProfileViewModelProtocol) {
-    
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
       
@@ -98,7 +97,6 @@ final class ProfileViewController: UIViewController {
         if let toastController = self.presentedViewController as? ToastContoller {
             toastController.dismiss(animated: true)
         }
-        
     }
 
     override func viewWillLayoutSubviews() {
@@ -110,26 +108,19 @@ final class ProfileViewController: UIViewController {
     // MARK: Public methods
     
     func presentToast(message: String? = nil) {
-        
         var toast: ToastContoller
-        
         if let message = message {
             toast = ToastContoller(message: message)
         } else {
             toast = ToastContoller()
         }
-        
-
         present(toast, animated: true)
-        
         timer = Timer.scheduledTimer(withTimeInterval: 3,
                                      repeats: false,
                                      block: { _ in
             toast.dismiss(animated: true)
         })
         timer?.tolerance = 0.3
-        
-        
     }
     
     // MARK: Private methods
@@ -211,7 +202,6 @@ final class ProfileViewController: UIViewController {
     private func bindViewModel() {
         viewModel.onStateDidChange = { [weak self] state in
             guard let self = self else { return }
-            
             switch state {
             case .initial:
                 print("Initial state")
@@ -260,7 +250,6 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
         if section == 0 {
             return 1
         } else {
@@ -269,7 +258,6 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseID.photos.rawValue, for: indexPath) as! PhotosTableViewCell
             cell.setup(tableView.frame)
@@ -284,6 +272,8 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
     }
+    
+    
 }
 
 // MARK: - Table View delegate extension
@@ -336,6 +326,13 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - Profile Header delegate extension
 
 extension ProfileViewController: ProfileHeaderViewDelegate {
+    
+    func profileHeaderViewDidTapNewPostButton(_ profileHeaderView: ProfileHeaderView) {
+        let newPostViewModel = NewPostViewModel(repository: viewModel.repository)
+        let newPostViewController = NewPostViewController(viewModel: newPostViewModel)
+        newPostViewController.modalPresentationStyle = .fullScreen
+        present(newPostViewController, animated: true)
+    }
     
     func profileHeaderViewDidTapEditProfileButton(_ profileHeaderView: ProfileHeaderView) {
         let editProfileViewModel = EditProfileViewModel(repository: viewModel.repository)

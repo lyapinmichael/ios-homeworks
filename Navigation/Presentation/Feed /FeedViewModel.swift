@@ -18,7 +18,7 @@ protocol FeedViewModelProtocol: AnyObject {
     
     var onStateDidChange: ((FeedViewModel.State) -> Void)? { get set }
     
-    func updateState(withInput input: FeedViewModel.ViewInput)
+    func updateState(withInput input: FeedViewModel.ViewInput, completion: @escaping () -> Void)
     
 }
 
@@ -26,15 +26,12 @@ protocol FeedViewModelProtocol: AnyObject {
 
 final class FeedViewModel: FeedViewModelProtocol {
  
-    // MARK: Feed view
-    
-    weak var feedView: FeedView?
-    
     // MARK: State related properties
     
     private(set) var state: State = .initial {
         didSet {
             onStateDidChange?(state)
+            state = .initial
         }
     }
     
@@ -68,13 +65,16 @@ final class FeedViewModel: FeedViewModelProtocol {
     
     // MARK: Public methods
     
-    func updateState(withInput input: ViewInput) {
-       
+    func updateState(withInput input: ViewInput, completion: @escaping () -> Void = {}) {
+        switch input {
+        case .didPullToRefresh:
+            fetchAllPosts(completion: completion)
+        }
     }
     
     // MARK: Private methods
     
-    private func fetchAllPosts() {
+    private func fetchAllPosts(completion: @escaping () -> Void = {}) {
         firestoreService.fetchAllPosts { result in
             switch result {
             case .failure(let error):
@@ -82,6 +82,7 @@ final class FeedViewModel: FeedViewModelProtocol {
             case .success(let posts):
                 self.posts = posts.sorted(by: { $0.dateCreated.dateValue() < $1.dateCreated.dateValue() })
             }
+            completion()
         }
     }
     
@@ -98,7 +99,7 @@ final class FeedViewModel: FeedViewModelProtocol {
             }
         }
         groupedPosts.sort(by: { $0.date > $1.date } )
-        for (index, group) in groupedPosts.enumerated() {
+        for (index, _) in groupedPosts.enumerated() {
             groupedPosts[index].posts.sort(by: { $0.dateCreated.dateValue() > $1.dateCreated.dateValue() })
         }
         return groupedPosts
@@ -112,7 +113,7 @@ final class FeedViewModel: FeedViewModelProtocol {
     }
     
     enum ViewInput {
-        case didTapCheckGuessButton(word: String)
+        case didPullToRefresh
     }
     
     

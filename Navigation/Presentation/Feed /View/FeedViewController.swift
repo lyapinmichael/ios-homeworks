@@ -7,13 +7,9 @@
 
 import UIKit
 import StorageService
+import ESPullToRefresh
 
-protocol FeedView: AnyObject {}
-
-
-// MARK: - FeedViewController
-
-final class FeedViewController: UIViewController, FeedView {
+final class FeedViewController: UIViewController {
     
     // MARK: Public properties
     
@@ -36,6 +32,12 @@ final class FeedViewController: UIViewController, FeedView {
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+        tableView.es.addPullToRefresh { [weak self] in
+            self?.viewModel.updateState(withInput: .didPullToRefresh) {
+                tableView.es.stopPullToRefresh()
+            }
+        }
     
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -53,7 +55,6 @@ final class FeedViewController: UIViewController, FeedView {
         title = NSLocalizedString("feed", comment: "")
         
         view.backgroundColor = Palette.dynamicBackground
-        
     }
     
     // MARK: Private methods
@@ -66,7 +67,6 @@ final class FeedViewController: UIViewController, FeedView {
     }
     
     private func bindViewModel() {
-        viewModel.feedView = self
         viewModel.onStateDidChange = { [weak self] state in
             switch state {
             case .initial:

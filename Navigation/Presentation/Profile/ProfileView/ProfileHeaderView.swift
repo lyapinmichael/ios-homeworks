@@ -11,8 +11,6 @@ protocol ProfileHeaderViewDelegate: AnyObject {
     
     func setTabBarColor(_ color: UIColor)
     func isScrollAndSelectionEnabled(_ flag: Bool)
-    func printStatus(_ status: String)
-    func setStatus(_ status: String)
     func profileHeaderViewDidTapEditProfileButton(_ profileHeaderView: ProfileHeaderView)
     func profileHeaderViewDidTapNewPostButton(_ profileHeaderView: ProfileHeaderView)
     
@@ -365,35 +363,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     @objc fileprivate func dismissKeyboard() {
         endEditing(true)
-    }
-    
-    @objc fileprivate func statusTextChanged(_ textField: UITextField) {
-        
-        let setStatusString = NSLocalizedString("setStatus", comment: "")
-        editProfileButton.setTitle(setStatusString, for: .normal)
-        
-        editProfileButton.customAction = {[weak self] in
-            guard let self = self else { return }
-            
-            guard let status = textField.text, !status.isEmpty else { return }
-            
-            textField.text = nil
-            
-            self.profileStatusLabel.text = status
-            self.delegate?.setStatus(status)
-            
-            let printStatusString = NSLocalizedString("printStatus", comment: "")
-            self.editProfileButton.setTitle(printStatusString, for: .normal)
-            
-            self.editProfileButton.customAction = {[weak self] in
-                guard let status = self?.profileStatusLabel.text else {
-                    
-                    print(NSLocalizedString("nothingToSee", comment: ""))
-                    return
-                }
-                self?.delegate?.printStatus(status)
-            }
-        }
     }
     
     @objc private func didTapOnProfilePicture() {

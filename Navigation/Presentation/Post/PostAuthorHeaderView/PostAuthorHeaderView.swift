@@ -7,7 +7,27 @@
 
 import UIKit
 
+protocol PostAuthorHeaderViewDelegate: AnyObject {
+    
+    func postAuthorHeaderView(_ postAuthorHeaderView: PostAuthorHeaderView, didTapThreeDotsButton: UIButton)
+    
+}
+
+// MARK: PostAuthorHeaderView
+
 final class PostAuthorHeaderView: UIView {
+    
+    // MARK: Public properties
+    
+    weak var delegate: PostAuthorHeaderViewDelegate?
+    var isActionButtonsHidden: Bool  {
+        get {
+            threeDotsButton.isHidden
+        }
+        set {
+            threeDotsButton.isHidden = newValue
+        }
+    }
     
     // MARK: Private properties
     
@@ -44,8 +64,13 @@ final class PostAuthorHeaderView: UIView {
     }()
     
     private lazy var threeDotsButton: UIButton = {
-      let button = UIButton()
+        let button = UIButton()
         button.setImage(UIImage(named: "ThreeDotsVertical"), for: .normal)
+        let action = UIAction { [weak self] _ in
+            guard let self else { return }
+            self.delegate?.postAuthorHeaderView(self, didTapThreeDotsButton: button)
+        }
+        button.addAction(action, for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

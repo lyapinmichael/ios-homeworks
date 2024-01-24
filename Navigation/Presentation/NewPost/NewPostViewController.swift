@@ -130,9 +130,9 @@ final class NewPostViewController: UIViewController {
                 return
             case .tyringToUpload:
                 mainTextView.endEditing(true)
-                self.showLoadingView()
+                loadingDimmingViewController.show(on: self)
             case .failedToUpload:
-                self.hideLoadingView()
+                loadingDimmingViewController.hide()
                 self.presentAlert(message: "failedToUpload".localized,
                                   title: "errorOccured".localized,
                                   feedBackType: .error)
@@ -166,19 +166,6 @@ final class NewPostViewController: UIViewController {
         ])
     }
     
-    private func showLoadingView() {
-        self.addChild(loadingDimmingViewController)
-        loadingDimmingViewController.view.frame = self.view.frame
-        view.addSubview(loadingDimmingViewController.view)
-        loadingDimmingViewController.didMove(toParent: self)
-    }
-    
-    private func hideLoadingView() {
-        loadingDimmingViewController.willMove(toParent: nil)
-        loadingDimmingViewController.view.removeFromSuperview()
-        loadingDimmingViewController.removeFromParent()
-    }
- 
     
 }
 

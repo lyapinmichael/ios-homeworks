@@ -64,9 +64,9 @@ final class NewPostViewModel {
             switch result {
             case .success(let post):
                 self?.repository.postData.value.append(post)
-//                print(self?.repository.postData.value)
-                self?.state = .didUpload
-                self?.uploadPostImageIfNeeded(post)
+                if post.hasImageAttached {
+                    self?.uploadPostImage(post)
+                }
             case .failure(let error):
                 print(error)
                 self?.state = .failedToUpload
@@ -74,13 +74,26 @@ final class NewPostViewModel {
         }
     }
     
-    private func uploadPostImageIfNeeded(_ post: Post) {
+    private func uploadPostImage(_ post: Post) {
         guard let postID = post.id,
               let image,
-              post.hasImageAttached else { return }
-        CloudStorageService.shared.uploadImage(image, forPost: postID) { error in
+              post.hasImageAttached else {
+            state = .failedToUpload
+            return
+        }
+        CloudStorageService.shared.uploadImage(image, forPost: postID) { [weak self] error in
             if let error {
-                print(error)
+                print(">>>>>\t", error)
+                self?.state = .failedToUpload
+            } else {
+                guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+                do {
+                    try CacheService.default.writePostImageCache(from: (postID: postID,
+                                                                        jpegData: imageData)) 
+                } catch {
+                    print(">>>>>\t", error)
+                }
+                self?.state = .didUpload
             }
         }
     }

@@ -20,4 +20,9 @@ final class ProfileRepository {
         self.postData = .init(value: [])
     }
     
+    func delete(_ post: Post) throws {
+        postData.value.removeAll(where: { $0.id == post.id })
+    }
+    
+    
 }

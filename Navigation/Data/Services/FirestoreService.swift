@@ -26,9 +26,12 @@ final class FirestoreService {
         // Single post related errors
         case failedToFetchPostDocument
         case postDocumentDoesntExist
+        case postIDNil
         case failedToDecodePostDocument
         case failedToCreateNewPostDocument
         case failedToEncodePostData
+        case failedToDeletePostDocument
+        
         
         // All posts related errors
         case failedToFetchPosts
@@ -118,7 +121,7 @@ final class FirestoreService {
     }
     
     // MARK: Post related methods
-        
+    
     func fetchPostData(by userID: String) async throws -> [Post] {
         rootCollectionReference = dataBase.collection("posts")
         do {
@@ -140,9 +143,6 @@ final class FirestoreService {
         }
     }
     
-    // TODO: Refactoring needed
-    // see db.collection("some").whereField("some", isEqualTo: some).getDocuments
-    // in doc
     @available(*, deprecated, message: "Use fetchPostData(by userID: String instead")
     func fetchPostData(_ documentReference: DocumentReference, completionHandler: @escaping (Result<Post, FirestoreServiceError>) -> Void) {
         
@@ -207,6 +207,23 @@ final class FirestoreService {
             completionHandler(.success(post))
         } catch {
             completionHandler(.failure(.failedToEncodePostData))
+        }
+    }
+    
+    func deletePost(_ post: Post, completionHandler: @escaping (FirestoreServiceError?) -> Void) {
+        rootCollectionReference = dataBase.collection("posts")
+        guard let postID = post.id else {
+            completionHandler(.postIDNil)
+            return
+        }
+        rootCollectionReference.document(postID).delete { error in
+            if let error {
+                print(">>>>>\t", error)
+                completionHandler(.failedToDeletePostDocument)
+                return
+            } else {
+                completionHandler(nil)
+            }
         }
     }
     

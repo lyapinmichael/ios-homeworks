@@ -35,13 +35,14 @@ final class ProfileViewController: UIViewController {
         return view
     }()
     
+    private lazy var loadingDimmingViewController = LoadingDimmingViewController()
+    
    
     // MARK: - Init
     
     init(with viewModel: ProfileViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-      
     }
     
     required init?(coder: NSCoder) {
@@ -136,7 +137,6 @@ final class ProfileViewController: UIViewController {
         
         let revealMenu = UIAction { [weak self] _ in
             guard let self else { return }
-            print("Should Present overlapping view")
             
             self.rootViewController?.showSlideOverMenu()
         }
@@ -204,16 +204,21 @@ final class ProfileViewController: UIViewController {
             guard let self = self else { return }
             switch state {
             case .initial:
-                print("Initial state")
-            case let .printStatus(status):
-                print (status)
-            case let .setStatus(status):
-                print ("Status set to \"\(status)\"")
+                self.presentedViewController?.dismiss(animated: true)
             case .didReceiveUserData:
                 let currentOffset = mainTableView.contentOffset
-                mainTableView.reloadData()
-                mainTableView.setContentOffset(currentOffset, animated: false)
-                viewModel.updateState(withInput: .didFinishUpdatingUI)
+                self.mainTableView.reloadData()
+                self.mainTableView.setContentOffset(currentOffset, animated: false)
+                self.viewModel.updateState(withInput: .didFinishUpdatingUI)
+            case .waiting:
+                loadingDimmingViewController.show(on: self)
+            case .postDeletedSuccessfully:
+                loadingDimmingViewController.hide()
+                self.presentToast(message: "postDeleted".localized)
+            case .failedToDeletePost:
+                loadingDimmingViewController.hide()
+                self.presentAlert(message: "failedToDeletePost".localized,
+                             title: "errorOccured".localized)
             }
         }
     }
@@ -328,6 +333,7 @@ extension ProfileViewController: UITableViewDelegate {
 extension ProfileViewController: ProfileHeaderViewDelegate {
     
     func profileHeaderViewDidTapNewPostButton(_ profileHeaderView: ProfileHeaderView) {
+        presentedViewController?.dismiss(animated: true)
         let newPostViewModel = NewPostViewModel(repository: viewModel.repository)
         let newPostViewController = NewPostViewController(viewModel: newPostViewModel)
         newPostViewController.modalPresentationStyle = .fullScreen
@@ -358,16 +364,10 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
         }
     }
     
-    func printStatus(_ status: String) {
-        viewModel.updateState(withInput: .didTapPrintStatusButton(status))
-    }
-    
-    func setStatus(_ status: String) {
-        viewModel.updateState(withInput: .didTapSetStatusButton(status))
-    }
-    
     
 }
+
+// MARK: - SlideOverMenuDelegate
 
 extension ProfileViewController: SlideOverMenuDelegate {
     
@@ -379,3 +379,60 @@ extension ProfileViewController: SlideOverMenuDelegate {
     
 }
 
+// MARK: - PostTableViewCellDelegate
+
+extension ProfileViewController: PostTableViewCellDelegate {
+    
+    func postTableViewCell(_ postTableViewCell: PostTableViewCell, askToPresentToastWithMessage message: String) {
+        presentToast(message: message)
+    }
+    
+    func postTableViewCell(_ postTableViewCell: PostTableViewCell, didTapButton button: UIButton, actionsFor post: Post) {
+        presentedViewController?.dismiss(animated: true)
+        let postActionsViewController = PostActionsViewController(actionsFor: post)
+        postActionsViewController.delegate = self
+        postActionsViewController.modalPresentationStyle = .popover
+        guard let popoverViewController = postActionsViewController.popoverPresentationController else { return }
+        popoverViewController.delegate = self
+        popoverViewController.sourceView = button
+        popoverViewController.permittedArrowDirections = .up
+        popoverViewController.sourceRect = CGRect(x: button.bounds.midX,
+                                                  y: button.bounds.maxY +  5,
+                                                  width: 0,
+                                                  height: 0)
+        present(postActionsViewController, animated: true)
+        
+    }
+    
+    
+}
+
+// MARK: - UIPopoverPresentationControllerDelegate
+
+extension ProfileViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        .none
+    }
+}
+
+// MARK: - PostActionsViewControllerDelegate
+
+extension ProfileViewController: PostActionsViewControllerDelegate {
+    func postActionsViewController(_ postActionsViewController: PostActionsViewController, didTapDeleteButton button: UIButton, forPost post: Post) {
+        presentedViewController?.dismiss(animated: true)
+        presentAlert(message: "sureToDelete".localized,
+                     title: "deletePost".localized, 
+                     actionTitle: "delete".localized,
+                     actionStyle: .destructive,
+                     feedBackType: .warning,
+                     addCancelAction: true) { [weak self] in 
+            self?.viewModel.updateState(withInput: .deletePost(post))
+        }
+    }
+    
+    func postActionsViewController(_ postActionsViewController: PostActionsViewController, didTapShareButton button: UIButton, forPost post: Post) {
+        return
+    }
+    
+
+}

@@ -9,6 +9,8 @@ import UIKit
 
 class ToastContoller: UIViewController {
     
+    // MARK: Private properties
+    
     private lazy var label: UILabel = {
         let label = UILabel()
         label.text = NSLocalizedString("thankUser", comment: "")
@@ -18,12 +20,7 @@ class ToastContoller: UIViewController {
         return label
     }()
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setup()
-    }
+    // MARK: Init
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -40,7 +37,16 @@ class ToastContoller: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: Lifecycle
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setup()
+    }
+        
+    // MARK: Private methods
     
     private func setup() {
         view.backgroundColor = Palette.accentOrange

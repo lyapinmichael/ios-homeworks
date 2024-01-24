@@ -34,6 +34,7 @@ final class PhotosTableViewCell: UITableViewCell {
     private lazy var arrowImage: UIImageView = {
         let arrow = UIImageView()
         arrow.image = UIImage(systemName: "arrow.forward")
+        arrow.tintColor = Palette.accentOrange
         arrow.clipsToBounds = true
         arrow.translatesAutoresizingMaskIntoConstraints = false
         return arrow

@@ -107,3 +107,11 @@
 
 "failedToUpload" = "Uploading new post failed. Please, try again later";
 
+"delete" = "Delete";
+"archivate" = "Archivate";
+"share" = "Share";
+
+"sureToDelete" = "Are you sure you want to delete post? This cannot be undone.";
+"deletePost" = "Delete post";
+"postDeleted" = "Post deleted";
+

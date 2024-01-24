@@ -10,6 +10,8 @@ import UIKit
 
 class ToastPresentationController: UIPresentationController {
     
+    // MARK: Override properties
+    
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView = containerView,
               let presentedView = presentedView else { return .zero }
@@ -37,6 +39,8 @@ class ToastPresentationController: UIPresentationController {
         return frame
     }
     
+    // MARK: Override methods
+    
     override func containerViewDidLayoutSubviews() {
         super.containerViewDidLayoutSubviews()
         presentedView?.frame = frameOfPresentedViewInContainerView
@@ -52,4 +56,6 @@ class ToastPresentationController: UIPresentationController {
         super.presentationTransitionDidEnd(completed)
         containerView?.isUserInteractionEnabled = false
     }
+    
+    
 }

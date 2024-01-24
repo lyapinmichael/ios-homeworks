@@ -70,15 +70,10 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         switch input {
         case .didFinishUpdatingUI:
             state = .initial
-        case .didTapPrintStatusButton(let status):
-            state = .printStatus(status)
-        case .didTapSetStatusButton(let status):
-            firestoreService.writeUserDocument(user) {
-                print("User document updated successfully")
-            }
-            state = .setStatus(status)
         case .didTapLogOutButton:
             coordinator?.logOut()
+        case .deletePost(let post):
+            delete(post)
         }
     }
     
@@ -111,22 +106,40 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         }
     }
     
+    private func delete(_ post: Post) {
+        state = .waiting
+        firestoreService.deletePost(post) { [weak self] error in
+            if let error {
+                self?.state = .failedToDeletePost
+            } else {
+                do {
+                    try self?.repository.delete(post)
+                } catch {
+                    print(">>>>>\t", error)
+                    self?.fetchPostData()
+                }
+                self?.state = .postDeletedSuccessfully
+            }
+        }
+        CloudStorageService.shared.deleteImage(forPost: post)
+    }
+    
     //MARK: Enums
     
     /// Possible states
     enum State {
         case initial
-        case printStatus(String)
-        case setStatus(String)
         case didReceiveUserData
+        case waiting
+        case failedToDeletePost
+        case postDeletedSuccessfully
     }
     
     /// Possible input actions performed by user
     enum ViewInput {
-        case didTapPrintStatusButton(String)
-        case didTapSetStatusButton(String)
         case didTapLogOutButton
         case didFinishUpdatingUI
+        case deletePost(Post)
     }
    
 }

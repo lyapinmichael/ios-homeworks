@@ -8,11 +8,23 @@
 import UIKit
 import StorageService
 
+protocol PostTableViewCellDelegate: AnyObject {
+    func postTableViewCell(_ postTableViewCell: PostTableViewCell, didTapButton button: UIButton, actionsFor post: Post)
+    func postTableViewCell(_ postTableViewCell: PostTableViewCell, askToPresentToastWithMessage message: String)
+}
+
+extension PostTableViewCellDelegate {
+    func postTableViewCell(_ postTableViewCell: PostTableViewCell, askToDeletePost: Post) {}
+    func postTableViewCell(_ postTableViewCell: PostTableViewCell, askToPresentToastWithMessage message: String) {}
+}
+
+// MARK: -  PostTableViewCell
+
 final class PostTableViewCell: UITableViewCell {
     
     static let reuseID = "CustomTableViewCell_ReuseID"
     
-    weak var delegate: ProfileViewController?
+    weak var delegate: PostTableViewCellDelegate?
     
     private var viewModel = PostTableViewCellViewModel()
     
@@ -32,6 +44,7 @@ final class PostTableViewCell: UITableViewCell {
     
     private lazy var authorView: PostAuthorHeaderView = {
         let view = PostAuthorHeaderView()
+        view.delegate = self
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -56,7 +69,7 @@ final class PostTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    /// A specific height constraint por postImage, that is meant to change in runtime 
+    /// A specific height constraint for postImage, that is meant to change in runtime 
     private lazy var postImageHeighAnchorConstraint = NSLayoutConstraint(item: postImage, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1)
 
     
@@ -156,7 +169,6 @@ final class PostTableViewCell: UITableViewCell {
         likesLabel.frame.maxY
     }
     
-    
     // MARK: Private methods
     
     private func bindViewModel() {
@@ -232,21 +244,28 @@ final class PostTableViewCell: UITableViewCell {
         guard let post = self.post else { return }
         
         FavouritePostsService.shared.add(post: post, completion: { [weak self] result in
-            
+            guard let self else { return }
             switch result {
             case .success(_):
-                
-                let addedToFavoritesString = NSLocalizedString("addedToFavorites", comment: "")
-                self?.delegate?.presentToast(message: addedToFavoritesString)
+                self.delegate?.postTableViewCell(self, askToPresentToastWithMessage: "addedToFavorites".localized)
                 
             case .failure(let error):
                 if case .alreadyInFavourites = error {
-                    
-                    let alreadyInFavoritesString = NSLocalizedString("alreadyInFavorites", comment: "")
-                    self?.delegate?.presentToast(message: alreadyInFavoritesString)
+                    self.delegate?.postTableViewCell(self, askToPresentToastWithMessage: "alreadyInFavorites".localized)
                 }
             }
         })
+    }
+    
+}
+
+// MARK: PostAuthorHeaderViewDelegate
+
+extension PostTableViewCell: PostAuthorHeaderViewDelegate {
+    
+    func postAuthorHeaderView(_ postAuthorHeaderView: PostAuthorHeaderView, didTapThreeDotsButton button: UIButton) {
+        guard let post else { return }
+        delegate?.postTableViewCell(self, didTapButton: button, actionsFor: post)
     }
     
 }

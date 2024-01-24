@@ -31,6 +31,8 @@ final class CloudStorageService {
     
     // MARK: Public methods
     
+    // MARK: Post image related methods
+    
     func uploadImage(_ image: UIImage, forPost postID: String, completionHandler: @escaping (CloudStorageServiceError?) -> Void = { _ in }) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             completionHandler(.failedToEncodeJPEGData)
@@ -72,6 +74,26 @@ final class CloudStorageService {
         }
     }
     
+    func deleteImage(forPost post: Post, completionHandler: @escaping (CloudStorageServiceError?) -> Void = { _ in }) {
+        guard let postID = post.id else {
+            completionHandler(.postIDisNil)
+            return
+        }
+        let reference = storage.reference(withPath: "/postImages/" + postID)
+        reference.delete { error in
+            if let error {
+                print(">>>>>", error)
+                completionHandler(.failedToDeleteImage)
+                return
+            } else {
+                completionHandler(nil)
+                return
+            }
+        }
+    }
+    
+    // MARK: Avatar related methods
+    
     func downloadAvatar(forUser userID: String, completionHandler: @escaping (Data?, CloudStorageServiceError?) -> Void) {
         let storageReference = storage.reference()
         let reference = storageReference.child("/userAvatars/\(userID)")
@@ -94,8 +116,10 @@ final class CloudStorageService {
     
     enum CloudStorageServiceError: Error {
         case userIDisNil
+        case postIDisNil
         case failedToEncodeJPEGData
         case failedToUploadImage
+        case failedToDeleteImage
     }
     
     

@@ -20,7 +20,7 @@ final class PostAuthorHeaderView: UIView {
     // MARK: Public properties
     
     weak var delegate: PostAuthorHeaderViewDelegate?
-    var isActionButtonsHidden: Bool  {
+    var isActionsButtonsHidden: Bool  {
         get {
             threeDotsButton.isHidden
         }

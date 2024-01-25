@@ -272,6 +272,7 @@ extension ProfileViewController: UITableViewDataSource {
                 withIdentifier: CellReuseID.post.rawValue,
                 for: indexPath) as! PostTableViewCell
             cell.delegate = self
+            cell.passRepository(viewModel.repository)
             let postData = viewModel.postData[indexPath.row]
             cell.updateContent(post: postData, authorDisplayName: viewModel.user.fullName)
             return cell

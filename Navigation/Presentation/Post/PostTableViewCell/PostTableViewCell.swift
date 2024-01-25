@@ -24,10 +24,18 @@ final class PostTableViewCell: UITableViewCell {
     
     static let reuseID = "CustomTableViewCell_ReuseID"
     
+    // MARK: Public properties
+    
     weak var delegate: PostTableViewCellDelegate?
+    var isActionsButtonHidden = false {
+        didSet {
+            authorView.isActionsButtonsHidden = isActionsButtonHidden
+        }
+    }
+    
+    // MARK: Private properties
     
     private var viewModel = PostTableViewCellViewModel()
-    
     private var post: Post? {
         didSet {
             if let post,
@@ -44,6 +52,7 @@ final class PostTableViewCell: UITableViewCell {
     
     private lazy var authorView: PostAuthorHeaderView = {
         let view = PostAuthorHeaderView()
+        view.isActionsButtonsHidden = self.isActionsButtonHidden
         view.delegate = self
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -169,6 +178,10 @@ final class PostTableViewCell: UITableViewCell {
         likesLabel.frame.maxY
     }
     
+    func passRepository(_ repository: ProfileRepository) {
+        viewModel.repository = repository
+    }
+    
     // MARK: Private methods
     
     private func bindViewModel() {
@@ -178,6 +191,7 @@ final class PostTableViewCell: UITableViewCell {
                 return
             case .didLoadPostImage(let imageData):
                 self?.postImage.image =  UIImage(data: imageData)
+                self?.setNeedsLayout()
             }
         }
     }

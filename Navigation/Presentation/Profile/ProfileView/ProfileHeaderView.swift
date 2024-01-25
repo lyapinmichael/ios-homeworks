@@ -87,12 +87,11 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private lazy var profileStatusLabel: UILabel = {
         let profileStatusLabel = UILabel()
-        
         profileStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         profileStatusLabel.textColor = .gray
         profileStatusLabel.text = NSLocalizedString("nothingToSee", comment: "")
+        profileStatusLabel.isHidden = true
         profileStatusLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         return profileStatusLabel
     }()
     

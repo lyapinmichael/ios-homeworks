@@ -62,6 +62,7 @@
 		EC8398332B5FA51100E40C2A /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398322B5FA51100E40C2A /* PlaceholderTextView.swift */; };
 		EC8398352B5FD39200E40C2A /* LoadingDimmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398342B5FD39200E40C2A /* LoadingDimmingViewController.swift */; };
 		EC8398372B616BC400E40C2A /* PostActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398362B616BC400E40C2A /* PostActionsViewController.swift */; };
+		EC83983A2B62C20600E40C2A /* UIButton+pont.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398392B62C20600E40C2A /* UIButton+pont.swift */; };
 		EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */; };
 		EC95BAAF2B0BCFFC002621C4 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95BAAE2B0BCFFC002621C4 /* SignInViewModel.swift */; };
 		ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */; };
@@ -194,6 +195,7 @@
 		EC8398322B5FA51100E40C2A /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
 		EC8398342B5FD39200E40C2A /* LoadingDimmingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDimmingViewController.swift; sourceTree = "<group>"; };
 		EC8398362B616BC400E40C2A /* PostActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActionsViewController.swift; sourceTree = "<group>"; };
+		EC8398392B62C20600E40C2A /* UIButton+pont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+pont.swift"; sourceTree = "<group>"; };
 		EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		EC95BAAE2B0BCFFC002621C4 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		EC9720D9299855A80090FE5A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				EC62CC622AB78BD100BD98C5 /* String+Localized.swift */,
 				EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */,
 				EC62CC642AB78C2500BD98C5 /* UIColor+Themes.swift */,
+				EC8398392B62C20600E40C2A /* UIButton+pont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -908,6 +911,7 @@
 			files = (
 				EC2799B829EA9744008E949B /* AuthenticationService.swift in Sources */,
 				EC95BAAF2B0BCFFC002621C4 /* SignInViewModel.swift in Sources */,
+				EC83983A2B62C20600E40C2A /* UIButton+pont.swift in Sources */,
 				ECAA5D0629B3B0E200EC2F21 /* PhotosTableViewCell.swift in Sources */,
 				EC8398372B616BC400E40C2A /* PostActionsViewController.swift in Sources */,
 				EC29695329FE4D1B00A18986 /* UINavigationController+RootVC.swift in Sources */,

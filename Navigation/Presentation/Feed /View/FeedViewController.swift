@@ -92,7 +92,6 @@ final class FeedViewController: UIViewController {
     }
 }
 
-
 // MARK: - UITableViewDataSource
 
 extension FeedViewController: UITableViewDataSource {
@@ -109,6 +108,7 @@ extension FeedViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID) as? PostTableViewCell else { return UITableViewCell() }
         let post = viewModel.postsByDate[indexPath.section].posts[indexPath.row]
         cell.updateContent(post: post)
+        cell.isActionsButtonHidden = true
         return cell
     }
 }

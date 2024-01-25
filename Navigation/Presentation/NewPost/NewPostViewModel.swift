@@ -66,6 +66,8 @@ final class NewPostViewModel {
                 self?.repository.postData.value.append(post)
                 if post.hasImageAttached {
                     self?.uploadPostImage(post)
+                } else {
+                    self?.state = .didUpload
                 }
             case .failure(let error):
                 print(error)
@@ -88,6 +90,7 @@ final class NewPostViewModel {
             } else {
                 guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
                 do {
+                    self?.repository.imageCache.setObject(NSData(data: imageData), forKey: NSString(string: postID))
                     try CacheService.default.writePostImageCache(from: (postID: postID,
                                                                         jpegData: imageData)) 
                 } catch {

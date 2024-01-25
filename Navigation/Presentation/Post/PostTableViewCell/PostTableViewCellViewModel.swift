@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 // MARK: - PostTableViewCellViewModel
 
@@ -21,17 +22,31 @@ final class PostTableViewCellViewModel {
         }
     }
         
+    // MARK: Public properties
+    
+    var repository: ProfileRepository?
+    
+    // MARK: Private properties
+    
+    private let timeInteval: DispatchTime = .now() + 0.5
+    private let maxAttempts: Int = 3
+    private var attemptsMade: Int = 0
+    
     // MARK: Public  methods
     
     func getPostImage(postID: String) {
-        
-        do {
-            let imageData = try CacheService.default.readPostImageCache(from: postID)
+        if let repository,
+           let imageData = repository.imageCache.object(forKey: NSString(string: postID)) as? Data {
             state = .didLoadPostImage(imageData)
-        } catch {
-            print(error)
-            if error as? CacheService.CacheServiceError == .fileDoesntExists {
-             downloadImage(postID)
+        } else {
+            do {
+                let imageData = try CacheService.default.readPostImageCache(from: postID)
+                state = .didLoadPostImage(imageData)
+            } catch {
+                print(error)
+                if error as? CacheService.CacheServiceError == .fileDoesntExists {
+                 downloadImage(postID)
+                }
             }
         }
     }
@@ -45,13 +60,18 @@ final class PostTableViewCellViewModel {
             
             if let error {
                 print(error)
+                guard attemptsMade < maxAttempts else {
+                    print(">>>>> Too many attemts. Returning")
+                    return
+                }
+                attemptsMade += 1
+                DispatchQueue.main.asyncAfter(deadline: timeInteval) {
+                    self.downloadImage(postID)
+                }
                 return
-            }
-            
-            if let imageData {
-                
+            } else if let imageData {
+                repository?.imageCache.setObject(NSData(data: imageData), forKey: NSString(string: postID))
                 state = .didLoadPostImage(imageData)
-                
                 do {
                     try CacheService.default.writePostImageCache(from: (postID, imageData))
                 } catch {

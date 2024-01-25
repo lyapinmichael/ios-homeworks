@@ -79,13 +79,14 @@ final class FirestoreService {
             }
         }
     }
-    
-    func writeUserDocument(_ user: User, completionHandler: @escaping () -> Void) {
+
+    func writeUserDocument(_ user: User, completionHandler: @escaping (Error?) -> Void) {
         do {
             try dataBase.collection("users").document(user.id).setData(from: user)
-            completionHandler()
+            completionHandler(nil)
         } catch {
             print(error)
+            completionHandler(error)
         }
     }
     

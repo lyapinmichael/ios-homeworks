@@ -130,7 +130,7 @@ class FavouritePostsTableController: UITableViewController {
                         dateCreated: favPost.dateCreated ?? Date())
         
         
-        let imageData = try? CacheService.default.readPostImageCache(from: postID)
+        let imageData = try? LocalStorageService.default.readPostImageCache(from: postID)
         (cell as? PostTableViewCell)?.updateContent(post: post)
         
 

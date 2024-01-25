@@ -40,11 +40,11 @@ final class PostTableViewCellViewModel {
             state = .didLoadPostImage(imageData)
         } else {
             do {
-                let imageData = try CacheService.default.readPostImageCache(from: postID)
+                let imageData = try LocalStorageService.default.readPostImageCache(from: postID)
                 state = .didLoadPostImage(imageData)
             } catch {
                 print(error)
-                if error as? CacheService.CacheServiceError == .fileDoesntExists {
+                if error as? LocalStorageService.CacheServiceError == .fileDoesntExists {
                  downloadImage(postID)
                 }
             }
@@ -73,7 +73,7 @@ final class PostTableViewCellViewModel {
                 repository?.imageCache.setObject(NSData(data: imageData), forKey: NSString(string: postID))
                 state = .didLoadPostImage(imageData)
                 do {
-                    try CacheService.default.writePostImageCache(from: (postID, imageData))
+                    try LocalStorageService.default.writePostImageCache(from: (postID, imageData))
                 } catch {
                     print("=====\nError occured while trying to save image to file:\n\(error)\n=====")
                 }

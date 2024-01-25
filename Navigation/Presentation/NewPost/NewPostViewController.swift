@@ -63,6 +63,29 @@ final class NewPostViewController: UIViewController {
         return textView
     }()
     
+    private lazy var attachedImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 18
+        imageView.isUserInteractionEnabled = true
+        imageView.isHidden = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private lazy var detachImageButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "x.circle.fill"), for: .normal)
+        button.tintColor = Palette.accentOrange
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let action = UIAction { [weak self] _ in
+            self?.viewModel.updateState(with: .didTapDetachImageButton)
+        }
+        button.addAction(action, for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var addImageFromRollButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "photo.on.rectangle"), for: .normal)
@@ -138,6 +161,9 @@ final class NewPostViewController: UIViewController {
                                   feedBackType: .error)
             case .didUpload:
                 self.dismiss(animated: true)
+            case .didChangeImage(let image):
+                self.attachedImage.image = image
+                self.attachedImage.isHidden = (image == nil)
             }
         }
     }
@@ -145,6 +171,8 @@ final class NewPostViewController: UIViewController {
     private func setupSubviews() {
         view.addSubview(topButtonsStack)
         view.addSubview(mainTextView)
+        view.addSubview(attachedImage)
+        attachedImage.addSubview(detachImageButton)
         view.addSubview(bottomButtonsStack)
         
         let safeArea = view.safeAreaLayoutGuide
@@ -158,12 +186,30 @@ final class NewPostViewController: UIViewController {
             mainTextView.topAnchor.constraint(equalTo: topButtonsStack.bottomAnchor, constant: 24),
             mainTextView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             mainTextView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            mainTextView.bottomAnchor.constraint(equalTo: bottomButtonsStack.topAnchor),
+            mainTextView.bottomAnchor.constraint(equalTo: attachedImage.topAnchor, constant: 16),
             
-            bottomButtonsStack.heightAnchor.constraint(equalToConstant: 40),
+            attachedImage.heightAnchor.constraint(equalToConstant: Constants.attachedImageSide),
+            attachedImage.widthAnchor.constraint(equalToConstant: Constants.attachedImageSide),
+            attachedImage.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
+            attachedImage.bottomAnchor.constraint(equalTo: bottomButtonsStack.topAnchor, constant: -16),
+            
+            detachImageButton.topAnchor.constraint(equalTo: attachedImage.topAnchor, constant: 8),
+            detachImageButton.trailingAnchor.constraint(equalTo: attachedImage.trailingAnchor, constant: -8),
+            detachImageButton.heightAnchor.constraint(equalToConstant: Constants.detachImageButtonSide),
+            detachImageButton.widthAnchor.constraint(equalToConstant: Constants.detachImageButtonSide),
+            
+            bottomButtonsStack.heightAnchor.constraint(equalToConstant: Constants.bottomButtonsStackHeight),
             bottomButtonsStack.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
             bottomButtonsStack.bottomAnchor.constraint(equalTo: keyboard.topAnchor)
         ])
+    }
+    
+    // MARK: Types
+    
+    enum Constants {
+        static let attachedImageSide: CGFloat = 78
+        static let bottomButtonsStackHeight: CGFloat = 40
+        static let detachImageButtonSide: CGFloat = 16
     }
     
     

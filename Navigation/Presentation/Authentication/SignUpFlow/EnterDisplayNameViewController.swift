@@ -44,13 +44,11 @@ class EnterDisplayNameViewController: UIViewController {
     }()
     
     private lazy var displayNameField: CustomTextField = {
-        let textField = CustomTextField()
-        textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        let textField = CustomTextField(autocapitalizationType: .words,
+                                        returnKeyType: .done,
+                                        textAlignment: .left)
         textField.placeholder = NSLocalizedString("fillFullName", comment: "")
-        textField.autocapitalizationType = .words
-        textField.returnKeyType = .done
         textField.customDelegate = self
-        
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()

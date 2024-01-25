@@ -17,7 +17,11 @@ final class NewPostViewModel {
     private let repository: ProfileRepository
     private let user: User
     private var text: String = ""
-    private var image: UIImage?
+    private var image: UIImage? {
+        didSet {
+            state = .didChangeImage(image)
+        }
+    }
     
     // MARK: State related properties
     
@@ -49,6 +53,8 @@ final class NewPostViewModel {
         case .didTapUploadButton:
             state = .tyringToUpload
             uploadPost()
+        case .didTapDetachImageButton:
+            image = nil 
         }
     }
     
@@ -91,7 +97,7 @@ final class NewPostViewModel {
                 guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
                 do {
                     self?.repository.imageCache.setObject(NSData(data: imageData), forKey: NSString(string: postID))
-                    try CacheService.default.writePostImageCache(from: (postID: postID,
+                    try LocalStorageService.default.writePostImageCache(from: (postID: postID,
                                                                         jpegData: imageData)) 
                 } catch {
                     print(">>>>>\t", error)
@@ -108,11 +114,13 @@ final class NewPostViewModel {
         case tyringToUpload
         case failedToUpload
         case didUpload
+        case didChangeImage(UIImage?)
     }
     
     enum ViewInput {
         case didTapUploadButton
         case didChangeText(String)
         case didPickImage(UIImage)
+        case didTapDetachImageButton
     }
 }

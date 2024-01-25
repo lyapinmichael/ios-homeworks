@@ -8,9 +8,9 @@
 import Foundation
 import StorageService
 
-final class CacheService {
+final class LocalStorageService {
     
-    static var `default` = CacheService()
+    static var `default` = LocalStorageService()
     
     typealias JPEGData = Data
     

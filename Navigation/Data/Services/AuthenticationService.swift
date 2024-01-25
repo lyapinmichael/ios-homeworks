@@ -56,13 +56,12 @@ class AuthenticationService: AuthenticationDelegate {
     }
     
     func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<User, AuthenticationError>) -> Void)) {
-        
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             
             if let error {
                 completion(.failure(.failedToSignUp))
                 print(error)
-
+                
                 return
             }
             
@@ -78,7 +77,6 @@ class AuthenticationService: AuthenticationDelegate {
                 return
             }
             
-
             /// Secondly, we make a request to change profile, then perform changes.
             let changeRequest = authUser.createProfileChangeRequest()
             changeRequest.displayName = fullName
@@ -93,7 +91,13 @@ class AuthenticationService: AuthenticationDelegate {
                             login: login,
                             fullName: fullName)
             
-            completion(.success(user))
+            FirestoreService().writeUserDocument(user) { error in
+                if let error {
+                    completion(.failure(.failedToSignUp))
+                } else {
+                    completion(.success(user))
+                }
+            }
         }
     }
     

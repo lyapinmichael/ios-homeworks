@@ -92,6 +92,7 @@ final class FirestoreService {
     
     func updateUserDisplayName(_ updatedUser: User, updatedName: String, completionHandler: @escaping (Error?) -> Void) {
         
+        /// First, change display name in Auth credentials
         guard let authUser = Auth.auth().currentUser,
               authUser.uid == updatedUser.id else {
             completionHandler(FirestoreServiceError.updatedUserIsNotCurrentUser)
@@ -108,8 +109,8 @@ final class FirestoreService {
             }
         }
         
+        /// Then, change full name in corresponding firestore document
         let documentReference = dataBase.collection("users").document(updatedUser.id)
-        
         documentReference.updateData([
             "fullName": updatedName
         ]) { error  in
@@ -118,6 +119,22 @@ final class FirestoreService {
             } else {
                 completionHandler(nil)
             }
+        }
+        
+        /// Finally, change auhtor's name in all posts
+        dataBase.collection("posts").whereField("authorID", isEqualTo: updatedUser.id).getDocuments { [weak self] querySnapshot, error in
+            if let error {
+                print(">>>>>\t", error)
+                return
+            }
+            guard let batch = self?.dataBase.batch(),
+                  let querySnapshot else {
+                return
+            }
+            for document in querySnapshot.documents {
+                batch.updateData(["author": updatedName], forDocument: document.reference)
+            }
+            batch.commit()
         }
     }
     

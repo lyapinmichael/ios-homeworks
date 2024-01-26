@@ -16,6 +16,7 @@ final class ProfileRootViewController: UIViewController {
     init(profileViewController: ProfileViewController, slideOverMenuViewContoller: SlideOverMenuViewController) {
         
         let profileNavigationContoller = UINavigationController(rootViewController: profileViewController)
+        profileNavigationContoller.navigationBar.tintColor = Palette.accentOrange
         
         super.init(nibName: nil, bundle: nil)
         

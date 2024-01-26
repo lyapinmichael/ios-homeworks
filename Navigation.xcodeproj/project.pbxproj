@@ -63,6 +63,7 @@
 		EC8398352B5FD39200E40C2A /* LoadingDimmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398342B5FD39200E40C2A /* LoadingDimmingViewController.swift */; };
 		EC8398372B616BC400E40C2A /* PostActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398362B616BC400E40C2A /* PostActionsViewController.swift */; };
 		EC83983A2B62C20600E40C2A /* UIButton+point.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8398392B62C20600E40C2A /* UIButton+point.swift */; };
+		EC8398402B63DF7600E40C2A /* NSLyaoutConstraint+withMultiplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC83983F2B63DF7600E40C2A /* NSLyaoutConstraint+withMultiplier.swift */; };
 		EC84CED329B5E01C00DDC6A9 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */; };
 		EC95BAAF2B0BCFFC002621C4 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95BAAE2B0BCFFC002621C4 /* SignInViewModel.swift */; };
 		ECA2C5752A4B20B40011155C /* UIViewController+TextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA2C5742A4B20B40011155C /* UIViewController+TextPicker.swift */; };
@@ -196,6 +197,7 @@
 		EC8398342B5FD39200E40C2A /* LoadingDimmingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDimmingViewController.swift; sourceTree = "<group>"; };
 		EC8398362B616BC400E40C2A /* PostActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActionsViewController.swift; sourceTree = "<group>"; };
 		EC8398392B62C20600E40C2A /* UIButton+point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+point.swift"; sourceTree = "<group>"; };
+		EC83983F2B63DF7600E40C2A /* NSLyaoutConstraint+withMultiplier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLyaoutConstraint+withMultiplier.swift"; sourceTree = "<group>"; };
 		EC84CED229B5E01C00DDC6A9 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		EC95BAAE2B0BCFFC002621C4 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		EC9720D9299855A80090FE5A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				EC193DA62A0EA26D0056F46D /* String+printableReplace.swift */,
 				EC62CC642AB78C2500BD98C5 /* UIColor+Themes.swift */,
 				EC8398392B62C20600E40C2A /* UIButton+point.swift */,
+				EC83983F2B63DF7600E40C2A /* NSLyaoutConstraint+withMultiplier.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -625,7 +628,6 @@
 			children = (
 				EC12423229FCF78600F74818 /* MainCoordinator.swift */,
 				EC83982D2B5EEF4800E40C2A /* NewPost */,
-				EC83982A2B5D9C9D00E40C2A /* Interfaces */,
 				ECFA869E2B4C3D8100121917 /* PostDetailedViewController */,
 				ECFA86982B4AF3F800121917 /* Post */,
 				ECFD599C2A45ABEF009E90F9 /* FavouritePosts */,
@@ -635,6 +637,7 @@
 				EC9720D7299855430090FE5A /* MainTabBar */,
 				ECD0FA522B04104200F835F1 /* UICustomElements */,
 				EC12424429FCFD8A00F74818 /* Extensions */,
+				EC83982A2B5D9C9D00E40C2A /* Interfaces */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -957,6 +960,7 @@
 				EC22BF4829F808AF0024E0B4 /* ProfileViewModel.swift in Sources */,
 				EC62CC632AB78BD100BD98C5 /* String+Localized.swift in Sources */,
 				EC12423529FCF7B500F74818 /* CoordinatorProtocol.swift in Sources */,
+				EC8398402B63DF7600E40C2A /* NSLyaoutConstraint+withMultiplier.swift in Sources */,
 				ECAA5CFE29B0AEA600EC2F21 /* UITableViewExtension.swift in Sources */,
 				EC193DA72A0EA26D0056F46D /* String+printableReplace.swift in Sources */,
 				ECAA5D0029B0C41D00EC2F21 /* PostTableViewCell.swift in Sources */,

@@ -13,9 +13,7 @@ import StorageService
 protocol FeedViewModelProtocol: AnyObject {
     
     var postsByDate:  [(date: Date, posts: [Post])] { get }
-    
     var state: FeedViewModel.State { get }
-    
     var onStateDidChange: ((FeedViewModel.State) -> Void)? { get set }
     
     func updateState(withInput input: FeedViewModel.ViewInput, completion: @escaping () -> Void)

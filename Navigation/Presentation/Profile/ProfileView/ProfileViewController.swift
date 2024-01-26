@@ -319,9 +319,12 @@ extension ProfileViewController: UITableViewDelegate {
             navigationController?.isNavigationBarHidden = false
             navigationController?.pushViewController(photosCollection, animated: true)
         } else {
-            let currentPost = viewModel.postData[indexPath.row]
-            let postDetailedViewController = PostDetailedViewController(post: currentPost)
-            navigationController?.pushViewController(postDetailedViewController, animated: true)
+            if let postCell = tableView.cellForRow(at: indexPath) as? PostTableViewCell,
+               let post = postCell.post {
+                let image = postCell.image
+                let postDetailedViewController = PostDetailedViewController(post: post, postImage: image)
+                navigationController?.pushViewController(postDetailedViewController, animated: true)
+            }
         }
     }
     

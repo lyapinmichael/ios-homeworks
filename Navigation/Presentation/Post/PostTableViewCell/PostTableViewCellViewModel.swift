@@ -34,7 +34,7 @@ final class PostTableViewCellViewModel {
     
     // MARK: Public  methods
     
-    func getPostImage(postID: String) {
+    func getPostImage(postID: String){
         if let repository,
            let imageData = repository.imageCache.object(forKey: NSString(string: postID)) as? Data {
             state = .didLoadPostImage(imageData)
@@ -54,7 +54,6 @@ final class PostTableViewCellViewModel {
     // MARK: Private methods
     
     private func downloadImage(_ postID: String) {
-        
         CloudStorageService.shared.downloadImage(forPost: postID) { [weak self] imageData, error in
             guard let self else { return }
             

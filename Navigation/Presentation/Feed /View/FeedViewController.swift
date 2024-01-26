@@ -124,9 +124,13 @@ extension FeedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let currentPost = viewModel.postsByDate[indexPath.section].posts[indexPath.row]
-        let postDetailedViewController = PostDetailedViewController(post: currentPost)
-        navigationController?.pushViewController(postDetailedViewController, animated: true)
+        if let postCell = tableView.cellForRow(at: indexPath) as? PostTableViewCell,
+           let post = postCell.post {
+            let image = postCell.image
+            let postDetailedViewController = PostDetailedViewController(post: post, postImage: image)
+            navigationController?.pushViewController(postDetailedViewController, animated: true)
+        }
     }
+    
     
 }

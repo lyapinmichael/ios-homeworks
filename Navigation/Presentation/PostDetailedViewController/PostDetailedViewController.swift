@@ -46,9 +46,9 @@ final class PostDetailedViewController: UIViewController {
         return label
     }()
     
-    private lazy var postImage: UIImageView = {
+    private lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         imageView.image = UIImage(named: "ImagePlaceholder")
@@ -56,6 +56,15 @@ final class PostDetailedViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    /// A specific height constraint for postImage, that is meant to change in runtime
+    private lazy var postImageHeighAnchorConstraint = NSLayoutConstraint(item: postImageView,
+                                                                         attribute: .height,
+                                                                         relatedBy: .equal,
+                                                                         toItem: postImageView,
+                                                                         attribute: .width,
+                                                                         multiplier: 1,
+                                                                         constant: 0)
     
     private lazy var postText: UILabel = {
         let label = UILabel()
@@ -85,10 +94,14 @@ final class PostDetailedViewController: UIViewController {
     
     // MARK: Init
     
-    init(post: Post) {
+    init(post: Post, postImage: UIImage? = nil) {
         super.init(nibName: nil, bundle: nil)
         postText.text = post.description
         authorName.text = post.author
+        let multiplier: CGFloat = post.hasImageAttached ? 1 : 0
+        postImageHeighAnchorConstraint = postImageHeighAnchorConstraint.withMultiplier(multiplier)
+        postImageView.isHidden = (postImage == nil)
+        postImageView.image = postImage
     }
     
     required init?(coder: NSCoder) {
@@ -112,7 +125,7 @@ final class PostDetailedViewController: UIViewController {
         containerScrollView.addSubview(contentView)
         contentView.addSubview(authorAvatar)
         contentView.addSubview(authorName)
-        contentView.addSubview(postImage)
+        contentView.addSubview(postImageView)
         contentView.addSubview(postText)
         contentView.addSubview(likeButton)
         contentView.addSubview(likesCountLabel)
@@ -138,16 +151,16 @@ final class PostDetailedViewController: UIViewController {
             authorName.centerYAnchor.constraint(equalTo: authorAvatar.centerYAnchor),
             authorName.leadingAnchor.constraint(equalTo: authorAvatar.trailingAnchor, constant: 16),
             
-            postImage.topAnchor.constraint(equalTo: authorAvatar.bottomAnchor, constant: 12),
-            postImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            postImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            postImage.heightAnchor.constraint(equalToConstant: contentView.frame.width / 1.773),
-            
-            postText.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: 16),
+            postText.topAnchor.constraint(equalTo: authorAvatar.bottomAnchor, constant: 16),
             postText.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             postText.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
             
-            likeButton.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 16),
+            postImageView.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 12),
+            postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            postImageHeighAnchorConstraint,
+            
+            likeButton.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 16),
             likeButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             likeButton.heightAnchor.constraint(equalToConstant: 24),
             likeButton.widthAnchor.constraint(equalToConstant: 24),

@@ -27,6 +27,22 @@ final class PostTableViewCell: UITableViewCell {
     // MARK: Public properties
     
     weak var delegate: PostTableViewCellDelegate?
+    private(set) var image: UIImage? {
+        didSet {
+            postImageView.image =  image
+        }
+    }
+    private(set) var post: Post? {
+        didSet {
+            if let post,
+               let id = post.id,
+               post.hasImageAttached {
+                postImageView.isHidden = false
+                postImageHeighAnchorConstraint.constant = 127
+                viewModel.getPostImage(postID: id)
+            }
+        }
+    }
     var isActionsButtonHidden = false {
         didSet {
             authorView.isActionsButtonsHidden = isActionsButtonHidden
@@ -36,17 +52,6 @@ final class PostTableViewCell: UITableViewCell {
     // MARK: Private properties
     
     private var viewModel = PostTableViewCellViewModel()
-    private var post: Post? {
-        didSet {
-            if let post,
-               let id = post.id,
-               post.hasImageAttached {
-                postImage.isHidden = false
-                postImageHeighAnchorConstraint.constant = 127
-                viewModel.getPostImage(postID: id)
-            }
-        }
-    }
     
     // MARK: Subviews
     
@@ -66,7 +71,7 @@ final class PostTableViewCell: UITableViewCell {
         return view
     }()
     
-    private lazy var postImage: UIImageView = {
+    private lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.backgroundColor =  .systemGray5
@@ -79,7 +84,7 @@ final class PostTableViewCell: UITableViewCell {
     }()
     
     /// A specific height constraint for postImage, that is meant to change in runtime 
-    private lazy var postImageHeighAnchorConstraint = NSLayoutConstraint(item: postImage, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1)
+    private lazy var postImageHeighAnchorConstraint = NSLayoutConstraint(item: postImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1)
 
     
     private lazy var postText: UILabel = {
@@ -157,8 +162,8 @@ final class PostTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        postImage.image = UIImage(named: "ImagePlaceholder")
-        postImage.isHidden = true
+        postImageView.image = UIImage(named: "ImagePlaceholder")
+        postImageView.isHidden = true
         postImageHeighAnchorConstraint.constant = 1
     }
     
@@ -190,7 +195,7 @@ final class PostTableViewCell: UITableViewCell {
             case.initial:
                 return
             case .didLoadPostImage(let imageData):
-                self?.postImage.image =  UIImage(data: imageData)
+                self?.image = UIImage(data: imageData)
                 self?.setNeedsLayout()
             }
         }
@@ -198,7 +203,7 @@ final class PostTableViewCell: UITableViewCell {
     
     private func addSubviews() {
         contentView.addSubview(verticalLine)
-        contentView.addSubview(postImage)
+        contentView.addSubview(postImageView)
         contentView.addSubview(postText)
         contentView.addSubview(revealFull)
         contentView.addSubview(horizontalSeparator)
@@ -228,12 +233,12 @@ final class PostTableViewCell: UITableViewCell {
             revealFull.leadingAnchor.constraint(equalTo: verticalLine.trailingAnchor, constant: 12),
             revealFull.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             
-            postImage.topAnchor.constraint(equalTo: revealFull.bottomAnchor, constant: 8),
-            postImage.leadingAnchor.constraint(equalTo: verticalLine.trailingAnchor,constant: 12),
-            postImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            postImageView.topAnchor.constraint(equalTo: revealFull.bottomAnchor, constant: 8),
+            postImageView.leadingAnchor.constraint(equalTo: verticalLine.trailingAnchor,constant: 12),
+            postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             postImageHeighAnchorConstraint,
             
-            horizontalSeparator.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: 8),
+            horizontalSeparator.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 8),
             horizontalSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             horizontalSeparator.heightAnchor.constraint(equalToConstant: 0.8),
             horizontalSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

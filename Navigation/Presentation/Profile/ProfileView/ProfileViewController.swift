@@ -8,7 +8,7 @@
 import UIKit
 import StorageService
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController, UINavigationControllerDelegate {
    
     weak var rootViewController: ProfileRootViewController?
     
@@ -35,8 +35,9 @@ final class ProfileViewController: UIViewController {
         return view
     }()
     
-    private lazy var loadingDimmingViewController = LoadingDimmingViewController()
-    
+    private lazy var loadingDimmingViewController: DimmingViewControllerProtocol =  {
+         LoadingDimmingViewController()
+    }()
    
     // MARK: - Init
     
@@ -213,12 +214,23 @@ final class ProfileViewController: UIViewController {
             case .waiting:
                 loadingDimmingViewController.show(on: self)
             case .postDeletedSuccessfully:
-                loadingDimmingViewController.hide()
-                self.presentToast(message: "postDeleted".localized)
+                loadingDimmingViewController.hide{
+                    self.presentToast(message: "postDeleted".localized)
+                }
             case .failedToDeletePost:
-                loadingDimmingViewController.hide()
-                self.presentAlert(message: "failedToDeletePost".localized,
-                             title: "errorOccured".localized)
+                loadingDimmingViewController.hide{
+                    self.presentAlert(message: "failedToDeletePost".localized,
+                                 title: "errorOccured".localized)
+                }
+            case .presentImagePicker:
+                self.presentedViewController?.dismiss(animated: true)
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.allowsEditing = true
+                self.present(imagePicker, animated: true)
+                
+            case .failedToUploadAvatar:
+                self.presentAlert(message: "failedToChangeAvatar".localized)
             }
         }
     }
@@ -245,7 +257,6 @@ final class ProfileViewController: UIViewController {
     
 }
 
-
 // MARK: - TableView Data Source extension
 
 extension ProfileViewController: UITableViewDataSource {
@@ -268,9 +279,8 @@ extension ProfileViewController: UITableViewDataSource {
             cell.setup(tableView.frame)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: CellReuseID.post.rawValue,
-                for: indexPath) as! PostTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseID.post.rawValue,
+                                                     for: indexPath) as! PostTableViewCell
             cell.delegate = self
             cell.passRepository(viewModel.repository)
             let postData = viewModel.postData[indexPath.row]
@@ -292,6 +302,10 @@ extension ProfileViewController: UITableViewDelegate {
             profileHeader.delegate = self
             profileHeader.update(with: viewModel.user)
             profileHeader.update(postsAmount: viewModel.postData.count)
+            profileHeader.update(userAvatar: viewModel.avatar) 
+            if let avatar = viewModel.avatar {
+                profileHeader.update(userAvatar: avatar)
+            }
             return profileHeader
         } else {
             return UIView()
@@ -331,10 +345,27 @@ extension ProfileViewController: UITableViewDelegate {
     
 }
 
-
-// MARK: - Profile Header delegate extension
+// MARK: - Profile Header delegate
 
 extension ProfileViewController: ProfileHeaderViewDelegate {
+    
+    func profileHeader(_ profileHeaderView: ProfileHeaderView, didTapAvatar imageView: UIImageView) {
+        guard let image = imageView.image else { return }
+        presentedViewController?.dismiss(animated: true)
+        let actionsProvider: ActionsProviderProtocol = AvatarActionsProvider(presentingViewController: self,
+                                                    avatar: image,
+                                                    viewModel: self.viewModel)
+        let sourceRect = CGRect(x: imageView.frame.midX,
+                                y: imageView.frame.maxY + 8,
+                                width: 0,
+                                height: 0)
+        do {
+            let  avatarActions: ActionsPopupViewControllerProtocol = try ActionsPopupViewController(sourceView: profileHeaderView, sourceRect: sourceRect, actionsProvider: actionsProvider)
+            present(avatarActions, animated: true)
+        } catch {
+            print(">>>>>\t", error)
+        }
+    }
     
     func profileHeaderViewDidTapNewPostButton(_ profileHeaderView: ProfileHeaderView) {
         presentedViewController?.dismiss(animated: true)
@@ -399,13 +430,12 @@ extension ProfileViewController: PostTableViewCellDelegate {
         guard let popoverViewController = postActionsViewController.popoverPresentationController else { return }
         popoverViewController.delegate = self
         popoverViewController.sourceView = button
-        popoverViewController.permittedArrowDirections = .up
+        popoverViewController.permittedArrowDirections = [.up]
         popoverViewController.sourceRect = CGRect(x: button.bounds.midX,
                                                   y: button.bounds.maxY +  5,
                                                   width: 0,
                                                   height: 0)
         present(postActionsViewController, animated: true)
-        
     }
     
     
@@ -417,6 +447,8 @@ extension ProfileViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         .none
     }
+    
+    
 }
 
 // MARK: - PostActionsViewControllerDelegate
@@ -439,4 +471,16 @@ extension ProfileViewController: PostActionsViewControllerDelegate {
     }
     
 
+}
+
+// MARK: UIImagePickerControllerDelegate
+
+extension ProfileViewController: UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        viewModel.updateState(withInput: .didFinishPickingAvatar(image))
+        picker.dismiss(animated: true)
+    }
+    
 }

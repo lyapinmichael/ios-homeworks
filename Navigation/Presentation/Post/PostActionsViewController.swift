@@ -17,6 +17,8 @@ protocol PostActionsViewControllerDelegate: AnyObject {
 
 final class PostActionsViewController: UIViewController {
     
+    // TODO: Needs to be replaced by ActionsPopoverViewController with proper actions in future
+    
     // MARK: Public properties
     
     weak var delegate: PostActionsViewControllerDelegate?
@@ -90,7 +92,8 @@ final class PostActionsViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        preferredContentSize = view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        preferredContentSize = CGSize(width: 300,
+                                      height: mainStack.frame.height + 8)
     }
     
     // MARK: Private methods
@@ -103,9 +106,6 @@ final class PostActionsViewController: UIViewController {
             mainStack.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 5),
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        
-            view.widthAnchor.constraint(equalToConstant: 300),
-            view.bottomAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 5)
         ])
     }
     

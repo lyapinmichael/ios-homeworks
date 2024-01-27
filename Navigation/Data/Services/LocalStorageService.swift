@@ -106,6 +106,18 @@ final class LocalStorageService {
         return data
     }
     
+    func deletePostImageCache(from postID: String) throws {
+        guard let postImageCacheFolderURL = self.postImageCacheFolderURL else {
+            print("postImageCacheFolderURL == nil")
+            throw CacheServiceError.badDirectoryURL
+        }
+        let cachedImageURL = postImageCacheFolderURL.appendingPathComponent(postID, conformingTo: .fileURL)
+        guard fileManager.fileExists(atPath: cachedImageURL.path()) else {
+            throw CacheServiceError.fileDoesntExists
+        }
+        try fileManager.removeItem(atPath: cachedImageURL.path())
+    }
+    
     // MARK: Avatar related methods
     
     func writeUserAvatarCache(userID: String, jpegData: JPEGData) throws {
@@ -142,4 +154,17 @@ final class LocalStorageService {
         }
         return data
     }
+    
+    func deleteUserAvatarCache(from userID: String) throws {
+        guard let avatarCacheFolderURL = self.avatarCacheFolderURL else {
+            print("avatarCacheFolderURL == nil")
+            throw CacheServiceError.badDirectoryURL
+        }
+        let cachedAvatarURL = avatarCacheFolderURL.appendingPathComponent(userID, conformingTo: .fileURL)
+        guard fileManager.fileExists(atPath: cachedAvatarURL.path()) else {
+            throw CacheServiceError.fileDoesntExists
+        }
+        try fileManager.removeItem(atPath: cachedAvatarURL.path())
+    }
+    
 }

@@ -112,6 +112,37 @@ final class CloudStorageService {
         }
     }
     
+    func uploadAvatar(_ image: UIImage, forUser userID: String, completionHandler: @escaping (CloudStorageServiceError?) -> Void = { _ in }) {
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            completionHandler(.failedToEncodeJPEGData)
+            return
+        }
+        let metadata = StorageMetadata()
+        let reference = storage.reference().child("/userAvatars/\(userID)")
+        _ = reference.putData(imageData, metadata: metadata) { metadata, error in
+            if let error {
+                print(">>>>>\t", error)
+                completionHandler(.failedToUploadImage)
+            } else {
+                FirestoreService().updateUserAvatar(userID, hasAvatar: true)
+                completionHandler(nil)
+            }
+        }
+    }
+    
+    func deleteAvatar(forUser userID: String, completionHandler: @escaping (CloudStorageServiceError?) -> Void = { _ in }) {
+        let reference = storage.reference(withPath: "/userAvatars/\(userID)")
+        reference.delete { error in
+            if error != nil {
+                completionHandler(.failedToDeleteImage)
+            } else {
+                FirestoreService().updateUserAvatar(userID, hasAvatar: false)
+                completionHandler(nil)
+            }
+        }
+    }
+
+    
     // MARK: Types
     
     enum CloudStorageServiceError: Error {

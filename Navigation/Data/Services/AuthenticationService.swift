@@ -11,7 +11,7 @@ import FirebaseAuth
 
 //MARK: - LogInViewControllerDelegate Protocol
 
-protocol AuthenticationDelegate: AnyObject {
+protocol AuthenticationProtocol: AnyObject {
     
     func signIn(email: String, password: String, completion: @escaping ((Result<User, AuthenticationService.AuthenticationError>) -> Void))
     func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<User, AuthenticationService.AuthenticationError>) -> Void))
@@ -19,7 +19,7 @@ protocol AuthenticationDelegate: AnyObject {
     func signOut()
 }
 
-class AuthenticationService: AuthenticationDelegate {
+class AuthenticationService: AuthenticationProtocol {
         
     // MARK: Private propeties
     
@@ -36,23 +36,21 @@ class AuthenticationService: AuthenticationDelegate {
                 return
             }
             
-            guard let authUser = authResult?.user,
-                  let login = authUser.email,
-                  let fullName = authUser.displayName
-            else {
+            guard let userID = authResult?.user.uid else {
                 completion(.failure(.authResultIsNil))
                 return
             }
             
-            let id = authUser.uid
-            
-            let user = User(id: id,
-                            login: login,
-                            fullName: fullName)
-            
-            completion(.success((user)))
+            FirestoreService().fetchUserData(userID: userID) { result  in
+                switch result {
+                case .success(let user):
+                    completion(.success(user))
+                case .failure(let error):
+                    print(">>>>>\t", error)
+                    completion(.failure(.failedToLoadUserData))
+                }
+            }
         }
-       
     }
     
     func signUp(email: String, password: String, fullName: String, completion: @escaping ((Result<User, AuthenticationError>) -> Void)) {
@@ -89,7 +87,9 @@ class AuthenticationService: AuthenticationDelegate {
             
             let user = User(id: authUser.uid,
                             login: login,
-                            fullName: fullName)
+                            fullName: fullName,
+                            hasAvatar: false
+                )
             
             FirestoreService().writeUserDocument(user) { error in
                 if let error {
@@ -141,6 +141,7 @@ class AuthenticationService: AuthenticationDelegate {
         case failedToSignUp
         case failedToChechIfEmailIsRegistered
         case emailAlreadyExists
+        case failedToLoadUserData
         
     }
     

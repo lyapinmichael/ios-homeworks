@@ -23,7 +23,7 @@ final class AuthenticationViewModel {
     
     // MARK: - Private properties
     
-    private var authenticationService: AuthenticationDelegate = AuthenticationService()
+    private var authenticationService: AuthenticationProtocol = AuthenticationService()
     
     // MARK: - State related method
     

@@ -64,7 +64,7 @@ final class PostAuthorHeaderView: UIView {
     }()
     
     private lazy var threeDotsButton: UIButton = {
-        let button = UIButton()
+        let button = WideTapAreaButton()
         button.setImage(UIImage(named: "ThreeDotsVertical"), for: .normal)
         let action = UIAction { [weak self] _ in
             guard let self else { return }
@@ -90,8 +90,9 @@ final class PostAuthorHeaderView: UIView {
     
     // MARK: Public methods
     
-    func update(authorDisplayName: String, authorID: String? = nil) {
+    func update(authorDisplayName: String? = nil, authorID: String? = nil, authorAvatar: UIImage? = nil) {
         authorNameLabel.text = authorDisplayName
+        self.authorAvatar.image = authorAvatar
         self.authorID = authorID
     }
     

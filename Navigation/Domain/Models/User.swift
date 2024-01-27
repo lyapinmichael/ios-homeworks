@@ -14,5 +14,6 @@ struct User: Codable {
     let id: String
     let login: String
     var fullName: String
+    var hasAvatar: Bool
 }
 

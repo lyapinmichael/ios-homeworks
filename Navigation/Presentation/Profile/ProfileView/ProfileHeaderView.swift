@@ -13,6 +13,7 @@ protocol ProfileHeaderViewDelegate: AnyObject {
     func isScrollAndSelectionEnabled(_ flag: Bool)
     func profileHeaderViewDidTapEditProfileButton(_ profileHeaderView: ProfileHeaderView)
     func profileHeaderViewDidTapNewPostButton(_ profileHeaderView: ProfileHeaderView)
+    func profileHeader(_ profileHeaderView: ProfileHeaderView, didTapAvatar imageView: UIImageView)
     
 }
 
@@ -32,10 +33,11 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             totalPostsLabel.text = String(postsAmount) + "\n" + "posts".localizedLowercase
         }
     }
+    private var hasAvatarImage = false
     
     // MARK: Subviews
     
-    private  lazy var profilePictureView: UIImageView = {
+    private  lazy var profileAvatar: UIImageView = {
         let profilePictureView = UIImageView(frame: CGRect(x: .zero, y: .zero, width: 104, height: 104))
         
         profilePictureView.clipsToBounds = true
@@ -48,8 +50,8 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         profilePictureView.translatesAutoresizingMaskIntoConstraints = false
         
         profilePictureView.isUserInteractionEnabled = true
-        
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnProfilePicture))
+        profilePictureView.addGestureRecognizer(tapGesture)
         
         return profilePictureView
     }()
@@ -96,7 +98,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     
     private lazy var editProfileButton: CustomButton = {
-       
         let buttonAction = { [weak self] in
             guard let self else { return }
             self.delegate?.profileHeaderViewDidTapEditProfileButton(self)
@@ -122,7 +123,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     
     private lazy var statsStack: UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fillProportionally
@@ -134,19 +135,16 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     
     private lazy var separatorLine: UIView = {
-       let view = UIView()
-       
+        let view = UIView()
         view.layer.borderColor = UIColor.systemGray3.cgColor
         view.layer.borderWidth = 2
-        
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var newPostButton: UIButton = {
-       let button = UIButton(frame: CGRect(x: 0, y: 0, width: 68, height: 68))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 68, height: 68))
         
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "square.and.pencil")
@@ -168,7 +166,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     
     private lazy var newPhotoButton: UIButton = {
-       let button = UIButton(frame: CGRect(x: 0, y: 0, width: 68, height: 68))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 68, height: 68))
         
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "camera.on.rectangle")
@@ -187,7 +185,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     
     private lazy var publicationButtonsStack: UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fillProportionally
@@ -198,92 +196,27 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+      
+    // MARK: Override init
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        pictureBackground.isHidden = true
+        setupSubviews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: Private methods
-    
-    private func tapOnProfilePicture() {
-        
-        delegate?.isScrollAndSelectionEnabled(false)
-        
-        profilePictureOrigin = profilePictureView.center
-        
-        profilePictureView.contentMode = .scaleAspectFit
-        profilePictureView.isUserInteractionEnabled = false
-        
-        pictureBackground.isHidden = false
-        
-        crossButton.isHidden = false
-        crossButton.isUserInteractionEnabled = true
-        
-        let zoomedBackgroundColor = UIColor.black.withAlphaComponent(0.8)
-        
-        let scaleX = UIScreen.main.bounds.width / profilePictureView.frame.width
-        
-        UIView.animate(
-            withDuration: 0.2,
-            delay: 0,
-            options: .curveEaseOut,
-            animations: {
-                
-                self.pictureBackground.backgroundColor = zoomedBackgroundColor
-                self.profilePictureView.backgroundColor = .none
-                self.profilePictureView.layer.cornerRadius = 0
-                self.profilePictureView.layer.borderWidth = 0
-                self.profilePictureView.center = CGPoint(x: UIScreen.main.bounds.midX,
-                                                         y: UIScreen.main.bounds.midY - self.profilePictureOrigin.y)
-                self.profilePictureView.transform = CGAffineTransform(scaleX: scaleX, y: scaleX)
-                self.delegate?.setTabBarColor(.black)
-                
-            },
-            completion: {_ in
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.crossButton.alpha = 1
-                })
-            }
-        )
-    }
-    
-    private func closeProfilePicture() {
-        
-        profilePictureView.contentMode = .scaleAspectFill
-        
-        let closedBackgroundColor = UIColor.black.withAlphaComponent(0)
-        
-        UIView.animate(withDuration: 0.2,
-                       delay: 0,
-                       options: .curveEaseOut,
-                       animations: {
-            self.profilePictureView.center = self.profilePictureOrigin
-            self.profilePictureView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.width / 2
-            self.profilePictureView.layer.borderWidth = 3
-            self.pictureBackground.backgroundColor = closedBackgroundColor
-            self.delegate?.setTabBarColor(Palette.dynamicBars)
-            self.crossButton.alpha = 1
-            
-        }, completion: {_ in
-            self.crossButton.isHidden = true
-            self.crossButton.isUserInteractionEnabled = false
-            self.pictureBackground.isHidden = true
-            self.delegate?.isScrollAndSelectionEnabled(true)
-            self.profilePictureView.isUserInteractionEnabled = true
-            
-        })
-    }
-    
-    private func setup() {
-    
-        pictureBackground.isHidden = true
-      
-    }
-    
-    // MARK: Constraints
     
     private func setupSubviews() {
         addSubview(profileNameLabel)
         addSubview(profileStatusLabel)
         addSubview(editProfileButton)
-        addSubview(profilePictureView)
+        addSubview(profileAvatar)
         addSubview(pictureBackground)
         addSubview(crossButton)
         addSubview(statsStack)
@@ -291,20 +224,20 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         addSubview(publicationButtonsStack)
         
         NSLayoutConstraint.activate([
-            profilePictureView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            profilePictureView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            profilePictureView.widthAnchor.constraint(equalToConstant: profilePictureView.frame.width),
-            profilePictureView.heightAnchor.constraint(equalToConstant: profilePictureView.frame.height),
+            profileAvatar.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            profileAvatar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            profileAvatar.widthAnchor.constraint(equalToConstant: profileAvatar.frame.width),
+            profileAvatar.heightAnchor.constraint(equalToConstant: profileAvatar.frame.height),
             
             profileNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            profileNameLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
+            profileNameLabel.leadingAnchor.constraint(equalTo: profileAvatar.trailingAnchor, constant: 24),
             profileNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            profileStatusLabel.leadingAnchor.constraint(equalTo: profilePictureView.trailingAnchor, constant: 24),
+            profileStatusLabel.leadingAnchor.constraint(equalTo: profileAvatar.trailingAnchor, constant: 24),
             profileStatusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            profileStatusLabel.centerYAnchor.constraint(equalTo: profilePictureView.centerYAnchor),
+            profileStatusLabel.centerYAnchor.constraint(equalTo: profileAvatar.centerYAnchor),
             
-            editProfileButton.topAnchor.constraint(equalTo: profilePictureView.bottomAnchor, constant: 34),
+            editProfileButton.topAnchor.constraint(equalTo: profileAvatar.bottomAnchor, constant: 34),
             editProfileButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             editProfileButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             editProfileButton.heightAnchor.constraint(equalToConstant: 50),
@@ -326,8 +259,77 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             publicationButtonsStack.heightAnchor.constraint(greaterThanOrEqualToConstant: 68),
             
             bottomAnchor.constraint(equalTo: publicationButtonsStack.bottomAnchor, constant: 16)
-            
         ])
+    }
+    
+    private func tapOnProfilePicture() {
+        
+        delegate?.isScrollAndSelectionEnabled(false)
+        
+        profilePictureOrigin = profileAvatar.center
+        
+        profileAvatar.contentMode = .scaleAspectFit
+        profileAvatar.isUserInteractionEnabled = false
+        
+        pictureBackground.isHidden = false
+        
+        crossButton.isHidden = false
+        crossButton.isUserInteractionEnabled = true
+        
+        let zoomedBackgroundColor = UIColor.black.withAlphaComponent(0.8)
+        
+        let scaleX = UIScreen.main.bounds.width / profileAvatar.frame.width
+        
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0,
+            options: .curveEaseOut,
+            animations: {
+                
+                self.pictureBackground.backgroundColor = zoomedBackgroundColor
+                self.profileAvatar.backgroundColor = .none
+                self.profileAvatar.layer.cornerRadius = 0
+                self.profileAvatar.layer.borderWidth = 0
+                self.profileAvatar.center = CGPoint(x: UIScreen.main.bounds.midX,
+                                                         y: UIScreen.main.bounds.midY - self.profilePictureOrigin.y)
+                self.profileAvatar.transform = CGAffineTransform(scaleX: scaleX, y: scaleX)
+                self.delegate?.setTabBarColor(.black)
+                
+            },
+            completion: {_ in
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.crossButton.alpha = 1
+                })
+            }
+        )
+    }
+    
+    private func closeProfilePicture() {
+        
+        profileAvatar.contentMode = .scaleAspectFill
+        
+        let closedBackgroundColor = UIColor.black.withAlphaComponent(0)
+        
+        UIView.animate(withDuration: 0.2,
+                       delay: 0,
+                       options: .curveEaseOut,
+                       animations: {
+            self.profileAvatar.center = self.profilePictureOrigin
+            self.profileAvatar.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.profileAvatar.layer.cornerRadius = self.profileAvatar.frame.width / 2
+            self.profileAvatar.layer.borderWidth = 3
+            self.pictureBackground.backgroundColor = closedBackgroundColor
+            self.delegate?.setTabBarColor(Palette.dynamicBars)
+            self.crossButton.alpha = 1
+            
+        }, completion: {_ in
+            self.crossButton.isHidden = true
+            self.crossButton.isUserInteractionEnabled = false
+            self.pictureBackground.isHidden = true
+            self.delegate?.isScrollAndSelectionEnabled(true)
+            self.profileAvatar.isUserInteractionEnabled = true
+            
+        })
     }
     
     // MARK: Public methods
@@ -341,22 +343,17 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.postsAmount = postsAmount
     }
     
-    func update(userAvatar: UIImage) {
-        self.profilePictureView.image = userAvatar
-    }
-    
-    // MARK: Override init
-    
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+    func update(userAvatar: UIImage?) {
+        if let userAvatar {
+            self.profileAvatar.image = userAvatar
+            hasAvatarImage = true
+        } else {
+            self.profileAvatar.image = UIImage(named: "ImagePlaceholder")
+            hasAvatarImage = false
+        }
         
-        setup()
-        setupSubviews()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK:  ObjC actions
     
@@ -365,9 +362,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     @objc private func didTapOnProfilePicture() {
-        
-        tapOnProfilePicture()
-        
+        delegate?.profileHeader(self, didTapAvatar: profileAvatar)
     }
     
     @objc private func didTapOnCrossButton(_ sender: UIButton) {

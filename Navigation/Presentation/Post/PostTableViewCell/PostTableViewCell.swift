@@ -169,13 +169,15 @@ final class PostTableViewCell: UITableViewCell {
     
     // MARK: Public methods
     
-    func updateContent(post: Post, authorDisplayName: String? = nil) {
+    func updateContent(post: Post, authorDisplayName: String? = nil, authorAvatar: UIImage? = nil) {
         self.post = post
         if let postText = post.description {
             self.postText.text = (postText.count > 140) ? (String(postText.prefix(140)) + "...") : postText
             self.revealFull.isHidden = !(postText.count > 140)
         }
-        authorView.update(authorDisplayName: authorDisplayName ?? post.author, authorID: post.authorID)
+        authorView.update(authorDisplayName: authorDisplayName ?? post.author,
+                          authorID: post.authorID,
+                          authorAvatar: authorAvatar)
         likesLabel.text = String(post.likes)
     }
     
@@ -197,6 +199,8 @@ final class PostTableViewCell: UITableViewCell {
             case .didLoadPostImage(let imageData):
                 self?.image = UIImage(data: imageData)
                 self?.setNeedsLayout()
+            case .didLoadAvatar(let image):
+                self?.authorView.update(authorAvatar: image)
             }
         }
     }

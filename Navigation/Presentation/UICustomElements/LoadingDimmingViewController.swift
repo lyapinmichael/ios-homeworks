@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LoadingDimmingViewController: UIViewController {
+final class LoadingDimmingViewController: DimmingViewController {
     
     // MARK: Private properties 
     
@@ -38,19 +38,6 @@ final class LoadingDimmingViewController: UIViewController {
         ])
     }
     
-    // MARK: Public methods
-    
-    func show(on viewController: UIViewController) {
-        viewController.addChild(self)
-        self.view.frame = viewController.view.frame
-        viewController.view.addSubview(self.view)
-        self.didMove(toParent: viewController)
-    }
-    
-    func hide() {
-        self.willMove(toParent: nil)
-        self.view.removeFromSuperview()
-        self.removeFromParent()
-    }
+ 
     
 }

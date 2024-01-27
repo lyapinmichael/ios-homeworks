@@ -63,7 +63,7 @@ final class LoginInspectorTests: XCTestCase {
     
 }
 
-fileprivate final class LoginInspectorMock: AuthenticationDelegate {
+fileprivate final class LoginInspectorMock: AuthenticationProtocol {
     
     var state: LoginInspectorState = .didLogin(false)
    

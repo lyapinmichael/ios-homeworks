@@ -25,7 +25,7 @@ final class PostAuthorHeaderViewModel: ViewModelProtocol {
     func updateState(with viewInput: ViewInput) {
         switch viewInput {
         case .requestAvatar(let authorID):
-            return
+            fetchAvatarForAuthor(authorID)
         }
     }
     

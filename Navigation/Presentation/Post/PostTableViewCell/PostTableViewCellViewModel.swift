@@ -51,6 +51,39 @@ final class PostTableViewCellViewModel {
         }
     }
     
+    func fetchAvatar(userID: String) {
+        if let repository,
+           let imageNSData = repository.imageCache.object(forKey: NSString(string:  userID)),
+           let image = UIImage(data: Data(referencing: imageNSData)) {
+            state = .didLoadAvatar(image)
+        } else {
+            do {
+                let imageData = try LocalStorageService.default.readUserAvatarCache(from: userID)
+                if let image = UIImage(data: imageData) {
+                    state = .didLoadAvatar(image)
+                }
+                repository?.imageCache.setObject(NSData(data: imageData),
+                                                 forKey: NSString(string: userID))
+            } catch {
+                CloudStorageService.shared.downloadAvatar(forUser: userID) { [weak self] imageData, error in
+                    guard let self else { return }
+                    if let error {
+                        return
+                    }
+                    if let  imageData,
+                       let image = UIImage(data: imageData),
+                       let imageData = image.jpegData(compressionQuality: 0.8) {
+                        try? LocalStorageService.default.writeUserAvatarCache(userID: userID,
+                                                                              jpegData: imageData)
+                        self.repository?.imageCache.setObject(NSData(data: imageData),
+                                                              forKey: NSString(string: userID))
+                        self.state = .didLoadAvatar(image)
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: Private methods
     
     private func downloadImage(_ postID: String) {
@@ -87,6 +120,7 @@ final class PostTableViewCellViewModel {
     enum State {
         case initial
         case didLoadPostImage(ImageData)
+        case didLoadAvatar(UIImage)
     }
     
     

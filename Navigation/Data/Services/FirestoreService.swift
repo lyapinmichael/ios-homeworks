@@ -138,6 +138,14 @@ final class FirestoreService {
         }
     }
     
+    func updateUserAvatar(_ userID: String, hasAvatar: Bool) {
+        let documentReference = dataBase.collection("users").document(userID)
+        documentReference.updateData(["hasAvatar": hasAvatar]) { error in
+            if let error {
+                print(">>>>>\t", error)
+            }
+        }
+    }
     // MARK: Post related methods
     
     func fetchPostData(by userID: String) async throws -> [Post] {

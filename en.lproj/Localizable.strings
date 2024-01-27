@@ -115,3 +115,7 @@
 "deletePost" = "Delete post";
 "postDeleted" = "Post deleted";
 
+"viewImage" = "View image";
+"changeImage" = "Change image";
+
+"failedToChangeAvatar" = "Failed to upload new user avatar";

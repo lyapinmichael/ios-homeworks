@@ -309,9 +309,9 @@
 		EC12423829FCF9AB00F74818 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				EC12423D29FCF9F800F74818 /* Photos */,
-				ECF396142B135C760022CCCD /* ProfileRootViewController.swift */,
 				EC12424A29FD0F3900F74818 /* ProfileCoordinator.swift */,
+				ECF396142B135C760022CCCD /* ProfileRootViewController.swift */,
+				EC12423D29FCF9F800F74818 /* Photos */,
 				ECF396112B134D010022CCCD /* SlideOverMenu */,
 				EC132FA52B1FACBB00B5BD71 /* EditProfile */,
 				EC12424C29FDAAEE00F74818 /* ProfileView */,

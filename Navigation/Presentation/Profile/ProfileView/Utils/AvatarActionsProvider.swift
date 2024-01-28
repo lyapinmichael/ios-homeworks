@@ -11,7 +11,7 @@ final class  AvatarActionsProvider: ActionsProviderProtocol {
     
     // MARK: Public properties
     
-    lazy var actions: [ActionItem] = [viewAvatar, changeAvatar, deleteAvatar]
+    lazy var actions: [ActionItem] = [] 
     
     // MARK: Private properties
     
@@ -37,10 +37,15 @@ final class  AvatarActionsProvider: ActionsProviderProtocol {
     
     // MARK: Init
     
-    init(presentingViewController: UIViewController, avatar: UIImage, viewModel: ProfileViewModelProtocol) {
+    init(presentingViewController: UIViewController, hasAvatar: Bool, avatar: UIImage, viewModel: ProfileViewModelProtocol) {
         self.presentingViewController = presentingViewController
         self.avatar = avatar
         self.viewModel = viewModel
+        if hasAvatar {
+            actions = [viewAvatar, changeAvatar, deleteAvatar]
+        } else {
+            actions = [changeAvatar, deleteAvatar]
+        }
     }
     
 }

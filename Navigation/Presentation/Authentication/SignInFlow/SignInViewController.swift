@@ -214,7 +214,9 @@ final class SignInViewController: UIViewController {
             continueButton.topAnchor.constraint(equalTo: loginTextField.bottomAnchor, constant: 16),
             continueButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             
-            backButton.topAnchor.constraint(equalTo: continueButton.bottomAnchor, constant: 16)
+            backButton.topAnchor.constraint(equalTo: continueButton.bottomAnchor, constant: 16),
+            backButton.heightAnchor.constraint(equalToConstant: 32),
+            backButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
             
         ])
     }
@@ -236,12 +238,12 @@ final class SignInViewController: UIViewController {
                 }
                 
             case .waitigForPassword:
-                self.passwordTextField.text = nil
-                self.continueButton.isEnabled = false
-                self.showPasswordTextField()
                 self.continueButton.setBackgroundColor(Palette.accentOrange)
                 self.continueButton.setTitle("signIn".localized.uppercased(), for: .normal)
                 self.continueButton.setTitleColor(UIColor.white)
+                self.continueButton.isEnabled = false
+                self.passwordTextField.text = nil
+                self.showPasswordTextField()
                 
             case .trySignIn(let email, let password):
                 delegate?.signInViewController(self, failureHandler: self, trySignIn: email, password: password)

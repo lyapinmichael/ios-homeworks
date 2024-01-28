@@ -37,7 +37,7 @@
 "views" = "Views: ";
 "addedToFavorites" = "Added to favorites";
 "alreadyInFavorites" = "Post is already in favorites";
-"photos" = "Photos: ";
+"photos" = "Photos";
 "thankUser" = "Thank you for using our app!";
 "login" = "login";
 "signIn" = "Sign in";
@@ -119,3 +119,5 @@
 "changeImage" = "Change image";
 
 "failedToChangeAvatar" = "Failed to upload new user avatar";
+
+"myPosts" = "My posts";

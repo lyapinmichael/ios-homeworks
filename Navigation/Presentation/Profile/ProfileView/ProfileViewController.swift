@@ -231,6 +231,8 @@ final class ProfileViewController: UIViewController, UINavigationControllerDeleg
                 
             case .failedToUploadAvatar:
                 self.presentAlert(message: "failedToChangeAvatar".localized)
+            case .avatarDeletedSuccessfully:
+                loadingDimmingViewController.hide{}
             }
         }
     }
@@ -257,7 +259,7 @@ final class ProfileViewController: UIViewController, UINavigationControllerDeleg
     
 }
 
-// MARK: - TableView Data Source extension
+// MARK: - TableView Data Source
 
 extension ProfileViewController: UITableViewDataSource {
     
@@ -292,7 +294,7 @@ extension ProfileViewController: UITableViewDataSource {
     
 }
 
-// MARK: - Table View delegate extension
+// MARK: - Table View delegate
 
 extension ProfileViewController: UITableViewDelegate {
     
@@ -308,7 +310,11 @@ extension ProfileViewController: UITableViewDelegate {
             }
             return profileHeader
         } else {
-            return UIView()
+            let postsSectionHeaderView = UITableViewHeaderFooterView()
+            var configuration = postsSectionHeaderView.defaultContentConfiguration()
+            configuration.attributedText = NSAttributedString(string: "myPosts".localized, attributes: [.font: UIFont.systemFont(ofSize: 14, weight: .medium), .foregroundColor: Palette.accentOrange])
+            postsSectionHeaderView.contentConfiguration = configuration
+            return postsSectionHeaderView
         }
     }
     
@@ -319,7 +325,7 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 20.0
+            return 5
         } else {
             return 0
         }
@@ -352,9 +358,7 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
     func profileHeader(_ profileHeaderView: ProfileHeaderView, didTapAvatar imageView: UIImageView) {
         guard let image = imageView.image else { return }
         presentedViewController?.dismiss(animated: true)
-        let actionsProvider: ActionsProviderProtocol = AvatarActionsProvider(presentingViewController: self,
-                                                    avatar: image,
-                                                    viewModel: self.viewModel)
+        let actionsProvider: ActionsProviderProtocol = AvatarActionsProvider(presentingViewController: self,hasAvatar: viewModel.user.hasAvatar, avatar: image, viewModel: self.viewModel)
         let sourceRect = CGRect(x: imageView.frame.midX,
                                 y: imageView.frame.maxY + 8,
                                 width: 0,

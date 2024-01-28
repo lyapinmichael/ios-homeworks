@@ -73,7 +73,7 @@ final class PostTableViewCell: UITableViewCell {
     
     private lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor =  .systemGray5
         imageView.image = UIImage(named: "ImagePlaceholder")
         imageView.layer.masksToBounds = true
@@ -266,7 +266,7 @@ final class PostTableViewCell: UITableViewCell {
         
         guard let post = self.post else { return }
         
-        FavouritePostsService.shared.add(post: post, completion: { [weak self] result in
+        FavouritePostsService.shared.add(post: post) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(_):
@@ -277,7 +277,7 @@ final class PostTableViewCell: UITableViewCell {
                     self.delegate?.postTableViewCell(self, askToPresentToastWithMessage: "alreadyInFavorites".localized)
                 }
             }
-        })
+        }
     }
     
 }

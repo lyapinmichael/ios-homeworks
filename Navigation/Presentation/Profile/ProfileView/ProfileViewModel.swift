@@ -12,7 +12,7 @@ import FirebaseAuth
 protocol ProfileViewModelProtocol: ViewModelProtocol, EditProfileViewModelDelegate {
     var onStateDidChange: ((ProfileViewModel.State) -> Void)? { get set }
     var postData: [Post] { get }
-    var user: User { get }
+    var user: User { get set }
     var avatar: UIImage? { get }
     var repository: ProfileRepository { get }
     
@@ -39,7 +39,12 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     weak var coordinator: ProfileCoordinator?
     
     var user: User {
-        return repository.profileData.value
+        get {
+            repository.profileData.value
+        }
+        set {
+            repository.profileData.value = newValue
+        }
     }
     
     var postData: [Post] {
@@ -83,7 +88,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case .didTapChangeAvatarButton:
             state = .presentImagePicker
         case .deletePost(let post):
-            delete(post)
+            deletePost(post)
         case .didFinishPickingAvatar(let image):
             changeAvatar(image)
         case .didTapDeleteAvatarButton:
@@ -150,11 +155,33 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                 return
             }
             guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+            self.user.hasAvatar = true 
             let imageNSData = NSData(data: imageData)
             let userIDNSString = NSString(string: user.id)
             repository.imageCache.setObject(imageNSData, forKey: userIDNSString)
             avatar = image
             try? LocalStorageService.default.writeUserAvatarCache(userID: user.id, jpegData: imageData)
+        }
+    }
+    
+    private func deleteAvatar() {
+        state = .waiting
+        CloudStorageService.shared.deleteAvatar(forUser: user.id) { [weak self] error in
+            guard let self else { return }
+            if let error {
+                self.state = .failedToUploadAvatar
+            } else {
+                self.avatar = nil
+                self.user.hasAvatar = false
+                let userIDNSString = NSString(string: self.user.id)
+                self.repository.imageCache.removeObject(forKey: userIDNSString)
+                self.state = .avatarDeletedSuccessfully
+                do {
+                    try LocalStorageService.default.deleteUserAvatarCache(from: self.user.id)
+                } catch {
+                    print(">>>>>\t", error)
+                }
+            }
         }
     }
     
@@ -169,26 +196,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         }
     }
     
-    private func deleteAvatar() {
-        state = .waiting
-        CloudStorageService.shared.deleteAvatar(forUser: user.id) { [weak self] error in
-            guard let self else { return }
-            if let error {
-                self.state = .failedToUploadAvatar
-            } else {
-                self.avatar = nil
-                let userIDNSString = NSString(string: self.user.id)
-                self.repository.imageCache.removeObject(forKey: userIDNSString)
-                do {
-                    try LocalStorageService.default.deleteUserAvatarCache(from: self.user.id)
-                } catch {
-                    print(">>>>>\t", error)
-                }
-            }
-        }
-    }
-    
-    private func delete(_ post: Post) {
+    private func deletePost(_ post: Post) {
         state = .waiting
         firestoreService.deletePost(post) { [weak self] error in
             if let error {
@@ -219,6 +227,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case postDeletedSuccessfully
         case presentImagePicker
         case failedToUploadAvatar
+        case avatarDeletedSuccessfully
     }
     
     /// Possible input actions performed by user

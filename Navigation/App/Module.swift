@@ -30,7 +30,7 @@ extension Module.ModuleType {
         case .profile:
             return UITabBarItem(title: NSLocalizedString("profile", comment: ""), image: UIImage(systemName: "person.circle"), tag: 1)
         case .favouritePosts:
-            return UITabBarItem(title: NSLocalizedString("favoritePosts", comment: ""), image: UIImage(systemName: "star.fill"), tag: 3)
+            return UITabBarItem(title: NSLocalizedString("savedPosts", comment: ""), image: UIImage(systemName: "bookmark.fill"), tag: 3)
         case .authentication:
             return nil
         }

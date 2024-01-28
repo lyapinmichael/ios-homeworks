@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit.UIImage
+import StorageService
 
 // MARK: - PostTableViewCellViewModel
 
@@ -26,13 +27,35 @@ final class PostTableViewCellViewModel {
     
     var repository: ProfileRepository?
     
+    private(set) var isPostSaved: Bool = false
+    private(set) var post: Post? {
+        didSet {
+            if let post,
+               let id = post.id,
+               post.hasImageAttached {
+                state = .prepareImageView
+                getPostImage(postID: id)
+            }
+        }
+    }
+    
     // MARK: Private properties
     
     private let timeInteval: DispatchTime = .now() + 0.5
     private let maxAttempts: Int = 3
     private var attemptsMade: Int = 0
-    
+        
     // MARK: Public  methods
+    
+    func updateState(with viewInput: ViewInput) {
+        switch viewInput {
+        case .didTapSavePostButton:
+            onSaveButtonDidTap()
+        case .didReceivePost(let post):
+            self.post = post
+            checkIfPostIsSaved()
+        }
+    }
     
     func getPostImage(postID: String){
         if let repository,
@@ -113,6 +136,35 @@ final class PostTableViewCellViewModel {
         }
     }
     
+    private func onSaveButtonDidTap() {
+        guard let post else { return }
+        if isPostSaved {
+            FavouritePostsService.shared.delete(post)
+            isPostSaved = false
+            state = .didCheckIsPostSaved
+        } else {
+            FavouritePostsService.shared.add(post: post) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.isPostSaved = true
+                    self?.state = .postSavedSuccessfully
+                case .failure(let error):
+                    self?.isPostSaved = false
+                    print(">>>>>\t", error)
+                    self?.state = .failedToSavePost
+                }
+            }
+        }
+    }
+    
+    private func checkIfPostIsSaved() {
+        guard let post else { return }
+        FavouritePostsService.shared.checkIsPostSaved(post) { [weak self] flag in
+            self?.isPostSaved = flag
+            self?.state = .didCheckIsPostSaved
+        }
+    }
+    
     // MARK: Types
     
     typealias ImageData = Data
@@ -121,6 +173,15 @@ final class PostTableViewCellViewModel {
         case initial
         case didLoadPostImage(ImageData)
         case didLoadAvatar(UIImage)
+        case prepareImageView
+        case postSavedSuccessfully
+        case failedToSavePost
+        case didCheckIsPostSaved
+    }
+    
+    enum ViewInput {
+        case didTapSavePostButton
+        case didReceivePost(Post)
     }
     
     

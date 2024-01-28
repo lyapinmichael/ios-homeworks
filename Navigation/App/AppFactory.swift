@@ -41,7 +41,7 @@ final class AppFactory {
             if let favouritePostsCorrdinator = coordinator as? FavouritePostsCoordinator {
                 favouritePostsTableController.coordinator = favouritePostsCorrdinator
             }
-            favouritePostsTableController.title = NSLocalizedString("favoritePosts", comment: "")
+            favouritePostsTableController.title = "savedPosts"
             let navigationController = UINavigationController(rootViewController: favouritePostsTableController)
             navigationController.navigationBar.tintColor = Palette.accentOrange
             

@@ -18,15 +18,10 @@ class FavouritePostsTableController: UITableViewController {
     lazy var fetchResultsController = {
         
         let fetchRequest = FavouritePost.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(
-//            format: "author.uuid == %@", "\(somestring)"
-//        )
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         let fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: FavouritePostsService.shared.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         return fetchResultsController
     }()
-    
-    private var posts: [FavouritePost] = []
     
     private var _isFiltered = false
     private var isFiltered: Bool {
@@ -103,6 +98,7 @@ class FavouritePostsTableController: UITableViewController {
         super.viewWillAppear(animated)
         fetchResultsController.delegate = self
         try? fetchResultsController.performFetch()
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -120,20 +116,15 @@ class FavouritePostsTableController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
         cell.selectionStyle = .none
         let favPost = fetchResultsController.object(at: indexPath)
-        
         guard let postID = favPost.uuid else { return UITableViewCell() }
-        
-        let post = Post(author: favPost.author?.name ?? NSLocalizedString("unknownAuthor", comment: ""),
+        let post = Post(id: favPost.uuid,
+                        author: favPost.author?.name ?? NSLocalizedString("unknownAuthor", comment: ""),
+                        authorID: favPost.author?.uuid,
                         description: favPost.text,
                         likes: Int(favPost.likes),
                         hasImageAttached: favPost.hasImageAttached,
                         dateCreated: favPost.dateCreated ?? Date())
-        
-        
-        let imageData = try? LocalStorageService.default.readPostImageCache(from: postID)
-        (cell as? PostTableViewCell)?.updateContent(post: post)
-        
-
+        (cell as? PostTableViewCell)?.updateContent(post: post, authorDisplayName: post.author)
         return cell
     }
     
@@ -148,8 +139,19 @@ class FavouritePostsTableController: UITableViewController {
             
         }
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let postCell = tableView.cellForRow(at: indexPath) as? PostTableViewCell,
+              let post = postCell.post else { return }
+        let image = postCell.image
+        let postDetailedViewController = PostDetailedViewController(post: post, postImage: image)
+        navigationController?.pushViewController(postDetailedViewController, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
 }
+
+// MARK: - NSFetchedResultsControllerDelegate
 
 extension FavouritePostsTableController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {

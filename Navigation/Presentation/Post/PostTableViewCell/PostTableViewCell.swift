@@ -27,22 +27,19 @@ final class PostTableViewCell: UITableViewCell {
     // MARK: Public properties
     
     weak var delegate: PostTableViewCellDelegate?
+    
     private(set) var image: UIImage? {
         didSet {
             postImageView.image =  image
         }
     }
-    private(set) var post: Post? {
-        didSet {
-            if let post,
-               let id = post.id,
-               post.hasImageAttached {
-                postImageView.isHidden = false
-                postImageHeighAnchorConstraint.constant = 127
-                viewModel.getPostImage(postID: id)
-            }
+
+    var post: Post? {
+        get {
+            return viewModel.post
         }
     }
+    
     var isActionsButtonHidden = false {
         didSet {
             authorView.isActionsButtonsHidden = isActionsButtonHidden
@@ -139,6 +136,19 @@ final class PostTableViewCell: UITableViewCell {
         return views
     }()
     
+    private lazy var savePostButton: UIButton = {
+       let button = WideTapAreaButton()
+        let image = viewModel.isPostSaved ? ButtonImages.bookmarkFill : ButtonImages.bookmark
+        button.setImage(image, for: .normal)
+        button.tintColor = Palette.accentOrange
+        let action = UIAction { [weak self] _ in
+            self?.viewModel.updateState(with: .didTapSavePostButton)
+        }
+        button.addAction(action, for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     // MARK: Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -149,9 +159,6 @@ final class PostTableViewCell: UITableViewCell {
         bindViewModel()
         
         backgroundColor = Palette.dynamicSecondaryBackground
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addToFavourites))
-        doubleTap.numberOfTapsRequired = 2
-        self.contentView.addGestureRecognizer(doubleTap)
     }
     
     required init?(coder: NSCoder) {
@@ -165,12 +172,14 @@ final class PostTableViewCell: UITableViewCell {
         postImageView.image = UIImage(named: "ImagePlaceholder")
         postImageView.isHidden = true
         postImageHeighAnchorConstraint.constant = 1
+        let image = viewModel.isPostSaved ? ButtonImages.bookmarkFill : ButtonImages.bookmark
+        savePostButton.setImage(image, for: .normal)
     }
     
     // MARK: Public methods
     
     func updateContent(post: Post, authorDisplayName: String? = nil, authorAvatar: UIImage? = nil) {
-        self.post = post
+        self.viewModel.updateState(with: .didReceivePost(post))
         if let postText = post.description {
             self.postText.text = (postText.count > 140) ? (String(postText.prefix(140)) + "...") : postText
             self.revealFull.isHidden = !(postText.count > 140)
@@ -193,14 +202,26 @@ final class PostTableViewCell: UITableViewCell {
     
     private func bindViewModel() {
         viewModel.onStateDidChange = { [weak self] state in
+            guard let self else { return }
             switch state {
-            case.initial:
+            case .initial:
                 return
+            case .prepareImageView:
+                self.postImageView.isHidden = false
+                self.postImageHeighAnchorConstraint.constant = 127
             case .didLoadPostImage(let imageData):
-                self?.image = UIImage(data: imageData)
-                self?.setNeedsLayout()
+                self.image = UIImage(data: imageData)
+                self.setNeedsLayout()
             case .didLoadAvatar(let image):
-                self?.authorView.update(authorAvatar: image)
+                self.authorView.update(authorAvatar: image)
+            case .postSavedSuccessfully:
+                self.savePostButton.setImage(ButtonImages.bookmarkFill, for: .normal)
+                self.delegate?.postTableViewCell(self, askToPresentToastWithMessage: "addedToFavorites".localized)
+            case .failedToSavePost:
+                self.delegate?.postTableViewCell(self, askToPresentToastWithMessage: "alreadyInFavorites".localized)
+            case .didCheckIsPostSaved:
+                let image = self.viewModel.isPostSaved ? ButtonImages.bookmarkFill : ButtonImages.bookmark
+                self.savePostButton.setImage(image, for: .normal)
             }
         }
     }
@@ -215,6 +236,7 @@ final class PostTableViewCell: UITableViewCell {
         contentView.addSubview(likesLabel)
         contentView.addSubview(viewsLabel)
         contentView.addSubview(authorView)
+        contentView.addSubview(savePostButton)
     }
     
     private func setConstraints() {
@@ -254,30 +276,22 @@ final class PostTableViewCell: UITableViewCell {
             
             likesLabel.centerYAnchor.constraint(equalTo: likesImage.centerYAnchor),
             likesLabel.leadingAnchor.constraint(equalTo: likesImage.trailingAnchor, constant: 8),
-       
+            
+            savePostButton.centerYAnchor.constraint(equalTo: likesImage.centerYAnchor),
+            savePostButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            savePostButton.heightAnchor.constraint(equalToConstant: 20),
+            savePostButton.widthAnchor.constraint(equalToConstant: 20),
+
             contentView.bottomAnchor.constraint(equalTo: likesLabel.bottomAnchor, constant: 16)
         ])
         
     }
     
-    // MARK: Objc methods
+    // MARK: Types
     
-    @objc private func addToFavourites() {
-        
-        guard let post = self.post else { return }
-        
-        FavouritePostsService.shared.add(post: post) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(_):
-                self.delegate?.postTableViewCell(self, askToPresentToastWithMessage: "addedToFavorites".localized)
-                
-            case .failure(let error):
-                if case .alreadyInFavourites = error {
-                    self.delegate?.postTableViewCell(self, askToPresentToastWithMessage: "alreadyInFavorites".localized)
-                }
-            }
-        }
+    enum ButtonImages {
+        static let bookmark = UIImage(systemName: "bookmark")
+        static let bookmarkFill = UIImage(systemName: "bookmark.fill")
     }
     
 }
@@ -287,7 +301,7 @@ final class PostTableViewCell: UITableViewCell {
 extension PostTableViewCell: PostAuthorHeaderViewDelegate {
     
     func postAuthorHeaderView(_ postAuthorHeaderView: PostAuthorHeaderView, didTapThreeDotsButton button: UIButton) {
-        guard let post else { return }
+        guard let post = viewModel.post else { return }
         delegate?.postTableViewCell(self, didTapButton: button, actionsFor: post)
     }
     

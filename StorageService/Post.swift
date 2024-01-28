@@ -19,7 +19,8 @@ public struct Post: Codable {
     public let dateCreated: Timestamp
     
     
-    public init(author: String, authorID: String? = nil, description: String?, likes: Int, hasImageAttached: Bool, dateCreated: Date = Date()) {
+    public init(id: String? = nil, author: String, authorID: String? = nil, description: String?, likes: Int, hasImageAttached: Bool, dateCreated: Date = Date()) {
+        self.id = id 
         self.author = author
         self.authorID = authorID
         self.description = description
@@ -28,7 +29,7 @@ public struct Post: Codable {
         self.dateCreated = Timestamp(date: dateCreated)
     }
     
-    public init (author: String, authorID: String? = nil, description: String?, likes: Int, id: String, hasImageAttached: Bool) {
+    public init (id: String, author: String, authorID: String? = nil, description: String?, likes: Int, hasImageAttached: Bool) {
         self.author = author
         self.authorID = authorID
         self.description = description

@@ -31,9 +31,26 @@ final class FavouritePostsService {
         return container
     }()
     
-    var favouritePosts: [FavouritePost] = []
-    
     private init() {
+    }
+    
+    func checkIsPostSaved(_ post: Post, completion: @escaping (Bool) -> Void = { _ in }) {
+        guard let postID = post.id else { return  }
+        let fetchRequest: NSFetchRequest<FavouritePost> = FavouritePost.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uuid == %@", postID)
+        persistentContainer.performBackgroundTask { context in
+            do {
+                let count = try context.count(for: fetchRequest)
+                DispatchQueue.main.async {
+                    completion(count > 0)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(false)
+                    print(">>>>>\t", error)
+                }
+            }
+        }
     }
     
     func add(post: Post, completion: @escaping ((Result<Any, FavouritePostsService.FavouritePostsError>) -> Void)) {
@@ -78,4 +95,23 @@ final class FavouritePostsService {
             try? context.save()
         })
     }
+    
+    func delete(_ postToDelete: Post) {
+        guard let postID = postToDelete.id else { return }
+        let fetchRequest = FavouritePost.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uuid == %@", "\(postID)")
+        persistentContainer.performBackgroundTask {context in
+            do {
+                let entities = try context.fetch(fetchRequest)
+                for entity in entities {
+                    context.delete(entity)
+                }
+                try context.save()
+            } catch {
+                print(">>>>>\t", error)
+            }
+        }
+    }
+    
+    
 }

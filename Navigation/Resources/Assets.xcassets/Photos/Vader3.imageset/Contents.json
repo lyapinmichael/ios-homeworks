@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "darth-vader.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

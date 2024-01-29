@@ -1,0 +1,126 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Ляпин Михаил on 15.09.2023.
+  
+*/
+
+
+"cancel" = "Отмена";
+"profile" = "Профиль";
+"loading" = "Загрузка";
+"errorOccured" = "Возникла ошибка";
+"somethingWentWrong" = "Что-то пошло не так при попытке загрузить информацию. Пожалуйсста, попробуйте позже";
+"close" = "Закрыть";
+"failedToLoadData" = "Не удалось загрузить данные";
+"planetOrbitalPeriod" = "Орбитальный период планеты %@ составляет %@ дней.";
+"listOfPlanetResidents" = "Список жителей планеты";
+"openPost" = "Открыть пост";
+"correctWord" = "Верное слово:";
+"check" = "Проверить!";
+"nothingWasChecked" = "Ничего пока не проверялось";
+"enterSomething" = "Введите что-нибудь для проверки ";
+"oops" = "Упс";
+"feed" = "Лента ";
+"right" = "Верно";
+"rightGuess" = "Поздравляем! Вы отгадали!";
+"wrong" = "Неверно";
+"wrongGuess" = "Вы ошиблись! Попробуйте снова!";
+"guessWasChecked" = "Догадка была проверена и...";
+"logOut" = "Выйти";
+"photoGallery" = "Фото галерея";
+"nothingToSee" = "Здесь пока ничего нет...";
+"printStatus" = "Напечатать статус";
+"whatsNew" = "Что нового??";
+"setStatus" = "Установить статус";
+"likes" = "Нравится: ";
+"views" = "Просмотры: ";
+"addedToFavorites" = "Добавлено в избранное";
+"alreadyInFavorites" = "Пост уже в избранном";
+"photos" = "Фото";
+"thankUser" = "Спасибо за пользование приложением!";
+"login" = "Логин";
+"signIn" = "Войти";
+"signUp" = "Зарегиcтрироваться";
+"fillFullName" = "Введите ваше имя";
+"fillEmail" = "Введите ваш e-mail";
+"fillPassword" = "Введите пароль";
+"confirm" = "Подтвердить";
+"continue" = "Продолжить";
+"pleaseFillEmail" = "Пожалуйста, введите e-mail";
+"pleaseFillPassword" = "Пожалуйста, введите пароль";
+"pleaseFillName" =  "Пожалуйста, введите ваше имя";
+"registrationSuccessfull" = "Поздравляем: вы успешно зарегистрировались!";
+"nowPlaying" = "Сейчас играет: ";
+"media" = "Медиа";
+"filterByAuthor" = "Фильтровать по автору";
+"enterAuthorToFilter" = "Введите имя автора для фильтрования постов";
+"favoritePosts" = "Избранные посты";
+"unknownAuthor" = "Неизвестный автор";
+"location" = "Локация";
+"checkUpdatesNotification" = "Проверьте последние обновления";
+"checkForUpdatesUNAction" = "Проверить обновления";
+"LAPolicy" = "Рарзешите приложению использовать биометрию для безопасного входа";
+"alreadyHaveAnAccount" = "Уже есть аккаунт";
+"yourEmailWillBeUsed" = "Ваш e-mail будет использоваться для входа в ваш аккаунт";
+"emailFormatInvalid" = "Некорректный формат. E-mail должен соответствовать формату: \"example@mail.com\" ";
+"proceed" = "Далее";
+"createPassword" = "Придумайте надежный пароль";
+
+"create" = "создайте";
+"secure" = "надежный";
+"password" = "пароль";
+"repeatPassword" = "повторите пароль";
+"passwordShouldNotHaveWhitespaces" = "Пароль не может содержать пробелы.";
+"passwordsComparisonFail" = "Пароли не совадают. Попробуйте снова.";
+"passwordLengthRestriction" = "Пароль должен быть содержать не менее 6 символов.";
+"almostThere" = "Почти готово";
+"yourDisplayNameWillBeSeen" = "Другие пользователи увидят ваше имя.";
+
+"emailAlreadyExists" = "Похоже, вы уже зарегистрированы. Хотите войти?";
+"failedToSignIn" = "Не удалось войти.";
+
+"begin" = "Начнем!";
+
+"welcomeBack" = "С возвращением!";
+"fillEmailAndPassword" = "Введите Ваш e-mail и пароль для входа.";
+
+"back" = "Назад";
+
+"editProfile" = "Редактировать профиль";
+
+"posts" = "Публикаций";
+"postsInf"="Публикации";
+"post" = "Пост";
+"photo" = "Фото";
+
+"generalInformation" = "Основная информация";
+
+"name" = "Имя";
+
+"failedToCommitChanges" = "Не удалось сохранить изменения";
+
+"revealFull" = "Показать полностью";
+
+"upload" = "Опубликовать";
+"whatsNew" = "Что нового";
+
+"failedToUpload" = "Не удалось опубликовать пост. Пожалуйста, поробуйте позже.";
+
+"delete" = "Удалить";
+"archivate" = "Архивировать";
+"share" = "Поделиться";
+
+"sureToDelete" = "Вы действительно хотите удалить публикацию? Это действие нельзя отменить.";
+"deletePost" = "Удалить публикацию";
+"postDeleted" = "Публикация удалена";
+
+"viewImage" = "Посмотреть изображение";
+"changeImage" = "Изменить изображение";
+
+"failedToChangeAvatar" = "Не удалось опубликовать новое изображение профиля.";
+
+"myPosts" = "Мои публикации";
+
+"savedPosts" = "Сохраненные посты";

@@ -1,0 +1,169 @@
+//
+//  PhotosTableViewCell.swift
+//  Navigation
+//
+//  Created by Ляпин Михаил on 04.03.2023.
+//
+
+import UIKit
+
+// MARK: - class PhotosTableViewCell
+
+final class PhotosTableViewCell: UITableViewCell {
+
+    // MARK: - Private properties
+    
+    fileprivate let photos = Photo.shared.testPhotos
+    
+    private enum Constants {
+        static let spacing: CGFloat = 8
+        static let offset: CGFloat = 12
+        static let maxItemsInRow: CGFloat = 16
+        static let minItemsInRow: CGFloat = 4
+    }
+    
+    private lazy var photosLabel: UILabel = {
+        let label = UILabel()
+        label.text = NSLocalizedString("photos", comment: "")
+        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var arrowImage: UIImageView = {
+        let arrow = UIImageView()
+        arrow.image = UIImage(systemName: "arrow.forward")
+        arrow.tintColor = Palette.accentOrange
+        arrow.clipsToBounds = true
+        arrow.translatesAutoresizingMaskIntoConstraints = false
+        return arrow
+    }()
+    
+    private lazy var photosCollection: UICollectionView = {
+        let viewLayout = UICollectionViewFlowLayout()
+        viewLayout.scrollDirection = .horizontal
+        viewLayout.sectionInset = UIEdgeInsets(top: .zero, left: .zero, bottom: .zero, right: .zero)
+        viewLayout.minimumLineSpacing = Constants.spacing
+        let photosCollection = UICollectionView(frame: contentView.frame, collectionViewLayout: viewLayout)
+        photosCollection.register(
+            PhotosCollectionViewCell.self,
+            forCellWithReuseIdentifier: PhotosCollectionViewCell.id)
+        
+        photosCollection.translatesAutoresizingMaskIntoConstraints = false
+        return photosCollection
+    }()
+    
+    // MARK: - Override init
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = Palette.dynamicBars
+        accessoryType = .none
+        accessoryView = nil
+    
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Private methods
+    
+    private func addSubviews() {
+        contentView.addSubview(photosLabel)
+        contentView.addSubview(photosCollection)
+        contentView.addSubview(arrowImage)
+        
+        photosCollection.dataSource = self
+        photosCollection.delegate  = self
+    }
+    
+    private func setConstraints() {
+        
+        NSLayoutConstraint.activate([
+            photosLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.offset),
+            photosLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.offset),
+            
+            arrowImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.offset),
+            arrowImage.centerYAnchor.constraint(equalTo: photosLabel.centerYAnchor),
+            
+            photosCollection.topAnchor.constraint(equalTo: photosLabel.bottomAnchor, constant: Constants.offset),
+            photosCollection.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.offset),
+            photosCollection.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.offset),
+            photosCollection.heightAnchor.constraint(equalToConstant: itemWidth(for: contentView.frame.width) + 1),
+            
+            contentView.bottomAnchor.constraint(equalTo: photosCollection.bottomAnchor, constant: Constants.offset - 1)
+            
+        ])
+
+        
+    }
+    
+    // MARK: - Public methods
+    
+    func setup(_ frame: CGRect) {
+        contentView.frame = frame
+        addSubviews()
+        setConstraints()
+    
+    }
+}
+
+// MARK: - DataSource extension
+
+extension PhotosTableViewCell: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        switch photos.count {
+        case 0:
+            return 1
+        case 0 ..< 4:
+            return Int(Constants.minItemsInRow)
+        case 5 ..< Int(Constants.maxItemsInRow):
+            return photos.count
+        default:
+            return Int(Constants.maxItemsInRow)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.id, for: indexPath) as! PhotosCollectionViewCell
+        
+        if photos.indices.contains(indexPath.row) {
+            cell.updateContent(with: photos[indexPath.row])
+        } else {
+            cell.updateContent(with: "ImagePlaceholder" )
+        }
+        
+        cell.contentView.layer.cornerRadius = 6
+        return cell
+    }
+}
+
+// MARK: - DelegateFlowLayout extension
+
+extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
+    
+    private func itemWidth(for width: CGFloat) -> CGFloat {
+        
+        let totalSpacing: CGFloat = 2 * Constants.offset + (Constants.minItemsInRow - 1) * Constants.spacing
+        let finalWidth = (width - totalSpacing) / Constants.minItemsInRow
+        
+        return (finalWidth)
+    }
+  
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = itemWidth(for: contentView.frame.width)
+
+        return CGSize(width: width, height: width)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        Constants.spacing
+    }
+}
+
+

@@ -1,0 +1,125 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Ляпин Михаил on 15.09.2023.
+  
+*/
+
+"cancel" = "Cancel";
+"profile" = "Profile";
+"loading" = "Loading";
+"errorOccured" = "Error occured";
+"somethingWentWrong" = "Something went wrong while trying to get requested information. Please, try again later.";
+"close" = "Close";
+"failedToLoadData" = "Failed to load data";
+"planetOrbitalPeriod" = "%@'s orbital period is %@ days.";
+"listOfPlanetResidents" = "List of planet residents";
+"openPost" = "Open post";
+"correctWord" = "Correct word:";
+"check" = "Check!";
+"nothingWasChecked" = "Nothing was checked yet";
+"enterSomething" = "Enter something so it can be checked ";
+"oops" = "Ooops";
+"feed" = "Feed";
+"right" = "Right";
+"rightGuess" = "Congrats! You're right!";
+"wrong" = "Wrong";
+"wrongGuess" = "You're wrong! Try again!";
+"guessWasChecked" = "Guess was checked and...";
+"logOut" = "Log out";
+"photoGallery" = "Photo gallery";
+"nothingToSee" = "Nothing to see here yet...";
+"printStatus" = "Print status";
+"whatsNew" = "What's new?";
+"setStatus" = "Set status";
+"likes" = "Likes: ";
+"views" = "Views: ";
+"addedToFavorites" = "Added to favorites";
+"alreadyInFavorites" = "Post is already in favorites";
+"photos" = "Photos";
+"thankUser" = "Thank you for using our app!";
+"login" = "login";
+"signIn" = "Sign in";
+"signUp" = "Sign up";
+"fillFullName" = "Fill in your full name";
+"fillEmail" = "Fill in your e-mail";
+"fillPassword" = "Fill in password";
+"confirm" = "Confirm";
+"continue" = "Continue";
+"pleaseFillEmail" = "Please, fill in e-mail";
+"pleaseFillPassword" = "Please, fill in password";
+"pleaseFillName" =  "Please fill in your full name";
+"registrationSuccessfull" = "Congratulations: you're successfully registered!";
+"nowPlaying" = "Now playing: ";
+"media" = "Media";
+"filterByAuthor" = "Filter by Author";
+"enterAuthorToFilter" = "Enter Author's name to filter posts";
+"favoritePosts" = "Favourite posts";
+"unknownAuthor" = "Unknown author";
+"location" = "Location";
+"checkUpdatesNotification" = "Check last updates";
+"checkForUpdatesUNAction" = "Check for updates";
+"LAPolicy" = "Allow app to use bimometry for safe entrance";
+"alreadyHaveAnAccount" = "Already have an account";
+"yourEmailWillBeUsed" = "Your e-mail will be used to log in to your account";
+"emailFormatInvalid" = "Invalid forma. E-mail should conform the following format: \"example@mail.com\" ";
+"proceed" = "Proceed";
+"createPassword" = "Create secure password";
+
+"create" = "create";
+"secure" = "secure";
+"password" = "password";
+"repeatPassword" = "repeat password";
+"passwordShouldNotHaveWhitespaces" = "Password should not contain whitespaces.";
+"passwordsComparisonFail" = "The passwords do not match. Please try again.";
+"passwordLengthRestriction" = "Passwords should contain at least 6 characters.";
+"almostThere" = "Almost there";
+"yourDisplayNameWillBeSeen" = "Your display name will be seen by other users.";
+
+"emailAlreadyExists" = "Seems like you have already registered. Would you like to sign in?";
+"failedToSignIn" = "Failed to sign in.";
+
+"begin" = "Let's begin!";
+
+"welcomeBack" = "Welcome back!";
+"fillEmailAndPassword" = "Fill in you email and password to sign in.";
+
+"back" = "Back";
+
+"editProfile" = "Edit profile";
+
+"posts" = "Posts";
+"postsInf"="Posts";
+"post" = "Post";
+"photo" = "Photo";
+
+"generalInformation" = "General information";
+
+"name" = "Name";
+
+"failedToCommitChanges" = "Failed to commit changes";
+
+"revealFull" = "Reveal full";
+
+"upload" = "Upload";
+"whatsNew" = "What's new";
+
+"failedToUpload" = "Uploading new post failed. Please, try again later";
+
+"delete" = "Delete";
+"archivate" = "Archivate";
+"share" = "Share";
+
+"sureToDelete" = "Are you sure you want to delete post? This cannot be undone.";
+"deletePost" = "Delete post";
+"postDeleted" = "Post deleted";
+
+"viewImage" = "View image";
+"changeImage" = "Change image";
+
+"failedToChangeAvatar" = "Failed to upload new user avatar";
+
+"myPosts" = "My posts";
+
+"savedPosts" = "Saved posts";
